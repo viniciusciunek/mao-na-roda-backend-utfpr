@@ -1,0 +1,9 @@
+root = true # devem ser aplicadas ao direitorio atual e subs
+
+[*] # todos os arquivos
+charset = utf-8 # charset da linguagem
+indent_size = 2 # tamanho de identação, quantos espaços teram 
+indent_style = space # tipo de indentação, space tab etc
+end_of_line = lf # unix style, independnete do os
+insert_final_newline = true # deixa uma ultima linha no final do arquivo
+trim_trailing_whitespace = true # ele apaga automatico os espaços em branco no final da linha
