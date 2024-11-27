@@ -1,0 +1,10 @@
+# ignore html nginx folder
+.html/
+
+# ignore vs code settings
+.vscode/
+
+# ignore logs and temporary files
+*.log
+*.temp
+*.tmp
