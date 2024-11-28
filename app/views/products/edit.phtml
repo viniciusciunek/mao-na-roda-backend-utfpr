@@ -1,0 +1,24 @@
+<form action="update.php" method="POST">
+  <input type="hidden" name="_method" value="PUT">
+  <input type="hidden" name="product[id]" value="<?= $product['id'] ?>">
+
+  <div>
+    <label for="product_name">Nome:</label>
+    <input type="text" name="product[name]" id="product_name" value="<?= $product['name'] ?>">
+    <div style="color: red;"><?= isset($errors['name']) ? $errors['name'] : '' ?></div>
+
+    <label for="product_description">Descrição:</label>
+    <input type="text" name="product[description]" id="product_description" value="<?= $product['description'] ?>">
+    <div style="color: red;"><?= isset($errors['description']) ? $errors['description'] : '' ?></div>
+
+    <label for="product_brand">Marca:</label>
+    <input type="text" name="product[brand]" id="product_brand" value="<?= $product['brand'] ?>">
+    <div style="color: red;"><?= isset($errors['brand']) ? $errors['brand'] : '' ?></div>
+
+    <label for="product_price">Preço:</label>
+    <input type="number" name="product[price]" id="product_price" value="<?= $product['price'] ?>">
+    <div style="color: red;"><?= isset($errors['price']) ? $errors['price'] : '' ?></div>
+  </div>
+
+  <button type="submit">Atualizar</button>
+</form>
