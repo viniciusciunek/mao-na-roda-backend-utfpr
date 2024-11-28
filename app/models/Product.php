@@ -104,11 +104,18 @@ class Product
   public function save(): bool
   {
     if ($this->isValid()) {
-      $this->id = count(file(self::DB_PATH));
-      file_put_contents(self::DB_PATH, "$this->name | $this->description | $this->brand | $this->price" . PHP_EOL, FILE_APPEND);
+      if ($this->newRecord()) {
+        $this->id = count(file(self::DB_PATH));
+        file_put_contents(self::DB_PATH, "$this->name | $this->description | $this->brand | $this->price" . PHP_EOL, FILE_APPEND);
+      } else {
+        $products = file(self::DB_PATH, FILE_IGNORE_NEW_LINES);
+        $products[$this->id] = "$this->name | $this->description | $this->brand | $this->price";
+
+        $data = implode(PHP_EOL, $products);
+        file_put_contents(self::DB_PATH, $data . PHP_EOL);
+      }
       return true;
     }
-
     return false;
   }
 
@@ -124,5 +131,23 @@ class Product
 
       return new Product($name, $description, $brand, $price, $line);
     }, array_keys($products), $products);
+  }
+
+  public static function findById($id): Product|null
+  {
+    $products = self::all();
+
+    foreach ($products as $product) {
+      if ($product->getId() === (int) $id) {
+        return $product;
+      }
+    }
+
+    return null;
+  }
+
+  public function newRecord(): bool
+  {
+    return $this->id === -1;
   }
 }

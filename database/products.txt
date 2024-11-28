@@ -1,5 +1,2 @@
-nao | nao | nao | 23
-produto 1 | descrição do produto | marca legal | 100
-nome | desc | marca | 123
-nomessss | descricaoooo | marcaaaa | 12313123
-dasdsa | dasdasd | asdasd | 123123
+nome | descricao | marca | 1
+nomeeee | descricaooooo | marcaaaa | 2

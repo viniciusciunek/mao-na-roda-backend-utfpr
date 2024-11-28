@@ -1,5 +1,7 @@
 <?php
 
+require '/var/www/app/models/Product.php';
+
 $method = $_REQUEST['_method'] ?? $_SERVER['REQUEST_METHOD'];
 
 if ($method !== 'PUT') {
@@ -7,45 +9,17 @@ if ($method !== 'PUT') {
   exit;
 }
 
-$product = $_POST['product'];
+$product = Product::findById($_POST['product']['id']);
+$product->setName($_POST['product']['name']);
+$product->setDescription($_POST['product']['description']);
+$product->setBrand($_POST['product']['brand']);
+$product->setPrice($_POST['product']['price']);
 
-$id = $product['id'];
-$name = trim($product['name']);
-$description = trim($product['description']);
-$brand = trim($product['brand']);
-$price = trim($product['price']);
-
-$errors = [];
-
-if (empty($name)) {
-  $errors['name'] = 'Não pode ser vazio!';
-}
-
-if (empty($description)) {
-  $errors['description'] = 'Insira uma descrição!';
-}
-
-if (empty($brand)) {
-  $errors['brand'] = 'Insira a marca do produto!';
-}
-
-if (empty($price)) {
-  $errors['price'] = 'Insira o preço do produto!';
-}
-
-if (empty($errors)) {
-  define('DB_PATH', '/var/www/database/products.txt');
-
-  $products = file(DB_PATH, FILE_IGNORE_NEW_LINES);
-  $products[$id] = "$name | $description | $brand | $price";
-
-  $data = implode(PHP_EOL, $products);
-  file_put_contents(DB_PATH, $data . PHP_EOL);
-
+if ($product->save()) {
   header('Location: /pages/products');
 } else {
-  $title = "Editar Produto #{$id}";
-  $view = '/var/www/app/views/problems/edit.phtml';
+  $title = "Editar Produto #{$product->getId()}";
+  $view = '/var/www/app/views/products/edit.phtml';
 
   require '/var/www/app/views/layouts/application.phtml';
 }
