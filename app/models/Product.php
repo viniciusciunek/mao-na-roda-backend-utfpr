@@ -111,4 +111,18 @@ class Product
 
     return false;
   }
+
+  public static function all(): array
+  {
+    $products = file(self::DB_PATH, FILE_IGNORE_NEW_LINES);
+
+    return array_map(function ($line, $data) {
+      $name = explode("|", $data)[0];
+      $description = explode("|", $data)[1];
+      $brand = explode("|", $data)[2];
+      $price = explode("|", $data)[3];
+
+      return new Product($name, $description, $brand, $price, $line);
+    }, array_keys($products), $products);
+  }
 }

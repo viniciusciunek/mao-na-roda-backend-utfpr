@@ -1,8 +1,8 @@
 <?php
 
-define("DB_PATH", '/var/www/database/products.txt');
+require '/var/www/app/models/Product.php';
 
-$products = file(DB_PATH, FILE_IGNORE_NEW_LINES);
+$products = Product::all();
 
 $title = 'Produtos Cadastrados';
 $view = '/var/www/app/views/products/index.phtml';
