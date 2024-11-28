@@ -34,8 +34,16 @@
         <td>R$ <?= explode('|', $product)[3] ?></td>
         <td>
           <a href="/pages/products/edit.php?id=<?= $index ?>">
-            Editar
+            <button>
+              Editar
+            </button>
           </a>
+
+          <form action="delete.php" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="product[id]" value="<?= $index ?>">
+            <button type="submit">Excluir</button>
+          </form>
         </td>
       </tr>
     <?php endforeach; ?>
