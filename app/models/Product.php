@@ -150,4 +150,13 @@ class Product
   {
     return $this->id === -1;
   }
+
+  public function destroy(): void
+  {
+    $products = file(self::DB_PATH, FILE_IGNORE_NEW_LINES);
+    unset($products[$this->id]);
+
+    $data = implode(PHP_EOL, $products);
+    file_put_contents(self::DB_PATH, $data . PHP_EOL);
+  }
 }
