@@ -1,2 +1,2 @@
 nao | nao | nao | 23
-a | b | c | 1
+produto 1 | descrição do produto | marca legal | 100
