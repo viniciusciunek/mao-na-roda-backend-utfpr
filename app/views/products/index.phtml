@@ -20,8 +20,18 @@
     <th>ID</th>
     <th>Nome</th>
     <th>Descrição</th>
+    <th>Marca</th>
     <th>Preço</th>
   </thead>
   <tbody>
+    <?php foreach ($products as $index => $product) : ?>
+      <tr>
+        <td><a href="/pages/products/show.php?id=<?= $index ?>">#<?= $index ?></a></td>
+        <td><?= explode('|', $product)[0] ?></td>
+        <td><?= explode('|', $product)[1] ?></td>
+        <td><?= explode('|', $product)[2] ?></td>
+        <td>R$ <?= explode('|', $product)[3] ?></td>
+      </tr>
+    <?php endforeach; ?>
   </tbody>
 </table>
