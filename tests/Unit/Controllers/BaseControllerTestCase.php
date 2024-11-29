@@ -6,18 +6,18 @@ use Tests\TestCase;
 
 abstract class BaseControllerTestCase extends TestCase
 {
-  public function get(string $action, string $controller): string
-  {
-    $controller = new $controller();
+    public function get(string $action, string $controller): string
+    {
+        $controller = new $controller();
 
-    ob_start();
+        ob_start();
 
-    $controller->index();
+        $controller->index();
 
-    $response = ob_get_contents();
+        $response = ob_get_contents();
 
-    ob_end_clean();
+        ob_end_clean();
 
-    return $response;
-  }
+        return $response;
+    }
 }

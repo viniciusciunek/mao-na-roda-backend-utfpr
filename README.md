@@ -52,5 +52,5 @@ $ docker compose run --rm php ./vendor/bin/phpunit tests --color
 ## Testar retorno da API
 
 ```
-curl -H "Accept: application/json" localhost/pages/problems/index.php
+curl -H "Accept: application/json" localhost/pages/products/index.php
 ```
