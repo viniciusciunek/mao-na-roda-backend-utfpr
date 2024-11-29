@@ -67,6 +67,30 @@ class ProductsController
     $this->render('edit', compact('product', 'title'));
   }
 
+  public function update()
+  {
+
+    $method = $_REQUEST['_method'] ?? $_SERVER['REQUEST_METHOD'];
+
+    if ($method !== 'PUT') {
+      $this->redirectTo('/pages/products');
+    }
+
+    $product = Product::findById($_POST['product']['id']);
+    $product->setName($_POST['product']['name']);
+    $product->setDescription($_POST['product']['description']);
+    $product->setBrand($_POST['product']['brand']);
+    $product->setPrice($_POST['product']['price']);
+
+    if ($product->save()) {
+      $this->redirectTo('/pages/products');
+    } else {
+      $title = "Editar Produto #{$product->getId()}";
+
+      $this->render('edit', compact('product', 'title'));
+    }
+  }
+
   private function redirectTo($location)
   {
     header('Location: ' . $location);
