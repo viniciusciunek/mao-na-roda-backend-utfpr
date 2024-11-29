@@ -15,12 +15,15 @@ services:
       - .:/var/www
     networks:
       - app-network
+    working_dir: /var/www
 
   composer:
     image: composer:2.7.2
     volumes:
       - .:/app
     user: 1000:1000
+    environment:
+      - COMPOSER_CACHE_DIR=/app/.cache/composer
 
 networks:
   app-network:
