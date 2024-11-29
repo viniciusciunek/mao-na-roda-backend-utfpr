@@ -32,10 +32,17 @@ $ chmod 665 ./database/products.txt
 ### Instalar as Dependências
 
 ```
-$ docker compose run --rm composer install
+$ ./run composer install
 ```
 
 ### Subir os contêineres
+
+```
+$ ./run up -d
+```
+
+ou
+
 
 ```
 $ docker compose up -d
@@ -44,8 +51,28 @@ $ docker compose up -d
 ### Rodar os testes
 
 ```
+$ ./run tests
+```
+ou
+
+```
 $ docker compose run --rm php ./vendor/bin/phpunit tests --color
 ```
+
+### Rodar os linters
+
+[PHPCS](https://github.com/PHPCSStandards/PHP_CodeSniffer/)
+```
+$ ./run phpcs
+```
+
+
+[PHPStan](https://phpstan.org/)
+
+```
+$ ./run phpstan
+```
+
 
  Acesse em [localhost](http://localhost)
 
