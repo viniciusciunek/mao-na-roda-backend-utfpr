@@ -1,6 +1,8 @@
 <?php
 
-require '/var/www/app/controllers/ProductsController.php';
+require '/var/www/config/bootstrap.php';
+
+use App\Controllers\ProductsController;
 
 $controller = new ProductsController();
 

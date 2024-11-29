@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Models;
+
 class Product
 {
   const DB_PATH = '/var/www/database/products.txt';
