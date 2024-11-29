@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Core\Constants\Constants;
+
 class Product
 {
     private array $errors = [];
@@ -12,8 +14,7 @@ class Product
         private string $brand = '',
         private float $price = 0,
         private int $id = -1,
-    ) {
-    }
+    ) {}
 
     public function setId(int $id): void
     {
@@ -106,10 +107,10 @@ class Product
     {
         if ($this->isValid()) {
             if ($this->newRecord()) {
-                $this->id = file_exists(self::DB_PATH()) ? count(file(self::DB_PATH())) : 0;
+                $this->id = file_exists(self::DB_PATH()) ? count(file(self::DB_PATH(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)) : 0;
                 file_put_contents(self::DB_PATH(), "$this->name | $this->description | $this->brand | $this->price" . PHP_EOL, FILE_APPEND);
             } else {
-                $products = file(self::DB_PATH(), FILE_IGNORE_NEW_LINES);
+                $products = file(self::DB_PATH(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
                 $products[$this->id] = "$this->name | $this->description | $this->brand | $this->price";
 
                 $data = implode(PHP_EOL, $products);
@@ -120,13 +121,17 @@ class Product
         return false;
     }
 
-    public static function all(): array
+    public static function all()
     {
         if (!file_exists(self::DB_PATH())) {
             return [];
         }
 
-        $products = file(self::DB_PATH(), FILE_IGNORE_NEW_LINES);
+        $products = file(self::DB_PATH(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        if (count($products) == 0) {
+            return [];
+        }
 
         return array_map(function ($line, $data) {
             $name = explode("|", $data)[0];
@@ -158,7 +163,7 @@ class Product
 
     public function destroy(): void
     {
-        $products = file(self::DB_PATH(), FILE_IGNORE_NEW_LINES);
+        $products = file(self::DB_PATH(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         unset($products[$this->id]);
 
         $data = implode(PHP_EOL, $products);
@@ -167,6 +172,6 @@ class Product
 
     private static function DB_PATH()
     {
-        return DATABASE_PATH . $_ENV['DB_NAME'];
+        return Constants::databasePath()->join($_ENV['DB_NAME']);
     }
 }
