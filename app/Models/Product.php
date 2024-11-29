@@ -110,14 +110,20 @@ class Product
     {
         if ($this->isValid()) {
             if ($this->newRecord()) {
-                $this->id = file_exists(self::dbPath()) ? count(file(self::dbPath(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)) : 0;
-                file_put_contents(self::dbPath(), "$this->name | $this->description | $this->brand | $this->price" . PHP_EOL, FILE_APPEND);
+                $dbPath = self::dbPath();
+                $productData = "$this->name | $this->description | $this->brand | $this->price" . PHP_EOL;
+
+                $this->id = file_exists($dbPath) ?
+                    count(file($dbPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)) : 0;
+
+                file_put_contents($dbPath, $productData, FILE_APPEND);
             } else {
-                $products = file(self::dbPath(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+                $dbPath = self::dbPath();
+                $products = file($dbPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
                 $products[$this->id] = "$this->name | $this->description | $this->brand | $this->price";
 
-                $data = implode(PHP_EOL, $products);
-                file_put_contents(self::dbPath(), $data . PHP_EOL);
+                $data = implode(PHP_EOL, $products) . PHP_EOL;
+                file_put_contents($dbPath, $data);
             }
             return true;
         }
