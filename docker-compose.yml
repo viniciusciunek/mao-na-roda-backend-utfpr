@@ -21,6 +21,8 @@ services:
     volumes:
       - .:/app
     user: 1000:1000
+    environment:
+      - COMPOSER_CACHE_DIR=/app/.cache/composer
 
 networks:
   app-network:

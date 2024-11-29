@@ -11,3 +11,6 @@
 
 # dependecies
 /vendor/
+
+# ignore composer cache folder
+.cache/*
