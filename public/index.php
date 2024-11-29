@@ -1,3 +1,3 @@
 <?php
 
-header('Location: /pages/products');
+require '/var/www/config/bootstrap.php';
