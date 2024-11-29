@@ -9,12 +9,48 @@ O Mão na Roda oferece funcionalidades para simplificar o fluxo de trabalho dent
 
 ## Como executar o projeto
 
+### Clonar o repositório
 ```
 $ git clone https://github.com/viniciusciunek/mao-na-roda-backend-utfpr
 
 $ cd mao-na-roda-backend-utfpr
+```
 
+### Definir as variáveis de ambiente
+```
+$ cp .env.example .env
+```
+
+### Criar o arquivo de dados
+
+```
+$ touch ./database/products.txt
+
+$ chmod 665 ./database/products.txt
+```
+
+### Instalar as Dependências
+
+```
+$ docker compose run --rm composer install
+```
+
+### Subir os contêineres
+
+```
 $ docker compose up -d
 ```
 
-Acesse em [localhost]("http://localhost")
+### Rodar os testes
+
+```
+$ docker compose run --rm php ./vendor/bin/phpunit tests --color
+```
+
+ Acesse em [localhost](http://localhost)
+
+## Testar retorno da API
+
+```
+curl -H "Accept: application/json" localhost/pages/problems/index.php
+```
