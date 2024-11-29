@@ -6,10 +6,9 @@ class StringPath
 {
     public function __construct(
         private string $path
-    ) {
-    }
+    ) {}
 
-    public function join(string $path)
+    public function join(string $path): StringPath
     {
         $this->path .= '/' . ltrim($path, '/');
 

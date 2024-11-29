@@ -6,7 +6,7 @@ use App\Models\Product;
 
 class ProductsControllerTest extends BaseControllerTestCase
 {
-    public function test_list_all_products()
+    public function test_list_all_products(): void
     {
         $products[] = new Product('Product 1', 'Product 1', 'Product 1', 1);
         $products[] = new Product('Product 2', 'Product 2', 'Product 2', 2);
