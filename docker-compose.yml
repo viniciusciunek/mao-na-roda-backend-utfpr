@@ -15,6 +15,7 @@ services:
       - .:/var/www
     networks:
       - app-network
+    working_dir: /var/www
 
   composer:
     image: composer:2.7.2
