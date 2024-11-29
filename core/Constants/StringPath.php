@@ -6,7 +6,8 @@ class StringPath
 {
     public function __construct(
         private string $path
-    ) {}
+    ) {
+    }
 
     public function join(string $path)
     {

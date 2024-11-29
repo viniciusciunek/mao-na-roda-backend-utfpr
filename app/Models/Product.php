@@ -14,7 +14,8 @@ class Product
         private string $brand = '',
         private float $price = 0,
         private int $id = -1,
-    ) {}
+    ) {
+    }
 
     public function setId(int $id): void
     {
@@ -107,14 +108,14 @@ class Product
     {
         if ($this->isValid()) {
             if ($this->newRecord()) {
-                $this->id = file_exists(self::DB_PATH()) ? count(file(self::DB_PATH(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)) : 0;
-                file_put_contents(self::DB_PATH(), "$this->name | $this->description | $this->brand | $this->price" . PHP_EOL, FILE_APPEND);
+                $this->id = file_exists(self::dbPath()) ? count(file(self::dbPath(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)) : 0;
+                file_put_contents(self::dbPath(), "$this->name | $this->description | $this->brand | $this->price" . PHP_EOL, FILE_APPEND);
             } else {
-                $products = file(self::DB_PATH(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+                $products = file(self::dbPath(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
                 $products[$this->id] = "$this->name | $this->description | $this->brand | $this->price";
 
                 $data = implode(PHP_EOL, $products);
-                file_put_contents(self::DB_PATH(), $data . PHP_EOL);
+                file_put_contents(self::dbPath(), $data . PHP_EOL);
             }
             return true;
         }
@@ -123,11 +124,11 @@ class Product
 
     public static function all()
     {
-        if (!file_exists(self::DB_PATH())) {
+        if (!file_exists(self::dbPath())) {
             return [];
         }
 
-        $products = file(self::DB_PATH(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $products = file(self::dbPath(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
         if (count($products) == 0) {
             return [];
@@ -163,14 +164,14 @@ class Product
 
     public function destroy(): void
     {
-        $products = file(self::DB_PATH(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $products = file(self::dbPath(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         unset($products[$this->id]);
 
         $data = implode(PHP_EOL, $products);
-        file_put_contents(self::DB_PATH(), $data . PHP_EOL);
+        file_put_contents(self::dbPath(), $data . PHP_EOL);
     }
 
-    private static function DB_PATH()
+    private static function dbPath()
     {
         return Constants::databasePath()->join($_ENV['DB_NAME']);
     }
