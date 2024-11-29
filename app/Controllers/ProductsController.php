@@ -6,7 +6,7 @@ use App\Models\Product;
 
 class ProductsController
 {
-    private $layout = 'application';
+    private string $layout = 'application';
 
     public function index(): void
     {
@@ -21,7 +21,10 @@ class ProductsController
         }
     }
 
-    private function render($view, $data = []): void
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function render(string $view, array $data = []): void
     {
         extract($data);
 
@@ -30,7 +33,10 @@ class ProductsController
         require '/var/www/app/views/layouts/' . $this->layout . '.phtml';
     }
 
-    private function renderJson($view, $data = []): void
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function renderJson(string $view, array $data = []): void
     {
         extract($data);
 
@@ -49,7 +55,7 @@ class ProductsController
         return (isset($_SERVER['HTTP_ACCEPT']) && $_SERVER['HTTP_ACCEPT'] === 'application/json');
     }
 
-    public function show()
+    public function show(): void
     {
         $id = intval($_GET['id']);
 
@@ -143,7 +149,7 @@ class ProductsController
         header('Location: /pages/products');
     }
 
-    private function redirectTo($location)
+    private function redirectTo(string $location): void
     {
         header('Location: ' . $location);
         exit;
