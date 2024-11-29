@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Core\Constants\Constants;
+use Core\Constants\StringPath;
 
 class Product
 {
+    /** @var array<string, string> */
     private array $errors = [];
 
     public function __construct(
@@ -14,8 +16,7 @@ class Product
         private string $brand = '',
         private float $price = 0,
         private int $id = -1,
-    ) {
-    }
+    ) {}
 
     public function setId(int $id): void
     {
@@ -95,7 +96,7 @@ class Product
         return !empty($this->errors);
     }
 
-    public function errors($index = null)
+    public function errors(string $index = null): string|null
     {
         if (isset($this->errors[$index])) {
             return $this->errors[$index];
@@ -122,7 +123,10 @@ class Product
         return false;
     }
 
-    public static function all()
+    /**
+     * @return array<int, Product>
+     */
+    public static function all(): array
     {
         if (!file_exists(self::dbPath())) {
             return [];
@@ -138,13 +142,13 @@ class Product
             $name = explode("|", $data)[0];
             $description = explode("|", $data)[1];
             $brand = explode("|", $data)[2];
-            $price = explode("|", $data)[3];
+            $price = (float) explode("|", $data)[3];
 
             return new Product($name, $description, $brand, $price, $line);
         }, array_keys($products), $products);
     }
 
-    public static function findById($id): Product|null
+    public static function findById(int $id): Product|null
     {
         $products = self::all();
 
@@ -171,7 +175,7 @@ class Product
         file_put_contents(self::dbPath(), $data . PHP_EOL);
     }
 
-    private static function dbPath()
+    private static function dbPath(): StringPath
     {
         return Constants::databasePath()->join($_ENV['DB_NAME']);
     }
