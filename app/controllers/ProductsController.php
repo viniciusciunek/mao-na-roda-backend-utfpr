@@ -91,6 +91,22 @@ class ProductsController
     }
   }
 
+  public function destroy(): void
+  {
+
+    $method = $_REQUEST['_method'] ?? $_SERVER['REQUEST_METHOD'];
+
+    if ($method !== "DELETE") {
+      $this->redirectTo('/pages/products');
+    }
+
+    $product = Product::findById($_POST['product']['id']);
+
+    $product->destroy();
+
+    header('Location: /pages/products');
+  }
+
   private function redirectTo($location)
   {
     header('Location: ' . $location);
