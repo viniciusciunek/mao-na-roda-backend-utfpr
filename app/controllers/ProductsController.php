@@ -6,16 +6,21 @@ class ProductsController
 {
   private $layout = 'application';
 
-  public function index()
+  public function index(): void
   {
     $products = Product::all();
 
     $title = 'Produtos Cadastrados';
 
-    $this->render('index', compact('products', 'title'));
+    if ($this->isJsonRequest()) {
+      $this->renderJson('index', compact('products', 'title'));
+    } else {
+
+      $this->render('index', compact('products', 'title'));
+    }
   }
 
-  private function render($view, $data = [])
+  private function render($view, $data = []): void
   {
     extract($data);
 
@@ -24,7 +29,26 @@ class ProductsController
     require '/var/www/app/views/layouts/' . $this->layout . '.phtml';
   }
 
-  public function new()
+  private function renderJson($view, $data = []): void
+  {
+    extract($data);
+
+    $view = '/var/www/app/views/products/' . $view . '.json.php';
+    $json = [];
+
+    header('Content-Type: application/json; charset=utf-8');
+    require $view;
+    var_dump($json);
+    echo json_encode($json);
+    return;
+  }
+
+  private function isJsonRequest(): bool
+  {
+    return (isset($_SERVER['HTTP_ACCEPT']) && $_SERVER['HTTP_ACCEPT'] === 'application/json');
+  }
+
+  public function new(): void
   {
     $product = new Product();
 
@@ -33,7 +57,7 @@ class ProductsController
     $this->render('new', compact('product', 'title'));
   }
 
-  public function create()
+  public function create(): void
   {
     $method = $_SERVER['REQUEST_METHOD'];
 
@@ -56,7 +80,7 @@ class ProductsController
     }
   }
 
-  public function edit()
+  public function edit(): void
   {
     $id = intval($_GET['id']);
 
@@ -67,7 +91,7 @@ class ProductsController
     $this->render('edit', compact('product', 'title'));
   }
 
-  public function update()
+  public function update(): void
   {
 
     $method = $_REQUEST['_method'] ?? $_SERVER['REQUEST_METHOD'];
