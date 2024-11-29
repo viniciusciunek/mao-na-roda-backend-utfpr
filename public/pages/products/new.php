@@ -1,10 +1,6 @@
 <?php
 
-require '/var/www/app/models/Product.php';
+require '/var/www/app/controllers/ProductsController.php';
 
-$product = new Product();
-
-$title = 'Novo Produto';
-$view = '/var/www/app/views/products/new.phtml';
-
-require '/var/www/app/views/layouts/application.phtml';
+$controller = new ProductsController();
+$controller->new();
