@@ -1,6 +1,8 @@
 <?php
 
-require '/var/www/app/models/Product.php';
+namespace App\Controllers;
+
+use App\Models\Product;
 
 class ProductsController
 {
@@ -46,6 +48,17 @@ class ProductsController
   private function isJsonRequest(): bool
   {
     return (isset($_SERVER['HTTP_ACCEPT']) && $_SERVER['HTTP_ACCEPT'] === 'application/json');
+  }
+
+  public function show()
+  {
+    $id = intval($_GET['id']);
+
+    $product = Product::findById($id);
+
+    $title = "Visualização do Produto #{$id}";
+
+    $this->render('show', compact('product', 'title'));
   }
 
   public function new(): void
