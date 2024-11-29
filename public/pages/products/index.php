@@ -1,10 +1,7 @@
 <?php
 
-define("DB_PATH", '/var/www/database/products.txt');
+require '/var/www/app/controllers/ProductsController.php';
 
-$products = file(DB_PATH, FILE_IGNORE_NEW_LINES);
+$controller = new ProductsController();
 
-$title = 'Produtos Cadastrados';
-$view = '/var/www/app/views/products/index.phtml';
-
-require '/var/www/app/views/layouts/application.phtml';
+$controller->index();

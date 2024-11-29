@@ -25,15 +25,15 @@
     <th>Ações</th>
   </thead>
   <tbody>
-    <?php foreach ($products as $index => $product) : ?>
+    <?php foreach ($products as $product) : ?>
       <tr>
-        <td><a href="/pages/products/show.php?id=<?= $index ?>">#<?= $index ?></a></td>
-        <td><?= explode('|', $product)[0] ?></td>
-        <td><?= explode('|', $product)[1] ?></td>
-        <td><?= explode('|', $product)[2] ?></td>
-        <td>R$ <?= explode('|', $product)[3] ?></td>
+        <td><a href="/pages/products/show.php?id=<?= $product->getId() ?>">#<?= $product->getId() ?></a></td>
+        <td><?= $product->getName() ?></td>
+        <td><?= $product->getDescription() ?></td>
+        <td><?= $product->getBrand() ?></td>
+        <td>R$ <?= $product->getPrice() ?></td>
         <td>
-          <a href="/pages/products/edit.php?id=<?= $index ?>">
+          <a href="/pages/products/edit.php?id=<?= $product->getId() ?>">
             <button>
               Editar
             </button>
@@ -41,7 +41,7 @@
 
           <form action="delete.php" method="POST">
             <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="product[id]" value="<?= $index ?>">
+            <input type="hidden" name="product[id]" value="<?= $product->getId() ?>">
             <button type="submit">Excluir</button>
           </form>
         </td>
