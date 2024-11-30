@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Product;
+use Core\Http\Request;
 
 class ProductsController
 {
@@ -75,26 +76,17 @@ class ProductsController
         $this->render('new', compact('product', 'title'));
     }
 
-    public function create(): void
+    public function create(Request $request): void
     {
-        $method = $_SERVER['REQUEST_METHOD'];
+        $params = $request->getParams();
 
-        if ($method !== 'POST') {
-            $this->redirectTo('/pages/products');
-        }
-
-        $data = $_POST['product'];
-
-        $product = new Product($data['name'], $data['description'], $data['brand'], (float) $data['price']);
+        $product = new Product($params['product']['name'], $params['product']['description'], $params['product']['brand'], (float) $params['product']['price']);
 
         if ($product->save()) {
-            header('Location: /pages/products');
+            $this->redirectTo(route('products.index'));
         } else {
             $title = 'Novo Produto';
-
-            $view = '/var/www/app/views/products/new.phtml';
-
-            require '/var/www/app/views/layouts/application.phtml';
+            $this->render('new', compact('product', 'title'));
         }
     }
 
