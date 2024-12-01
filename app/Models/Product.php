@@ -15,7 +15,8 @@ class Product
         private string $brand = '',
         private float $price = 0,
         private int $id = -1,
-    ) {}
+    ) {
+    }
 
     public function setId(int $id): void
     {
@@ -110,7 +111,10 @@ class Product
             $pdo = Database::getDatabaseConn();
 
             if ($this->newRecord()) {
-                $sql = 'INSERT INTO products (name, description, brand, price) VALUES (:name, :description, :brand, :price)';
+                $sql = 'INSERT INTO products
+                    (name, description, brand, price)
+                    VALUES (:name, :description, :brand, :price)';
+
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':name', $this->name);
                 $stmt->bindParam(':description', $this->description);
@@ -120,7 +124,8 @@ class Product
 
                 $this->id = (int) $pdo->lastInsertId();
             } else {
-                $sql = 'UPDATE products SET name = :name, description = :description, brand = :brand, price = :price WHERE id = :id';
+                $sql = 'UPDATE products
+                    SET name = :name, description = :description, brand = :brand, price = :price WHERE id = :id';
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':name', $this->name);
                 $stmt->bindParam(':description', $this->description);
