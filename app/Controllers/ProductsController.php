@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Product;
 use Core\Http\Request;
+use Lib\FlashMessage;
 
 class ProductsController
 {
@@ -54,8 +55,12 @@ class ProductsController
         );
 
         if ($product->save()) {
+            FlashMessage::success("Produto criado com sucesso!");
+
             $this->redirectTo(route('products.index'));
         } else {
+            FlashMessage::danger("Erro ao criar produto!");
+
             $title = 'Novo Produto';
             $this->render('new', compact('product', 'title'));
         }
@@ -81,8 +86,12 @@ class ProductsController
         $product->setPrice($_POST['product']['price']);
 
         if ($product->save()) {
+            FlashMessage::success("Produto editado com sucesso!");
+
             $this->redirectTo(route('products.index'));
         } else {
+            FlashMessage::success("Erro ao editar produto!");
+
             $title = "Editar Produto #{$product->getId()}";
             $this->render('edit', compact('product', 'title'));
         }
@@ -94,6 +103,8 @@ class ProductsController
 
         $product = Product::findById($params['id']);
         $product->destroy();
+
+        FlashMessage::success("Produto removido com sucesso!");
 
         $this->redirectTo(route('products.index'));
     }
