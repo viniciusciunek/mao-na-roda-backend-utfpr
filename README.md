@@ -21,13 +21,6 @@ $ cd mao-na-roda-backend-utfpr
 $ cp .env.example .env
 ```
 
-### Criar o arquivo de dados
-
-```
-$ touch ./database/products.txt
-
-$ chmod 665 ./database/products.txt
-```
 
 ### Instalar as Dependências
 
