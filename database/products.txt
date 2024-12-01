@@ -1,2 +1,2 @@
-teste | teste | teste | 2
+teste | teste | teste | 1
 nome | descricao | marca | 2
