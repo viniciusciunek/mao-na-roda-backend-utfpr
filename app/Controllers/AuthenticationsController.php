@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Admin;
 use App\Models\User;
 use Core\Http\Request;
 use Lib\Authentication\Auth;
@@ -19,7 +20,7 @@ class AuthenticationsController
     public function authenticate(Request $request): void
     {
         $params = $request->getParam('user');
-        $user = User::findByEmail($params['email']);
+        $user = User::findByEmail($params['email']) ?? Admin::findByEmail($params['email']);
 
         if ($user && $user->authenticate($params['password'])) {
             Auth::login($user);

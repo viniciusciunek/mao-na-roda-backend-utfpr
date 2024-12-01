@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Admin;
 use App\Models\User;
 use Lib\FlashMessage;
 use Core\Http\Request;
@@ -12,9 +13,14 @@ class ProductsController
 {
     private string $layout = 'application';
 
-    private ?User $currentUser = null;
+    private User|Admin|null $currentUser = null;
 
-    public function currentUser(): ?User
+    public function isAdmin(): bool
+    {
+        return Auth::user() instanceof Admin;
+    }
+
+    public function currentUser(): User|Admin|null
     {
         if ($this->currentUser === null && isset($_SESSION['user']['id'])) {
             $this->currentUser = Auth::user();
