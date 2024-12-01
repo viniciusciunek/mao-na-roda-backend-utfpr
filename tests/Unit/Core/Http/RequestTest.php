@@ -33,7 +33,7 @@ class RequestTest extends TestCase
     public function test_should_return_uri(): void
     {
         $request = new Request();
-        $this->assertEquals('/test',  $request->getUri());
+        $this->assertEquals('/test', $request->getUri());
     }
 
     public function test_should_return_params(): void

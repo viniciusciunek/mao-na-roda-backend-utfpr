@@ -1,24 +1,22 @@
-<form action="update.php" method="POST">
-  <input type="hidden" name="_method" value="PUT">
-  <input type="hidden" name="product[id]" value="<?= $product->getId() ?>">
+<form action="<?= route('products.update', ['id' => $product->getId()]) ?>" method="POST">
+    <input type="hidden" name="_method" value="PUT">
+    <div>
+        <label for="product_name">Nome:</label>
+        <input type="text" name="product[name]" id="product_name" value="<?= trim($product->getName()) ?>">
+        <div style="color: red;"><?= $product->errors('name') ?  $product->errors('name') : '' ?></div>
 
-  <div>
-    <label for="product_name">Nome:</label>
-    <input type="text" name="product[name]" id="product_name" value="<?= trim($product->getName()) ?>">
-    <div style="color: red;"><?= $product->errors('name') ?  $product->errors('name') : '' ?></div>
+        <label for="product_description">Descrição:</label>
+        <input type="text" name="product[description]" id="product_description" value="<?= trim($product->getDescription()) ?>">
+        <div style="color: red;"><?= $product->errors('description') ? $product->errors('description') : '' ?></div>
 
-    <label for="product_description">Descrição:</label>
-    <input type="text" name="product[description]" id="product_description" value="<?= trim($product->getDescription()) ?>">
-    <div style="color: red;"><?= $product->errors('description') ? $product->errors('description') : '' ?></div>
+        <label for="product_brand">Marca:</label>
+        <input type="text" name="product[brand]" id="product_brand" value="<?= trim($product->getBrand()) ?>">
+        <div style="color: red;"><?= $product->errors('brand') ? $product->errors('brand') : '' ?></div>
 
-    <label for="product_brand">Marca:</label>
-    <input type="text" name="product[brand]" id="product_brand" value="<?= trim($product->getBrand()) ?>">
-    <div style="color: red;"><?= $product->errors('brand') ? $product->errors('brand') : '' ?></div>
+        <label for="product_price">Preço:</label>
+        <input type="number" name="product[price]" id="product_price" value="<?= trim($product->getPrice()) ?>">
+        <div style="color: red;"><?= $product->errors('price') ? $product->errors('price') : '' ?></div>
+    </div>
 
-    <label for="product_price">Preço:</label>
-    <input type="number" name="product[price]" id="product_price" value="<?= trim($product->getPrice()) ?>">
-    <div style="color: red;"><?= $product->errors('price') ? $product->errors('price') : '' ?></div>
-  </div>
-
-  <button type="submit">Atualizar</button>
+    <button type="submit">Atualizar</button>
 </form>

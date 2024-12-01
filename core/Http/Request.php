@@ -16,12 +16,9 @@ class Request
     public function __construct()
     {
         $this->method = $_REQUEST['_method'] ?? $_SERVER['REQUEST_METHOD'];
-
         $this->uri = $_SERVER['REQUEST_URI'];
-
         $this->params = $_REQUEST;
-
-        $this->headers = getallheaders();
+        $this->headers = function_exists('getallheaders') ? getallheaders() : [];
     }
 
     public function getMethod(): string
@@ -44,5 +41,16 @@ class Request
     public function getHeaders(): array
     {
         return $this->headers;
+    }
+
+    /** @param mixed[] $params*/
+    public function addParams(array $params): void
+    {
+        $this->params = array_merge($this->params, $params);
+    }
+
+    public function acceptJson(): bool
+    {
+        return (isset($_SERVER['HTTP_ACCEPT']) && $_SERVER['HTTP_ACCEPT'] === 'application/json');
     }
 }

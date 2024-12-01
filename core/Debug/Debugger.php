@@ -17,9 +17,9 @@ class Debugger
         exit;
     }
 
-    public static function highlightVariableIfHTTPRequest(mixed $value, bool $hr)
+    public static function highlightVariableIfHTTPRequest(mixed $value, bool $hr): string
     {
-        if (isset($_SERVER['REQUEST_METHOD'])) {
+        if (isset($_SERVER['REQUEST_METHOD']) && strpos($_SERVER['HTTP_ACCEPT'], 'text/html') !== false) {
             $hr = $hr ? '<hr>' : '';
 
             return highlight_string('<?php ' . self::dump($value) . '?>', true);
