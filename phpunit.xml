@@ -4,7 +4,11 @@
    colors="true" cacheDirectory=".cache/phpunit"
    displayDetailsOnTestsThatTriggerWarnings="true">
   <php>
-    <env name="APP_ENV" value="testing"/>
-    <env name="DB_NAME" value="products_test.txt"/>
+    <env name="APP_ENV" value="testing" />
+    <env name="DB_HOST" value="db" />
+    <env name="DB_PORT" value="3306" />
+    <env name="DB_DATABASE" value="maonaroda_test" />
+    <env name="DB_USERNAME" value="root" />
+    <env name="DB_PASSWORD" value="" />
   </php>
 </phpunit>

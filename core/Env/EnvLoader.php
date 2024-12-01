@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Environments;
+namespace Core\Env;
 
 use Core\Constants\Constants;
 
