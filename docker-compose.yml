@@ -10,6 +10,9 @@ services:
         networks:
             - app-network
     php:
+        build:
+            context: .
+            dockerfile: Dockerfile
         image: php:8.3.4-fpm
         volumes:
             - .:/var/www
@@ -22,10 +25,10 @@ services:
         env_file:
             - .env
         environment:
-        MYSQL_DATABASE: "$DB_DATABASE"
-        MYSQL_USER: "$DB_USERNAME"
-        MYSQL_PASSWORD: "$DB_PASSWORD"
-        MYSQL_ALLOW_EMPTY_PASSWORD: yes
+            MYSQL_DATABASE: "$DB_DATABASE"
+            MYSQL_USER: "$DB_USERNAME"
+            MYSQL_PASSWORD: "$DB_PASSWORD"
+            MYSQL_ALLOW_EMPTY_PASSWORD: yes
         volumes:
             - dbdata:/var/lib/mysql
         networks:
