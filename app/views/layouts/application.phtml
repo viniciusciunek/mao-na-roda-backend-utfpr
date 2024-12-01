@@ -1,25 +1,26 @@
 <html lang="pt-br">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mão na Roda</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mão na Roda</title>
 
-  <link rel="stylesheet" href="/assets/css/application.css">
-  <script src="/assets/js/application.js"></script>
+    <link rel="stylesheet" href="/assets/css/application.css">
+    <script src="/assets/js/application.js"></script>
 </head>
 
 <body>
-  <header>
-    <nav>
-      <h1>Mão na Roda!</h1>
-    </nav>
-  </header>
+    <header>
+        <nav>
+            <!-- <h1>Mão na Roda!</h1> -->
+            <a style="font-size: large; color: blue; font-weight: bold;" href="<?= route('root') ?>">Mão na Roda!</a>
+        </nav>
+    </header>
 
-  <main>
-    <?= $title ?>
-    <?php require $view ?>
-  </main>
+    <main>
+        <?= $title ?>
+        <?php require $view ?>
+    </main>
 </body>
 
 </html>

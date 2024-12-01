@@ -1,51 +1,49 @@
 <div>
-  <div>
     <div>
-      <input type="text" placeholder="Procurar produtos">
-      <button type="button">
-        Pesquisar...
-      </button>
+        <div>
+            <input type="text" placeholder="Procurar produtos">
+            <button type="button">
+                Pesquisar...
+            </button>
+        </div>
     </div>
-  </div>
-  <div>
-    <a href="/pages/products/new.php">
-      <i></i>
-      Cadastrar Produto
-    </a>
-  </div>
+    <div>
+        <a href="<?= route('products.new') ?>">
+            Cadastrar Produto
+        </a>
+    </div>
 </div>
 
 <table>
-  <thead>
-    <th>ID</th>
-    <th>Nome</th>
-    <th>Descrição</th>
-    <th>Marca</th>
-    <th>Preço</th>
-    <th>Ações</th>
-  </thead>
-  <tbody>
-    <?php foreach ($products as $product) : ?>
-      <tr>
-        <td><a href="/pages/products/show.php?id=<?= $product->getId() ?>">#<?= $product->getId() ?></a></td>
-        <td><?= $product->getName() ?></td>
-        <td><?= $product->getDescription() ?></td>
-        <td><?= $product->getBrand() ?></td>
-        <td>R$ <?= $product->getPrice() ?></td>
-        <td>
-          <a href="/pages/products/edit.php?id=<?= $product->getId() ?>">
-            <button>
-              Editar
-            </button>
-          </a>
+    <thead>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Marca</th>
+        <th>Preço</th>
+        <th>Ações</th>
+    </thead>
+    <tbody>
+        <?php foreach ($products as $product) : ?>
+            <tr>
+                <td><a href="<?= route('products.show', ['id' => $product->getId()]) ?>">#<?= $product->getId() ?></a></td>
+                <td><?= $product->getName() ?></td>
+                <td><?= $product->getDescription() ?></td>
+                <td><?= $product->getBrand() ?></td>
+                <td>R$ <?= $product->getPrice() ?></td>
+                <td>
+                    <a href="<?= route('products.edit', ['id' => $product->getId()]) ?>">
+                        <button>
+                            Editar <?= $product->getId() ?>
+                        </button>
+                    </a>
 
-          <form action="delete.php" method="POST">
-            <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="product[id]" value="<?= $product->getId() ?>">
-            <button type="submit">Excluir</button>
-          </form>
-        </td>
-      </tr>
-    <?php endforeach; ?>
-  </tbody>
+                    <form action="<?= route('products.destroy', ['id' => $product->getId()]) ?>" method="POST" class="m-0">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
 </table>

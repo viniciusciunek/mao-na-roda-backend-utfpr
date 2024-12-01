@@ -1,21 +1,21 @@
-<form action="create.php" method="POST">
-  <div>
-    <label for="product_name">Nome:</label>
-    <input type="text" name="product[name]" id="product_name">
-    <div style="color: red;"><?= $product->errors('name') ? $product->errors('name') : '' ?></div>
+<form action="<?= route('products.create') ?>" method="POST">
+    <div>
+        <label for="product_name">Nome:</label>
+        <input type="text" name="product[name]" id="product_name">
+        <div style="color: red;"><?= $product->errors('name') ? $product->errors('name') : '' ?></div>
 
-    <label for="product_description">Descrição:</label>
-    <input type="text" name="product[description]" id="product_description">
-    <div style="color: red;"><?= $product->errors('description') ? $product->errors('description') : '' ?></div>
+        <label for="product_description">Descrição:</label>
+        <input type="text" name="product[description]" id="product_description">
+        <div style="color: red;"><?= $product->errors('description') ? $product->errors('description') : '' ?></div>
 
-    <label for="product_brand">Marca:</label>
-    <input type="text" name="product[brand]" id="product_brand">
-    <div style="color: red;"><?= $product->errors('brand') ? $product->errors('brand') : '' ?></div>
+        <label for="product_brand">Marca:</label>
+        <input type="text" name="product[brand]" id="product_brand">
+        <div style="color: red;"><?= $product->errors('brand') ? $product->errors('brand') : '' ?></div>
 
-    <label for="product_price">Preço:</label>
-    <input type="number" name="product[price]" id="product_price">
-    <div style="color: red;"><?= $product->errors('price') ? $product->errors('price') : '' ?></div>
-  </div>
+        <label for="product_price">Preço:</label>
+        <input type="number" name="product[price]" id="product_price">
+        <div style="color: red;"><?= $product->errors('price') ? $product->errors('price') : '' ?></div>
+    </div>
 
-  <button type="submit">Registrar</button>
+    <button type="submit">Registrar</button>
 </form>
