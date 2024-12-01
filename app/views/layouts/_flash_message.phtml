@@ -1,0 +1,8 @@
+<?php foreach (\Lib\FlashMessage::get() as $type => $msg) : ?>
+    <div style="background-color: <?= $type == 'success' ? 'green' : 'red' ?>;">
+        <div><?= $msg ?></div>
+        <button type="button">
+            close
+        </button>
+    </div>
+<?php endforeach ?>
