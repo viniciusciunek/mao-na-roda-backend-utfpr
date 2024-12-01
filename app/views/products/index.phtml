@@ -11,6 +11,12 @@
         <a href="<?= route('products.new') ?>">
             Cadastrar Produto
         </a>
+
+        <?php if ($this->currentUser()) : ?>
+            <a href="<?= route('users.logout') ?>">
+                Logout
+            </a>
+        <?php endif; ?>
     </div>
 </div>
 

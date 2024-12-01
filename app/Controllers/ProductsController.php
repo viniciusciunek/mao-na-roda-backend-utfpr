@@ -2,13 +2,26 @@
 
 namespace App\Controllers;
 
-use App\Models\Product;
-use Core\Http\Request;
+use App\Models\User;
 use Lib\FlashMessage;
+use Core\Http\Request;
+use App\Models\Product;
+use Lib\Authentication\Auth;
 
 class ProductsController
 {
     private string $layout = 'application';
+
+    private ?User $currentUser = null;
+
+    public function currentUser(): ?User
+    {
+        if ($this->currentUser === null && isset($_SESSION['user']['id'])) {
+            $this->currentUser = Auth::user();
+        }
+
+        return $this->currentUser;
+    }
 
     public function index(Request $request): void
     {
