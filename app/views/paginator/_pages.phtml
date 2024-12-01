@@ -1,0 +1,29 @@
+<nav>
+    <ul>
+        <?php if ($paginator->hasPreviousPage()) : ?>
+            <li>
+                <a href="<?= route($paginator->getRouteName(), ['page' => $paginator->previousPage()]) ?>">Anterior</a>
+            </li>
+        <?php else : ?>
+            <li>
+                <a>Anterior</a>
+            </li>
+        <?php endif; ?>
+        <?php for ($page = 1; $page <= $paginator->totalOfPages(); $page++) : ?>
+            <li active' : '' ?>">
+                <a href="<?= route($paginator->getRouteName(), ['page' => $page]) ?>"><?= $page ?></a>
+            </li>
+        <?php endfor; ?>
+        <?php if ($paginator->hasNextPage()) : ?>
+            <li>
+                <a href="<?= route($paginator->getRouteName(), ['page' => $paginator->nextPage()]) ?>">Próxima</a>
+            </li>
+        <?php else : ?>
+            <li>
+                <a>Próxima</a>
+            </li>
+        <?php endif; ?>
+    </ul>
+</nav>
+
+<div><?= $paginator->entriesInfo() ?></div>
