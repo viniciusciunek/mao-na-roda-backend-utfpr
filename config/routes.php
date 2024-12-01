@@ -1,7 +1,7 @@
 <?php
 
-use Core\Router\Route;
 use App\Controllers\ProductsController;
+use Core\Router\Route;
 
 Route::get('/', [ProductsController::class, 'index'])->name('root');
 

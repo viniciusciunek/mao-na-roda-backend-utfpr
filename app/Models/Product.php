@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-use Core\Constants\Constants;
-use Core\Constants\StringPath;
+use Core\Database\Database;
 
 class Product
 {
@@ -109,21 +108,31 @@ class Product
     public function save(): bool
     {
         if ($this->isValid()) {
+            $pdo = Database::getDatabaseConn();
+
             if ($this->newRecord()) {
-                $dbPath = self::dbPath();
-                $productData = "$this->name | $this->description | $this->brand | $this->price" . PHP_EOL;
+                $sql = 'INSERT INTO products
+                    (name, description, brand, price)
+                    VALUES (:name, :description, :brand, :price)';
 
-                $this->id = file_exists($dbPath) ?
-                    count(file($dbPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)) : 0;
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(':name', $this->name);
+                $stmt->bindParam(':description', $this->description);
+                $stmt->bindParam(':brand', $this->brand);
+                $stmt->bindParam(':price', $this->price);
+                $stmt->execute();
 
-                file_put_contents($dbPath, $productData, FILE_APPEND);
+                $this->id = (int) $pdo->lastInsertId();
             } else {
-                $dbPath = self::dbPath();
-                $products = file($dbPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-                $products[$this->id] = "$this->name | $this->description | $this->brand | $this->price";
-
-                $data = implode(PHP_EOL, $products) . PHP_EOL;
-                file_put_contents($dbPath, $data);
+                $sql = 'UPDATE products
+                    SET name = :name, description = :description, brand = :brand, price = :price WHERE id = :id';
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(':name', $this->name);
+                $stmt->bindParam(':description', $this->description);
+                $stmt->bindParam(':brand', $this->brand);
+                $stmt->bindParam(':price', $this->price);
+                $stmt->bindParam(':id', $this->id);
+                $stmt->execute();
             }
             return true;
         }
@@ -135,37 +144,44 @@ class Product
      */
     public static function all(): array
     {
-        if (!file_exists(self::dbPath())) {
-            return [];
+        $products = [];
+
+        $pdo = Database::getDatabaseConn();
+        $resp = $pdo->query('SELECT * FROM products');
+
+        foreach ($resp as $row) {
+            $products[] = new Product(
+                $row['name'],
+                $row['description'],
+                $row['brand'],
+                (float) $row['price'],
+                (int) $row['id'],
+            );
         }
 
-        $products = file(self::dbPath(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-
-        if (count($products) == 0) {
-            return [];
-        }
-
-        return array_map(function ($line, $data) {
-            $name = explode("|", $data)[0];
-            $description = explode("|", $data)[1];
-            $brand = explode("|", $data)[2];
-            $price = (float) explode("|", $data)[3];
-
-            return new Product($name, $description, $brand, $price, $line);
-        }, array_keys($products), $products);
+        return $products;
     }
 
     public static function findById(int $id): Product|null
     {
-        $products = self::all();
+        $pdo = Database::getDatabaseConn();
+        $stmt = $pdo->prepare('SELECT * FROM products WHERE id = :id');
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
 
-        foreach ($products as $product) {
-            if ($product->getId() === (int) $id) {
-                return $product;
-            }
+        if ($stmt->rowCount() == 0) {
+            return null;
         }
 
-        return null;
+        $row = $stmt->fetch();
+
+        return new Product(
+            $row['name'],
+            $row['description'],
+            $row['brand'],
+            (float) $row['price'],
+            (int) $row['id'],
+        );
     }
 
     public function newRecord(): bool
@@ -173,17 +189,14 @@ class Product
         return $this->id === -1;
     }
 
-    public function destroy(): void
+    public function destroy(): bool
     {
-        $products = file(self::dbPath(), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        unset($products[$this->id]);
+        $pdo = Database::getDatabaseConn();
+        $sql = 'DELETE FROM products WHERE id = :id';
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':id', $this->id);
+        $stmt->execute();
 
-        $data = implode(PHP_EOL, $products);
-        file_put_contents(self::dbPath(), $data . PHP_EOL);
-    }
-
-    private static function dbPath(): StringPath
-    {
-        return Constants::databasePath()->join($_ENV['DB_NAME']);
+        return ($stmt->rowCount() !== 0);
     }
 }

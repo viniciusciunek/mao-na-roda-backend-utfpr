@@ -102,13 +102,14 @@ class Router
                 return $controller;
             }
         }
-
         throw new HTTPException('URI ' . $request->getUri() . ' not found.', 404);
     }
 
     public static function init(): void
     {
-        require Constants::rootPath()->join('config/routes.php');
-        Router::getInstance()->dispatch();
+        if (php_sapi_name() !== 'cli') {
+            require Constants::rootPath()->join('config/routes.php');
+            Router::getInstance()->dispatch();
+        }
     }
 }
