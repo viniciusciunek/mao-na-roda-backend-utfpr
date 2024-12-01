@@ -11,6 +11,7 @@ Route::post('/products', [ProductsController::class, 'create'])->name('products.
 
 // Retrieve
 Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
+Route::get('/products/page/{page}', [ProductsController::class, 'index'])->name('products.paginate');
 Route::get('/products/{id}', [ProductsController::class, 'show'])->name('products.show');
 
 // Update

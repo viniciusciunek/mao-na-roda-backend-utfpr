@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Core\Database\Database;
+use Lib\Paginator;
 
 class Product
 {
@@ -10,11 +11,11 @@ class Product
     private array $errors = [];
 
     public function __construct(
+        private int $id = -1,
         private string $name = '',
         private string $description = '',
         private string $brand = '',
-        private float $price = 0,
-        private int $id = -1,
+        private float|string $price = 0.0,
     ) {
     }
 
@@ -151,11 +152,11 @@ class Product
 
         foreach ($resp as $row) {
             $products[] = new Product(
-                $row['name'],
-                $row['description'],
-                $row['brand'],
-                (float) $row['price'],
-                (int) $row['id'],
+                name: $row['name'],
+                description: $row['description'],
+                brand: $row['brand'],
+                price: (float) $row['price'],
+                id: (int) $row['id'],
             );
         }
 
@@ -176,11 +177,11 @@ class Product
         $row = $stmt->fetch();
 
         return new Product(
-            $row['name'],
-            $row['description'],
-            $row['brand'],
-            (float) $row['price'],
-            (int) $row['id'],
+            name: $row['name'],
+            description: $row['description'],
+            brand: $row['brand'],
+            price: (float) $row['price'],
+            id: (int) $row['id'],
         );
     }
 
@@ -198,5 +199,10 @@ class Product
         $stmt->execute();
 
         return ($stmt->rowCount() !== 0);
+    }
+
+    public static function paginate(int $page = 1, int $per_page = 10): Paginator
+    {
+        return new Paginator(Product::class, $page, $per_page, 'products', ['name', 'description', 'brand', 'price']);
     }
 }

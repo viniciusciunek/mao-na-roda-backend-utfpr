@@ -11,14 +11,16 @@ class ProductsController
 
     public function index(Request $request): void
     {
-        $products = Product::all();
+        $paginator = Product::paginate(page: $request->getParam('page', 1));
+
+        $products = $paginator->registers();
 
         $title = 'Produtos Registrados';
 
         if ($request->acceptJson()) {
-            $this->renderJson('index', compact('products', 'title'));
+            $this->renderJson('index', compact('paginator', 'products', 'title'));
         } else {
-            $this->render('index', compact('products', 'title'));
+            $this->render('index', compact('paginator', 'products', 'title'));
         }
     }
 
@@ -44,7 +46,12 @@ class ProductsController
     {
         $params = $request->getParams()['product'];
 
-        $product = new Product($params['name'], $params['description'], $params['brand'], (float) $params['price']);
+        $product = new Product(
+            name: $params['name'],
+            description: $params['description'],
+            brand: $params['brand'],
+            price: (float) $params['price']
+        );
 
         if ($product->save()) {
             $this->redirectTo(route('products.index'));
