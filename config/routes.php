@@ -8,7 +8,6 @@ Route::get('/login', [AuthenticationsController::class, 'new'])->name('users.log
 Route::post('/login', [AuthenticationsController::class, 'authenticate'])->name('users.authenticate');
 
 Route::middleware('auth')->group(function () {
-
     Route::get('/', [ProductsController::class, 'index'])->name('root');
 
     // Create
