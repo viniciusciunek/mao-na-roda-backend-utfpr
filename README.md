@@ -41,6 +41,18 @@ ou
 $ docker compose up -d
 ```
 
+### Criar banco de dados e tabelas
+
+```
+$ ./run db:reset
+```
+
+### Popular banco de dados
+
+```
+$ ./run db:populate
+```
+
 ### Rodar os testes
 
 ```
@@ -68,6 +80,7 @@ $ ./run phpstan
 
 
  Acesse em [localhost](http://localhost)
+
 
 ## Testar retorno da API
 
