@@ -24,9 +24,9 @@ jobs:
         run: ./run test tests/Unit
 
       - name: PHPUnit Browser Tests
-        run:
-            ./run up -d
-            ./run test tests/Browser
+        run: |
+          ./run up -d
+          ./run test tests/Browser
 
   code_quality:
     name: Code Quality Check
