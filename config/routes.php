@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\AuthenticationsController;
+use App\Controllers\DashboardController;
 use App\Controllers\ProductsController;
 use Core\Router\Route;
 
@@ -8,7 +9,7 @@ Route::get('/login', [AuthenticationsController::class, 'new'])->name('users.log
 Route::post('/login', [AuthenticationsController::class, 'authenticate'])->name('users.authenticate');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [ProductsController::class, 'index'])->name('root');
+    Route::get('/', [DashboardController::class, 'index'])->name('root');
 
     // Create
     Route::get('/products/new', [ProductsController::class, 'new'])->name('products.new');
