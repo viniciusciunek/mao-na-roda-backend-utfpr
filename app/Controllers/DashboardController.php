@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Admin;
 use Core\Http\Request;
 use Lib\Authentication\Auth;
+use Lib\FlashMessage;
 
 class DashboardController
 {
@@ -26,7 +27,6 @@ class DashboardController
 
         return $this->currentUser;
     }
-
 
     public function index(Request $request)
     {

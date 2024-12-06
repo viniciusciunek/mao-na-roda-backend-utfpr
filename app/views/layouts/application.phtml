@@ -27,6 +27,25 @@
                 <span class="text-2xl font-bold">Mão na Roda</span>
             </a>
 
+            <div class="flex flex-col items-center gap-3 my-2">
+                <div class="bg-gray-200 w-16 h-16 rounded-full flex justify-center items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                </div>
+                <p>
+                    <?= $this->currentUser()->getName() ?>
+                </p>
+
+                <div>
+                    <form method="POST">
+                        <a href="<?= route('users.logout') ?>" class="p-2 rounded bg-gray-200 uppercase font-bold text-gray-500 text-sm px-6 hover:bg-gray-300">
+                            Logout
+                        </a>
+                    </form>
+                </div>
+            </div>
+
             <nav>
                 <a href="<?= route('root') ?>" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Home</a>
                 <a href="<?= route('products.index') ?>" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Produtos</a>
@@ -35,14 +54,10 @@
 
         <div class="flex-1 flex flex-col">
             <main class="flex-1 bg-white border-l-2">
-                <div class=" flex-1 h-18 p-4 border-b-2">
-                    <span class="text-2xl font-bold">
-                        <?= $title ?>
-                    </span>
-                </div>
-
                 <div class="p-6 bg-white mx-auto">
-                    <?php require '_flash_message.phtml' ?>
+                    <div class="absolute top-4 right-4">
+                        <?php require '_flash_message.phtml' ?>
+                    </div>
 
                     <?php require $view ?>
                 </div>

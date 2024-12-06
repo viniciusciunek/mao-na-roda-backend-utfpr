@@ -51,6 +51,7 @@ class ProductsController
         $product = Product::findById($params['id']);
 
         $title = "Visualização do Produto #{$product->getId()}";
+
         $this->render('show', compact('product', 'title'));
     }
 
@@ -59,6 +60,7 @@ class ProductsController
         $product = new Product();
 
         $title = 'Novo Produto';
+
         $this->render('new', compact('product', 'title'));
     }
 
