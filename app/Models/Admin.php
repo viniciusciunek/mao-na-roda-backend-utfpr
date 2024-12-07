@@ -15,7 +15,8 @@ class Admin
         private string|null $email = null,
         private string|null $password = null,
         private string|null $password_confirmation = null,
-    ) {}
+    ) {
+    }
 
     public function setId(int $id): void
     {

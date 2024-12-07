@@ -28,7 +28,7 @@ class DashboardController
         return $this->currentUser;
     }
 
-    public function index(Request $request)
+    public function index(Request $request): void
     {
         $title = 'Dashboard';
 
@@ -44,11 +44,5 @@ class DashboardController
 
         $view = '/var/www/app/views/dashboard/' . $view . '.phtml';
         require '/var/www/app/views/layouts/' . $this->layout . '.phtml';
-    }
-
-    private function redirectTo(string $location): void
-    {
-        header('Location: ' . $location);
-        exit;
     }
 }
