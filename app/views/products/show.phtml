@@ -1,8 +1,12 @@
-<div class="card">
-  <div class="card-body">
-    <p>Nome: <?= $product->getName()  ?></p>
-    <p>Descrição: <?= $product->getDescription()  ?></p>
-    <p>Marca: <?= $product->getBrand()  ?></p>
-    <p>Preço: R$ <?= $product->getPrice() ?></p>
-  </div>
+<div>
+    <div class="flex flex-row justify-between items-center bg-gray-100 p-4 shadow rounded-t-lg">
+        <h1 class="font-bold text-gray-700"><?= $title ?></h1>
+    </div>
+
+    <div class="p-4 shadow rounded-b-lg">
+        <p><span class="font-bold text-gray-800">Nome:</span> <?= $product->getName()  ?></p>
+        <p><span class="font-bold text-gray-800">Descrição:</span> <?= $product->getDescription()  ?></p>
+        <p><span class="font-bold text-gray-800">Marca:</span> <?= $product->getBrand()  ?></p>
+        <p><span class="font-bold text-gray-800">Preço:</span> R$ <?= number_format($product->getPrice(), 2, ',', '.') ?></p>
+    </div>
 </div>

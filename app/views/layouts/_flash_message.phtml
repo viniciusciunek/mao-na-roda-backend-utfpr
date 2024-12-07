@@ -1,8 +1,18 @@
 <?php foreach (\Lib\FlashMessage::get() as $type => $msg) : ?>
-    <div style="background-color: <?= $type == 'success' ? 'green' : 'red' ?>;">
-        <div><?= $msg ?></div>
-        <button type="button">
-            close
-        </button>
+    <div class="flash-message flex flex-row justify-between items-center <?= $type == "success" ? "bg-green-700" : "bg-red-700" ?> text-white w-full p-4 px-4 rounded-lg font-bold mb-4">
+        <div class="mr-8">
+            <?= $msg ?>
+        </div>
+        <div class="mr-4">
+            <?php if ($type == 'success') { ?>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+            <?php } elseif ($type == 'danger') { ?>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+            <?php } ?>
+        </div>
     </div>
 <?php endforeach ?>

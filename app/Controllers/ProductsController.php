@@ -51,6 +51,7 @@ class ProductsController
         $product = Product::findById($params['id']);
 
         $title = "Visualização do Produto #{$product->getId()}";
+
         $this->render('show', compact('product', 'title'));
     }
 
@@ -59,12 +60,15 @@ class ProductsController
         $product = new Product();
 
         $title = 'Novo Produto';
+
         $this->render('new', compact('product', 'title'));
     }
 
     public function create(Request $request): void
     {
         $params = $request->getParams()['product'];
+
+        $params = array_map('trim', $params);
 
         $product = new Product(
             name: $params['name'],
@@ -88,9 +92,11 @@ class ProductsController
     public function edit(Request $request): void
     {
         $params = $request->getParams();
+
         $product = Product::findById($params['id']);
 
         $title = "Editar Produto #{$product->getId()}";
+
         $this->render('edit', compact('product', 'title'));
     }
 
@@ -98,18 +104,20 @@ class ProductsController
     {
         $params = $request->getParams();
 
+        $params['product'] = array_map('trim', $params['product']);
+
         $product = Product::findById($params['id']);
-        $product->setName($_POST['product']['name']);
-        $product->setDescription($_POST['product']['description']);
-        $product->setBrand($_POST['product']['brand']);
-        $product->setPrice($_POST['product']['price']);
+        $product->setName($params['product']['name']);
+        $product->setDescription($params['product']['description']);
+        $product->setBrand($params['product']['brand']);
+        $product->setPrice((float) $params['product']['price']);
 
         if ($product->save()) {
             FlashMessage::success("Produto editado com sucesso!");
 
             $this->redirectTo(route('products.index'));
         } else {
-            FlashMessage::success("Erro ao editar produto!");
+            FlashMessage::danger("Erro ao editar produto!");
 
             $title = "Editar Produto #{$product->getId()}";
             $this->render('edit', compact('product', 'title'));

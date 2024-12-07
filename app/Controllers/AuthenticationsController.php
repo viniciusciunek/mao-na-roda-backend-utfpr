@@ -20,6 +20,7 @@ class AuthenticationsController
     public function authenticate(Request $request): void
     {
         $params = $request->getParam('user');
+
         $user = User::findByEmail($params['email']) ?? Admin::findByEmail($params['email']);
 
         if ($user && $user->authenticate($params['password'])) {
@@ -27,7 +28,7 @@ class AuthenticationsController
 
             FlashMessage::success('Login realizado com sucesso!');
 
-            $this->redirectTo(route('products.index'));
+            $this->redirectTo(route('root'));
         } else {
             FlashMessage::danger('Email e/ou senha inválidos!');
 
