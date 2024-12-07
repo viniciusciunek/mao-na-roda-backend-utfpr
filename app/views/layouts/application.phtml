@@ -44,7 +44,7 @@
                         </svg>
                     </div>
                     <p>
-                        <?= $this->currentUser()->getName() ?>
+                        <?= $this->currentUser() ? $this->currentUser()->getName() : 'Usuário' ?>
                     </p>
 
                     <div>
