@@ -1,5 +1,5 @@
 <div>
-    <div class="flex flex-row justify-between items-center bg-gray-100 p-4 shadow rounded mb-2">
+    <div class="flex flex-row items-center justify-between p-4 mb-2 bg-gray-100 rounded shadow">
         <h1 class="font-bold text-gray-700"><?= $title ?></h1>
 
         <a href="<?= route('products.new') ?>" class="btn-success">
@@ -9,25 +9,25 @@
 
     <table class="min-w-full bg-white rounded-lg shadow">
         <thead>
-            <tr class="bg-gray-200 text-gray-700 text-left text-sm uppercase font-semibold">
-                <th class="py-2 px-4 border-b text-center">ID</th>
-                <th class="py-2 px-4 border-b text-center">Nome</th>
-                <th class="py-2 px-4 border-b text-center">Descrição</th>
-                <th class="py-2 px-4 border-b text-center">Marca</th>
-                <th class="py-2 px-4 border-b text-center">Preço</th>
-                <th class="py-2 px-4 border-b text-center">Ações</th>
+            <tr class="text-sm font-semibold text-left text-gray-700 uppercase bg-gray-200">
+                <th class="px-4 py-2 text-center border-b">ID</th>
+                <th class="px-4 py-2 text-center border-b">Nome</th>
+                <th class="px-4 py-2 text-center border-b">Descrição</th>
+                <th class="px-4 py-2 text-center border-b">Marca</th>
+                <th class="px-4 py-2 text-center border-b">Preço</th>
+                <th class="px-4 py-2 text-center border-b">Ações</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($products as $product) : ?>
                 <tr class="hover:bg-gray-50">
-                    <td class="py-2 border-b text-gray-800 text-center"><a href="<?= route('products.show', ['id' => $product->getId()]) ?>">#<?= $product->getId() ?></a></td>
-                    <td class="py-2 border-b text-gray-800 text-center"><?= $product->getName() ?></td>
-                    <td class="py-2 border-b text-gray-800 text-center"><?= $product->getDescription() ?></td>
-                    <td class="py-2 border-b text-gray-800 text-center"><?= $product->getBrand() ?></td>
-                    <td class="py-2 border-b text-gray-800 text-center">R$ <?= number_format($product->getPrice(), 2, ',', '.')  ?></td>
-                    <td class="py-2 border-b text-gray-800 text-center">
-                        <div class="flex flex-row justify-center items-stretch gap-2">
+                    <td class="py-2 font-bold text-center text-gray-800 border-b"><a href="<?= route('products.show', ['id' => $product->getId()]) ?>"><?= $product->getId() ?></a></td>
+                    <td class="py-2 text-center text-gray-800 border-b"><?= $product->getName() ?></td>
+                    <td class="py-2 text-center text-gray-800 border-b"><?= $product->getDescription() ?></td>
+                    <td class="py-2 text-center text-gray-800 border-b"><?= $product->getBrand() ?></td>
+                    <td class="py-2 text-center text-gray-800 border-b">R$ <?= number_format($product->getPrice(), 2, ',', '.')  ?></td>
+                    <td class="py-2 text-center text-gray-800 border-b">
+                        <div class="flex flex-row items-stretch justify-center gap-2">
                             <a href="<?= route('products.edit', ['id' => $product->getId()]) ?>">
                                 <button class="btn-info">
                                     Editar

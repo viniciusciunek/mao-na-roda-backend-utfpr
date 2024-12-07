@@ -7,11 +7,12 @@
     <title>Mão na Roda</title>
 
     <link rel="stylesheet" href="/assets/css/output.css">
+    <script src="/assets/js/application.js"></script>
 </head>
 
 <body class="min-h-screen antialiased bg-gray-100">
     <header class="bg-white shadow lg:hidden">
-        <div class="max-w-screen-xl mx-auto px-4 py-4 flex items-center justify-between">
+        <div class="flex items-center justify-between max-w-screen-xl px-4 py-4 mx-auto">
             <a href="<?= route('root') ?>" class="text-xl font-bold">Mão na Roda</a>
             <button id="mobile-menu-button" class="text-gray-500 focus:outline-none focus:text-gray-900 hover:text-gray-900 fill-red-500">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -22,47 +23,67 @@
     </header>
 
     <div class="flex">
-        <aside id="sidebar" class="bg-white h-screen w-64 absolute transform -translate-x-full lg:relative lg:translate-x-0 transition duration-200 ease-in-out">
-            <a href="<?= route('root') ?>" class="text-gray-800 flex items-center p-4 px-4 border-b-2 ">
-                <span class="text-2xl font-bold">Mão na Roda</span>
-            </a>
+        <div class="absolute bottom-0 z-10 m-4">
+            <button class="p-2 font-bold text-white rounded-full btn-collapsed bg-darkBlue w-14 h-14">
+                <svg class="inline w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25"></path>
+                </svg>
+            </button>
+        </div>
 
-            <div class="flex flex-col items-center gap-3 my-2">
-                <div class="bg-gray-200 w-16 h-16 rounded-full flex justify-center items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                    </svg>
-                </div>
-                <p>
-                    <?= $this->currentUser()->getName() ?>
-                </p>
+        <aside id="sidebar" class="absolute z-20 flex flex-col justify-between w-64 h-screen transition duration-200 ease-in-out transform -translate-x-full bg-white lg:relative lg:translate-x-0">
+            <div>
+                <a href="<?= route('root') ?>" class="flex items-center p-4 px-4 text-gray-800 border-b-2 ">
+                    <span class="text-2xl font-bold">Mão na Roda</span>
+                </a>
 
-                <div>
-                    <form method="POST">
-                        <a href="<?= route('users.logout') ?>" class="p-2 rounded bg-gray-200 uppercase font-bold text-gray-500 text-sm px-6 hover:bg-gray-300">
-                            Logout
-                        </a>
-                    </form>
+                <div class="flex flex-col items-center gap-3 my-2">
+                    <div class="flex items-center justify-center w-16 h-16 bg-gray-200 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                        </svg>
+                    </div>
+                    <p>
+                        <?= $this->currentUser()->getName() ?>
+                    </p>
+
+                    <div>
+                        <form method="POST">
+                            <a href="<?= route('users.logout') ?>" class="p-2 px-6 text-sm font-bold text-gray-500 uppercase bg-gray-200 rounded hover:bg-gray-300">
+                                Logout
+                            </a>
+                        </form>
+                    </div>
                 </div>
+
+                <nav>
+                    <a href="<?= route('root') ?>" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Home</a>
+                    <a href="<?= route('products.index') ?>" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Produtos</a>
+                </nav>
             </div>
 
-            <nav>
-                <a href="<?= route('root') ?>" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Home</a>
-                <a href="<?= route('products.index') ?>" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Produtos</a>
-            </nav>
+            <div>
+                <button class="flex items-center w-full gap-2 p-2 rounded btn-collapse hover:bg-gray-200">
+                    <span>
+                        <svg class="inline w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25"></path>
+                        </svg>
+                    </span>
+
+                    Collapse
+                </button>
+            </div>
         </aside>
 
-        <div class="flex-1 flex flex-col">
-            <main class="flex-1 bg-white border-l-2">
-                <div class="p-6 bg-white mx-auto">
-                    <div class="absolute top-4 right-4">
-                        <?php require '_flash_message.phtml' ?>
-                    </div>
-
-                    <?php require $view ?>
+        <main class="flex-1 w-full min-h-screen bg-white border-l-2">
+            <div class="p-6 mx-auto bg-white">
+                <div class="absolute top-4 right-4">
+                    <?php require '_flash_message.phtml' ?>
                 </div>
-            </main>
-        </div>
+
+                <?php require $view ?>
+            </div>
+        </main>
     </div>
 
     <script src="/assets/js/application.js"></script>

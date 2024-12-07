@@ -1,30 +1,32 @@
 <div>
-    <div class="flex flex-row justify-between items-center bg-gray-100 p-4 shadow rounded">
+    <div class="flex flex-row items-center justify-between p-4 bg-gray-100 rounded shadow">
         <h1 class="font-bold text-gray-700"><?= $title ?></h1>
     </div>
 
-    <form action="<?= route('products.create') ?>" method="POST">
-        <div class="flex flex-col gap-2 bg-white mt-2 p-4 shadow rounded">
+    <form action="<?= route('products.update', ['id' => $product->getId()]) ?>" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+
+        <div class="flex flex-col gap-2 p-4 mt-2 bg-white rounded shadow">
             <label for="product_name" class="input-label">Nome:</label>
             <input type="text" name="product[name]" id="product_name" class="input" placeholder="Nome" value="<?= trim($product->getName()) ?>">
-            <div class="text-red-500 font-semibold text-sm"><?= $product->errors('name') ? $product->errors('name') : '' ?></div>
+            <div class="text-sm font-semibold text-red-500"><?= $product->errors('name') ? $product->errors('name') : '' ?></div>
 
             <label for="product_description" class="input-label">Descrição:</label>
             <input type="text" name="product[description]" id="product_description" class="input" placeholder="Descrição" value="<?= trim($product->getDescription()) ?>">
-            <div class="text-red-500 font-semibold text-sm"><?= $product->errors('description') ? $product->errors('description') : '' ?></div>
+            <div class="text-sm font-semibold text-red-500"><?= $product->errors('description') ? $product->errors('description') : '' ?></div>
 
             <label for="product_brand" class="input-label">Marca:</label>
             <input type="text" name="product[brand]" id="product_brand" class="input" placeholder="Marca" value="<?= trim($product->getBrand()) ?>">
-            <div class="text-red-500 font-semibold text-sm"><?= $product->errors('brand') ? $product->errors('brand') : '' ?></div>
+            <div class="text-sm font-semibold text-red-500"><?= $product->errors('brand') ? $product->errors('brand') : '' ?></div>
 
             <label for="product_price" class="input-label">Preço:</label>
             <div class="flex flex-row">
-                <span class="h-12 px-4 text-center text-lg flex justify-center items-center leading-6 rounded-md rounded-e-none border border-gray-600 bg-gray-200">R$</span>
-                <input type="number" name="product[price]" id="product_price" class="input !rounded-s-none" min="0.00" max="10000.00" step="0.01" placeholder="0" value="<?= trim($product->getPrice()) ?>">
+                <span class="flex items-center justify-center h-12 px-4 text-lg leading-6 text-center bg-gray-200 border border-gray-600 rounded-md rounded-e-none">R$</span>
+                <input type="number" name="product[price]" id="product_price" class="input !rounded-s-none" min="0.00" step="0.01" placeholder="0" value="<?= trim($product->getPrice()) ?>">
             </div>
-            <div class="text-red-500 font-semibold text-sm"><?= $product->errors('price') ? $product->errors('price') : '' ?></div>
+            <div class="text-sm font-semibold text-red-500"><?= $product->errors('price') ? $product->errors('price') : '' ?></div>
         </div>
 
-        <button class="btn-success w-full mt-2" type="submit">Registrar</button>
+        <button class="w-full mt-2 btn-success" type="submit">EDITAR</button>
     </form>
 </div>

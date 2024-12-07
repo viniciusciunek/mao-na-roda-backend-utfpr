@@ -5,28 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mão na Roda</title>
 
-    <link rel="stylesheet" href="/assets/css/application.css">
+    <link rel="stylesheet" href="/assets/css/output.css">
     <script src="/assets/js/application.js"></script>
 </head>
 
 <body>
+    <main>
+        <div class="flex flex-col items-center min-h-screen pt-6 bg-[#F5FFFA] sm:justify-center sm:pt-0">
+            <div class="absolute top-4 right-4">
+                <?php require '_flash_message.phtml' ?>
+            </div>
 
-    <div>
-        <div>
             <div>
-
-                <?php require '_flash_message.phtml'; ?>
-
-                <h4>
-                    Login
-                </h4>
-
                 <?php require $view ?>
             </div>
         </div>
-
-    </div>
-
+    </main>
 </body>
 
 </html>
