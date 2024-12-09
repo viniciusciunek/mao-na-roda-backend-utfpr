@@ -30,3 +30,15 @@ CREATE TABLE customers (
   cpf VARCHAR(255) NOT NULL,
   cnpj VARCHAR(255) NOT NULL
 );
+
+DROP TABLE IF EXISTS budgets;
+
+CREATE TABLE budgets (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  customer_id INT NOT NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'pending',
+  cancelled TINYINT(1) NOT NULL DEFAULT 0,
+  payed TINYINT(1) NOT NULL DEFAULT 0,
+  total DECIMAL(10,2) NOT NULL DEFAULT 0.0,
+  FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
