@@ -16,7 +16,8 @@ class Product
         private string $description = '',
         private string $brand = '',
         private float|string $price = 0.0,
-    ) {}
+    ) {
+    }
 
     public function setId(int $id): void
     {
