@@ -14,7 +14,7 @@ class Authenticate implements Middleware
         if (!Auth::check()) {
             FlashMessage::danger('Você deve estar logado para acessar essa página');
 
-            $this->redirectTo(route('users.login'));
+            $this->redirectTo(route('customers.login'));
         }
     }
 

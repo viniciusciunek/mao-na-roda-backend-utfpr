@@ -5,12 +5,13 @@ use App\Controllers\DashboardController;
 use App\Controllers\ProductsController;
 use Core\Router\Route;
 
-Route::get('/login', [AuthenticationsController::class, 'new'])->name('users.login');
-Route::post('/login', [AuthenticationsController::class, 'authenticate'])->name('users.authenticate');
+Route::get('/login', [AuthenticationsController::class, 'new'])->name('customers.login');
+Route::post('/login', [AuthenticationsController::class, 'authenticate'])->name('customers.authenticate');
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('root');
 
+    // ------------------------------- Products ------------------------------------
     // Create
     Route::get('/products/new', [ProductsController::class, 'new'])->name('products.new');
     Route::post('/products', [ProductsController::class, 'create'])->name('products.create');
@@ -28,5 +29,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/products/{id}', [ProductsController::class, 'destroy'])->name('products.destroy');
 
     // Logout
-    Route::get('/logout', [AuthenticationsController::class, 'destroy'])->name('users.logout');
+    Route::get('/logout', [AuthenticationsController::class, 'destroy'])->name('customers.logout');
+    // ------------------------------- End Products --------------------------------
 });

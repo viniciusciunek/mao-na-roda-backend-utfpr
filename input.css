@@ -34,4 +34,8 @@
     .input {
         @apply w-full h-12 px-4 text-base leading-6 rounded-md border border-gray-600 bg-transparent outline-none focus:outline-none active:outline-none
     }
+
+    .select {
+        @apply w-full h-12 px-4 text-base leading-6 rounded-md border border-gray-600 bg-transparent outline-none focus:outline-none active:outline-none
+    }
 }

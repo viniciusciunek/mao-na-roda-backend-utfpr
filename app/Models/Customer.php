@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Core\Database\Database;
 
-class User
+class Customer
 {
     /** @var array<string, string> */
     private array $errors = [];
@@ -86,7 +86,7 @@ class User
         if ($this->isValid()) {
             $pdo = Database::getDatabaseConn();
             if ($this->newRecord()) {
-                $sql = 'INSERT INTO users (name, email, password, phone, cpf, cnpj)
+                $sql = 'INSERT INTO customers (name, email, password, phone, cpf, cnpj)
                     VALUES (:name, :email, :password, :phone, :cpf, :cnpj);';
 
                 $stmt = $pdo->prepare($sql);
@@ -105,7 +105,7 @@ class User
 
                 $this->id = (int) $pdo->lastInsertId();
             } else {
-                $sql = 'UPDATE users SET name = :name, email = :email, phone = :phone, cpf = :cpf, cnpj = :cnpj
+                $sql = 'UPDATE customers SET name = :name, email = :email, phone = :phone, cpf = :cpf, cnpj = :cnpj
                     WHERE id = :id;';
 
                 $stmt = $pdo->prepare($sql);
@@ -181,7 +181,7 @@ class User
     {
         $pdo = Database::getDatabaseConn();
 
-        $sql = 'SELECT password FROM users WHERE email = :email';
+        $sql = 'SELECT password FROM customers WHERE email = :email';
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':email', $this->email);
 
@@ -200,7 +200,7 @@ class User
     {
         $pdo = Database::getDatabaseConn();
 
-        $sql = 'DELETE FROM users WHERE id = :id';
+        $sql = 'DELETE FROM customers WHERE id = :id';
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':id', $this->id);
 
@@ -210,17 +210,17 @@ class User
     }
 
     /**
-     * @return array<int, User>
+     * @return array<int, Customer>
      */
     public static function all(): array
     {
-        $users = [];
+        $customers = [];
 
         $pdo = Database::getDatabaseConn();
-        $resp = $pdo->query('SELECT id, name, email, phone, cpf, cnpj FROM users;');
+        $resp = $pdo->query('SELECT id, name, email, phone, cpf, cnpj FROM customers;');
 
         foreach ($resp as $row) {
-            $users[] = new User(
+            $customers[] = new Customer(
                 id: $row['id'],
                 name: $row['name'],
                 email: $row['email'],
@@ -230,15 +230,15 @@ class User
             );
         }
 
-        return $users;
+        return $customers;
     }
 
-    public static function findById(int $id): User|null
+    public static function findById(int $id): Customer|null
     {
         $pdo = Database::getDatabaseConn();
 
         $sql = 'SELECT id, name, email, phone, cpf, cnpj
-            FROM users WHERE id = :id';
+            FROM customers WHERE id = :id';
 
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':id', $id);
@@ -251,7 +251,7 @@ class User
 
         $row = $stmt->fetch();
 
-        return new User(
+        return new Customer(
             id: $row['id'],
             name: $row['name'],
             email: $row['email'],
@@ -261,12 +261,12 @@ class User
         );
     }
 
-    public static function findByEmail(string $email): User | null
+    public static function findByEmail(string $email): Customer | null
     {
         $pdo = Database::getDatabaseConn();
 
         $sql = 'SELECT id, name, email, phone, cpf, cnpj
-            FROM users WHERE email = :email';
+            FROM customers WHERE email = :email';
 
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':email', $email);
@@ -279,7 +279,7 @@ class User
 
         $row = $stmt->fetch();
 
-        return new User(
+        return new Customer(
             id: $row['id'],
             name: $row['name'],
             email: $row['email'],

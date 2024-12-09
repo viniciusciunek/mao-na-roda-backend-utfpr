@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\User;
+use App\Models\Customer;
 use App\Models\Admin;
 use Core\Http\Request;
 use Lib\Authentication\Auth;
@@ -12,14 +12,14 @@ class DashboardController
 {
     private string $layout = 'application';
 
-    private User|Admin|null $currentUser = null;
+    private Customer|Admin|null $currentUser = null;
 
     public function isAdmin(): bool
     {
         return Auth::user() instanceof Admin;
     }
 
-    public function currentUser(): User|Admin|null
+    public function currentUser(): Customer|Admin|null
     {
         if ($this->currentUser === null && isset($_SESSION['user']['id'])) {
             $this->currentUser = Auth::user();

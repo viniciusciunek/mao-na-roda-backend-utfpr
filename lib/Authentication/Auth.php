@@ -3,14 +3,14 @@
 namespace Lib\Authentication;
 
 use App\Models\Admin;
-use App\Models\User;
+use App\Models\Customer;
 
 class Auth
 {
-    public static function login(User|Admin $user): void
+    public static function login(Customer|Admin $customer): void
     {
-        $_SESSION['user']['id'] = $user->getId();
-        $_SESSION['user']['email'] = $user->getEmail();
+        $_SESSION['user']['id'] = $customer->getId();
+        $_SESSION['user']['email'] = $customer->getEmail();
     }
 
     public static function logout(): void
@@ -19,7 +19,7 @@ class Auth
     }
 
 
-    public static function user(): User|Admin|null
+    public static function user(): Customer|Admin|null
     {
         if (isset($_SESSION['user']['id'])) {
             $id = $_SESSION['user']['id'];
@@ -29,7 +29,7 @@ class Auth
                 return Admin::findById($id);
             }
 
-            return User::findById($id);
+            return Customer::findById($id);
         }
 
         return null;
