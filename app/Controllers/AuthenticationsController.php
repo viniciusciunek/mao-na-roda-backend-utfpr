@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Admin;
-use App\Models\User;
+use App\Models\Customer;
 use Core\Http\Request;
 use Lib\Authentication\Auth;
 use Lib\FlashMessage;
@@ -21,10 +21,10 @@ class AuthenticationsController
     {
         $params = $request->getParam('user');
 
-        $user = User::findByEmail($params['email']) ?? Admin::findByEmail($params['email']);
+        $customer = Customer::findByEmail($params['email']) ?? Admin::findByEmail($params['email']);
 
-        if ($user && $user->authenticate($params['password'])) {
-            Auth::login($user);
+        if ($customer && $customer->authenticate($params['password'])) {
+            Auth::login($customer);
 
             FlashMessage::success('Login realizado com sucesso!');
 
@@ -32,7 +32,7 @@ class AuthenticationsController
         } else {
             FlashMessage::danger('Email e/ou senha inválidos!');
 
-            $this->redirectTo(route('users.login'));
+            $this->redirectTo(route('customers.login'));
         }
     }
 
@@ -42,7 +42,7 @@ class AuthenticationsController
 
         FlashMessage::success('Logout realizado com sucesso!');
 
-        $this->redirectTo(route('users.login'));
+        $this->redirectTo(route('customers.login'));
     }
 
 

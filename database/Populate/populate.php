@@ -5,10 +5,10 @@ require __DIR__ . '/../../config/bootstrap.php';
 use Core\Database\Database;
 use Database\Populate\AdminsPopulate;
 use Database\Populate\ProductsPopulate;
-use Database\Populate\UsersPopulate;
+use Database\Populate\CustomersPopulate;
 
 Database::migrate();
 
 ProductsPopulate::populate();
-UsersPopulate::populate();
+CustomersPopulate::populate();
 AdminsPopulate::populate();

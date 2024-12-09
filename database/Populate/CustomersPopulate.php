@@ -2,15 +2,15 @@
 
 namespace Database\Populate;
 
-use App\Models\User;
+use App\Models\Customer;
 
-class UsersPopulate
+class CustomersPopulate
 {
     public static function populate()
     {
-        $user = new User(
-            name: 'User 1',
-            email: 'fulano@example.com',
+        $customer = new Customer(
+            name: 'Customer 1',
+            email: 'customer@example.com',
             password: '123456',
             password_confirmation: '123456',
             phone: '(11) 1 1111-1111',
@@ -18,24 +18,24 @@ class UsersPopulate
             cnpj: '11.111.111/1111-11'
         );
 
-        $user->save();
+        $customer->save();
 
         $numberOfUsers = 10;
 
         for ($i = 1; $i < $numberOfUsers; $i++) {
-            $user = new User(
-                name: 'User ' . $i,
-                email: 'fulano' . $i . '@example.com',
+            $customer = new Customer(
+                name: 'Customer ' . $i,
+                email: 'customer' . $i . '@example.com',
                 password: '123456',
                 password_confirmation: '123456',
                 phone: "($i$i) $i $i$i$i$i-$i$i$i$i",
                 cpf: "$i$i$i.$i$i$i.$i$i$i-$i$i",
                 cnpj: "$i$i.$i$i$i.$i$i$i/$i$i$i$i-$i$i"
             );
-            $user->save();
+            $customer->save();
         }
 
 
-        echo "Users populated with $numberOfUsers registers\n";
+        echo "Customers populated with $numberOfUsers registers\n";
     }
 }

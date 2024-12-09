@@ -35,6 +35,16 @@ services:
         networks:
             - app-network
 
+    phpmyadmin:
+        image: phpmyadmin
+        restart: always
+        networks:
+            - app-network
+        environment:
+            PMA_ARBITRARY: 1
+        ports:
+            - 8090:80
+
 networks:
     app-network:
         driver: bridge

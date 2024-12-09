@@ -50,7 +50,7 @@ class AdminTest extends TestCase
     public function test_destroy_should_remove_the_admin(): void
     {
         $admin = new Admin(
-            name: 'User 2',
+            name: 'Customer 2',
             email: 'fulano1@example.com',
             password: '123456',
             password_confirmation: '123456',
@@ -71,8 +71,8 @@ class AdminTest extends TestCase
 
     public function test_set_name(): void
     {
-        $this->admin->setName('User name');
-        $this->assertEquals('User name', $this->admin->getName());
+        $this->admin->setName('Customer name');
+        $this->assertEquals('Customer name', $this->admin->getName());
     }
 
     public function test_set_email(): void
@@ -97,7 +97,7 @@ class AdminTest extends TestCase
     public function test_errors_should_return_password_confirmation_error(): void
     {
         $admin = new Admin(
-            name: 'User 2',
+            name: 'Customer 2',
             email: 'fulano1@example.com',
             password: '123456',
             password_confirmation: '1234567',

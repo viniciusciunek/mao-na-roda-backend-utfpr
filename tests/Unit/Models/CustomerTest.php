@@ -2,18 +2,18 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\User;
+use App\Models\Customer;
 use Tests\TestCase;
 
-class UserTest extends TestCase
+class CustomerTest extends TestCase
 {
-    private User $user;
+    private Customer $customer;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = new User(
-            name: 'User 1',
+        $this->customer = new Customer(
+            name: 'Customer 1',
             email: 'fulano@example.com',
             password: '123456',
             password_confirmation: '123456',
@@ -21,18 +21,18 @@ class UserTest extends TestCase
             cpf: '111.111.111-11',
             cnpj: '11.111.111/1111-11'
         );
-        $this->user->save();
+        $this->customer->save();
     }
 
     public function test_should_create_new_user(): void
     {
-        $this->assertCount(1, User::all());
+        $this->assertCount(1, Customer::all());
     }
 
     public function test_all_should_return_all_users(): void
     {
-        $user = new User(
-            name: 'User 2',
+        $customer = new Customer(
+            name: 'Customer 2',
             email: 'fulano1@example.com',
             password: '123456',
             password_confirmation: '123456',
@@ -40,21 +40,22 @@ class UserTest extends TestCase
             cpf: '222.222.222-22',
             cnpj: '22.222.222/2222-22'
         );
-        $user->save();
 
-        $users[] = $this->user->getId();
-        $users[] = $user->getId();
+        $customer->save();
 
-        $all = array_map(fn($user) => $user->getId(), User::all());
+        $customers[] = $this->customer->getId();
+        $customers[] = $customer->getId();
+
+        $all = array_map(fn($customer) => $customer->getId(), Customer::all());
 
         $this->assertCount(2, $all);
-        $this->assertEquals($users, $all);
+        $this->assertEquals($customers, $all);
     }
 
     public function test_destroy_should_remove_the_user(): void
     {
-        $user = new User(
-            name: 'User 2',
+        $customer = new Customer(
+            name: 'Customer 2',
             email: 'fulano1@example.com',
             password: '123456',
             password_confirmation: '123456',
@@ -62,51 +63,51 @@ class UserTest extends TestCase
             cpf: '222.222.222-22',
             cnpj: '22.222.222/2222-22'
         );
-        $user->save();
+        $customer->save();
 
-        $this->user->destroy();
+        $this->customer->destroy();
 
-        $this->assertCount(1, User::all());
+        $this->assertCount(1, Customer::all());
     }
 
     public function test_set_id(): void
     {
-        $this->user->setId(10);
-        $this->assertEquals(10, $this->user->getId());
+        $this->customer->setId(10);
+        $this->assertEquals(10, $this->customer->getId());
     }
 
     public function test_set_name(): void
     {
-        $this->user->setName('User name');
-        $this->assertEquals('User name', $this->user->getName());
+        $this->customer->setName('Customer name');
+        $this->assertEquals('Customer name', $this->customer->getName());
     }
 
     public function test_set_email(): void
     {
-        $this->user->setEmail('outro@example.com');
-        $this->assertEquals('outro@example.com', $this->user->getEmail());
+        $this->customer->setEmail('outro@example.com');
+        $this->assertEquals('outro@example.com', $this->customer->getEmail());
     }
 
     public function test_errors_should_return_errors(): void
     {
-        $user = new User();
+        $customer = new Customer();
 
-        $this->assertFalse($user->isValid());
-        $this->assertFalse($user->save());
-        $this->assertFalse($user->hasErrors());
+        $this->assertFalse($customer->isValid());
+        $this->assertFalse($customer->save());
+        $this->assertFalse($customer->hasErrors());
 
-        $this->assertEquals('não pode ser vazio!', $user->errors('name'));
-        $this->assertEquals('não pode ser vazio!', $user->errors('email'));
-        $this->assertEquals('não pode ser vazio!', $user->errors('password'));
-        $this->assertEquals('não pode ser vazio!', $user->errors('phone'));
-        $this->assertEquals('não pode ser vazio!', $user->errors('cpf'));
-        $this->assertEquals('não pode ser vazio!', $user->errors('password'));
+        $this->assertEquals('não pode ser vazio!', $customer->errors('name'));
+        $this->assertEquals('não pode ser vazio!', $customer->errors('email'));
+        $this->assertEquals('não pode ser vazio!', $customer->errors('password'));
+        $this->assertEquals('não pode ser vazio!', $customer->errors('phone'));
+        $this->assertEquals('não pode ser vazio!', $customer->errors('cpf'));
+        $this->assertEquals('não pode ser vazio!', $customer->errors('password'));
     }
 
     public function test_errors_should_return_password_confirmation_error(): void
     {
-        $user = new User(
-            name: 'User 2',
+        $customer = new Customer(
+            name: 'Customer 2',
             email: 'fulano1@example.com',
             password: '123456',
             password_confirmation: '1234567',
@@ -115,17 +116,17 @@ class UserTest extends TestCase
             cnpj: '22.222.222/2222-22'
         );
 
-        $this->assertFalse($user->isValid());
-        $this->assertFalse($user->save());
+        $this->assertFalse($customer->isValid());
+        $this->assertFalse($customer->save());
 
-        $this->assertEquals('as senhas devem ser idênticas!', $user->errors('password'));
+        $this->assertEquals('as senhas devem ser idênticas!', $customer->errors('password'));
     }
 
     public function test_find_by_id_should_return_the_user(): void
     {
         for ($i = 0; $i < 2; $i++) {
-            (new User(
-                name: 'User ' . $i,
+            (new Customer(
+                name: 'Customer ' . $i,
                 email: 'fulano' . $i . '@example.com',
                 password: '123456',
                 password_confirmation: '123456',
@@ -135,19 +136,19 @@ class UserTest extends TestCase
             ))->save();
         }
 
-        $this->assertEquals($this->user->getId(), User::findById($this->user->getId())->getId());
+        $this->assertEquals($this->customer->getId(), Customer::findById($this->customer->getId())->getId());
     }
 
     public function test_find_by_id_should_return_null(): void
     {
-        $this->assertNull(User::findById(2));
+        $this->assertNull(Customer::findById(2));
     }
 
     public function test_find_by_email_should_return_the_user(): void
     {
         for ($i = 0; $i < 2; $i++) {
-            (new User(
-                name: 'User ' . $i,
+            (new Customer(
+                name: 'Customer ' . $i,
                 email: 'fulano' . $i . '@example.com',
                 password: '123456',
                 password_confirmation: '123456',
@@ -157,17 +158,17 @@ class UserTest extends TestCase
             ))->save();
         }
 
-        $this->assertEquals($this->user->getId(), User::findByEmail($this->user->getEmail())->getId());
+        $this->assertEquals($this->customer->getId(), Customer::findByEmail($this->customer->getEmail())->getId());
     }
 
     public function test_find_by_email_should_return_null(): void
     {
-        $this->assertNull(User::findByEmail('not.exits@example.com'));
+        $this->assertNull(Customer::findByEmail('not.exits@example.com'));
     }
 
     public function test_authenticate_should_return_the_true(): void
     {
-        $this->assertTrue($this->user->authenticate('123456'));
-        $this->assertFalse($this->user->authenticate('wrong'));
+        $this->assertTrue($this->customer->authenticate('123456'));
+        $this->assertFalse($this->customer->authenticate('wrong'));
     }
 }
