@@ -2,35 +2,16 @@
 
 namespace App\Controllers;
 
-use App\Models\Admin;
 use Lib\FlashMessage;
 use App\Models\Budget;
-use App\Models\BudgetItem;
 use Core\Http\Request;
-use App\Models\Customer;
 use App\Models\Product;
-use Lib\Authentication\Auth;
+use App\Models\Customer;
+use App\Models\BudgetItem;
+use Core\Http\Controllers\Controller;
 
-class BudgetsController
+class BudgetsController extends Controller
 {
-    private string $layout = 'application';
-
-    private Customer|Admin|null $currentUser = null;
-
-    public function isAdmin(): bool
-    {
-        return Auth::user() instanceof Admin;
-    }
-
-    public function currentUser(): Customer|Admin|null
-    {
-        if ($this->currentUser === null && isset($_SESSION['user']['id'])) {
-            $this->currentUser = Auth::user();
-        }
-
-        return $this->currentUser;
-    }
-
     public function index(Request $request): void
     {
         $paginator = Budget::paginate(page: $request->getParam('page', 1));
@@ -40,9 +21,9 @@ class BudgetsController
         $title = 'Orçamentos Registrados';
 
         if ($request->acceptJson()) {
-            $this->renderJson('index', compact('paginator', 'budgets', 'title'));
+            $this->renderJson('budgets/index', compact('paginator', 'budgets', 'title'));
         } else {
-            $this->render('index', compact('paginator', 'budgets', 'title'));
+            $this->render('budgets/index', compact('paginator', 'budgets', 'title'));
         }
     }
 
@@ -54,7 +35,7 @@ class BudgetsController
 
         $title = "Visualização do Orçamento #{$budget->getId()}";
 
-        $this->render('show', compact('budget', 'title'));
+        $this->render('budgets/show', compact('budget', 'title'));
     }
 
     public function new(): void
@@ -67,7 +48,7 @@ class BudgetsController
 
         $title = 'Criando Orçamento';
 
-        $this->render('new', compact('budget', 'customers', 'products', 'title'));
+        $this->render('budgets/new', compact('budget', 'customers', 'products', 'title'));
     }
 
 
@@ -90,7 +71,7 @@ class BudgetsController
 
             $title = 'Criando Orçamento';
 
-            $this->render('new', compact('budget', 'customers', 'products', 'title'));
+            $this->render('budgets/new', compact('budget', 'customers', 'products', 'title'));
 
             return false;
         }
@@ -136,40 +117,9 @@ class BudgetsController
 
             $title = 'Criando Orçamento';
 
-            $this->render('new', compact('budget', 'customers', 'products', 'title'));
+            $this->render('budgets/new', compact('budget', 'customers', 'products', 'title'));
         }
 
         return true;
-    }
-
-    /** @param array<string, mixed> $data */
-
-    private function render(string $view, array $data = []): void
-    {
-        extract($data);
-
-        $view = '/var/www/app/views/budgets/' . $view . '.phtml';
-        require '/var/www/app/views/layouts/' . $this->layout . '.phtml';
-    }
-
-
-    /** @param array<string, mixed> $data */
-    private function renderJson(string $view, array $data = []): void
-    {
-        extract($data);
-
-        $view = '/var/www/app/views/budgets/' . $view . '.json.php';
-        $json = [];
-
-        header('Content-Type: application/json; chartset=utf-8');
-        require $view;
-        echo json_encode($json);
-        return;
-    }
-
-    private function redirectTo(string $location): void
-    {
-        header('Location: ' . $location);
-        exit;
     }
 }

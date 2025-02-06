@@ -4,30 +4,14 @@ namespace App\Controllers;
 
 use App\Models\Admin;
 use App\Models\Customer;
+use Core\Http\Controllers\Controller;
 use Lib\FlashMessage;
 use Core\Http\Request;
 use App\Models\Product;
 use Lib\Authentication\Auth;
 
-class ProductsController
+class ProductsController extends Controller
 {
-    private string $layout = 'application';
-
-    private Customer|Admin|null $currentUser = null;
-
-    public function isAdmin(): bool
-    {
-        return Auth::user() instanceof Admin;
-    }
-
-    public function currentUser(): Customer|Admin|null
-    {
-        if ($this->currentUser === null && isset($_SESSION['user']['id'])) {
-            $this->currentUser = Auth::user();
-        }
-
-        return $this->currentUser;
-    }
 
     public function index(Request $request): void
     {
@@ -38,9 +22,9 @@ class ProductsController
         $title = 'Produtos Registrados';
 
         if ($request->acceptJson()) {
-            $this->renderJson('index', compact('paginator', 'products', 'title'));
+            $this->renderJson('products/index', compact('paginator', 'products', 'title'));
         } else {
-            $this->render('index', compact('paginator', 'products', 'title'));
+            $this->render('products/index', compact('paginator', 'products', 'title'));
         }
     }
 
@@ -52,7 +36,7 @@ class ProductsController
 
         $title = "Visualização do Produto #{$product->getId()}";
 
-        $this->render('show', compact('product', 'title'));
+        $this->render('products/show', compact('product', 'title'));
     }
 
     public function new(): void
@@ -61,7 +45,7 @@ class ProductsController
 
         $title = 'Novo Produto';
 
-        $this->render('new', compact('product', 'title'));
+        $this->render('products/new', compact('product', 'title'));
     }
 
     public function create(Request $request): void
@@ -85,7 +69,7 @@ class ProductsController
             FlashMessage::danger("Erro ao criar produto!");
 
             $title = 'Novo Produto';
-            $this->render('new', compact('product', 'title'));
+            $this->render('products/new', compact('product', 'title'));
         }
     }
 
@@ -97,7 +81,7 @@ class ProductsController
 
         $title = "Editar Produto #{$product->getId()}";
 
-        $this->render('edit', compact('product', 'title'));
+        $this->render('products/edit', compact('product', 'title'));
     }
 
     public function update(Request $request): void
@@ -120,7 +104,7 @@ class ProductsController
             FlashMessage::danger("Erro ao editar produto!");
 
             $title = "Editar Produto #{$product->getId()}";
-            $this->render('edit', compact('product', 'title'));
+            $this->render('products/edit', compact('product', 'title'));
         }
     }
 
@@ -134,39 +118,5 @@ class ProductsController
         FlashMessage::success("Produto removido com sucesso!");
 
         $this->redirectTo(route('products.index'));
-    }
-
-    /**
-     * @param array<string, mixed> $data
-     */
-    private function render(string $view, array $data = []): void
-    {
-        extract($data);
-
-        $view = '/var/www/app/views/products/' . $view . '.phtml';
-        require '/var/www/app/views/layouts/' . $this->layout . '.phtml';
-    }
-
-
-    /**
-     * @param array<string, mixed> $data
-     */
-    private function renderJson(string $view, array $data = []): void
-    {
-        extract($data);
-
-        $view = '/var/www/app/views/products/' . $view . '.json.php';
-        $json = [];
-
-        header('Content-Type: application/json; chartset=utf-8');
-        require $view;
-        echo json_encode($json);
-        return;
-    }
-
-    private function redirectTo(string $location): void
-    {
-        header('Location: ' . $location);
-        exit;
     }
 }
