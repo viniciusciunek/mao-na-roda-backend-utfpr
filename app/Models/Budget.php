@@ -11,12 +11,13 @@ class Budget
     private array $errors = [];
 
     public function __construct(
+        private int $id = -1,
+
         private int $customer_id = 0,
         private string $status = 'pending',
         private int $cancelled = 0,
         private int $payed = 0,
         private float $total = 0.0,
-        private int $id = -1,
     ) {}
 
     public function getId(): int

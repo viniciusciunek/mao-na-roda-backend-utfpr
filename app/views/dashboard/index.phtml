@@ -1,1 +1,23 @@
-<h1>essa é a página de dashboard!</h1>
+<?php if ($this->isAdmin()): ?>
+    <div class="p-4 mb-2 text-center rounded-xl bg-darkBlue">
+        <h1 class="font-bold text-white uppercase">Administrador</h1>
+    </div>
+
+    <div class="grid grid-cols-4 gap-2">
+        <a href="<?= route('budgets.index') ?>">
+            <div class="flex items-center justify-center p-4 bg-transparent border border-darkBlue rounded-xl hover:bg-darkBlue text-darkBlue hover:text-white">
+                <p class="font-bold uppercase">ORÇAMENTOS</p>
+            </div>
+        </a>
+
+        <a href="<?= route('products.index') ?>">
+            <div class="flex items-center justify-center p-4 bg-transparent border border-darkBlue rounded-xl hover:bg-darkBlue text-darkBlue hover:text-white">
+                <p class="font-bold uppercase">PRODUTOS</p>
+            </div>
+        </a>
+    </div>
+<?php else: ?>
+    <div class="p-4 mb-2 text-center rounded-xl bg-darkBlue">
+        <h1 class="font-bold text-white uppercase">Cliente</h1>
+    </div>
+<?php endif ?>

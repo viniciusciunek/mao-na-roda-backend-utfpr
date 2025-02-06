@@ -35,8 +35,13 @@ Route::middleware('auth')->group(function () {
 
     // ------------------------------- Budgets ------------------------------------
     Route::get('/budgets', [BudgetsController::class, 'index'])->name('budgets.index');
+    Route::get('/budgets/page/{page}', [BudgetsController::class, 'index'])->name('budgets.paginate');
 
     // Create
     Route::get('/budgets/new', [BudgetsController::class, 'new'])->name('budgets.new');
     Route::post('/budgets', [BudgetsController::class, 'create'])->name('budgets.create');
+    Route::post('/budgets/add_item', [BudgetsController::class, 'test'])->name('budgets.test');
+
+    // Show
+    Route::get('/budgets/{id}', [BudgetsController::class, 'show'])->name('budgets.show');
 });

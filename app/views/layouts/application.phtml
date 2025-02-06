@@ -60,8 +60,11 @@
 
                 <nav>
                     <a href="<?= route('root') ?>" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Home</a>
-                    <a href="<?= route('budgets.index') ?>" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Orçamentos</a>
-                    <a href="<?= route('products.index') ?>" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Produtos</a>
+
+                    <?php if ($this->isAdmin()): ?>
+                        <a href="<?= route('budgets.index') ?>" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Orçamentos</a>
+                        <a href="<?= route('products.index') ?>" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Produtos</a>
+                    <?php endif ?>
                 </nav>
             </div>
 

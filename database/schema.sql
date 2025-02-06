@@ -42,3 +42,16 @@ CREATE TABLE budgets (
   total DECIMAL(10,2) NOT NULL DEFAULT 0.0,
   FOREIGN KEY (customer_id) REFERENCES customers(id)
 );
+
+DROP TABLE IF EXISTS budget_items;
+
+CREATE TABLE budget_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    budget_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL,
+    total_price DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (budget_id) REFERENCES budgets(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
