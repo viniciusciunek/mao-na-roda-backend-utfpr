@@ -7,7 +7,6 @@ use Lib\Paginator;
 
 class BudgetItem
 {
-
     /** @var array<string, string> */
     private array $errors = [];
     public function __construct(
@@ -17,7 +16,8 @@ class BudgetItem
         private float $unit_price = 0.0,
         private float $total_price = 0.0,
         private int $id = -1,
-    ) {}
+    ) {
+    }
 
     public function getBudgetId(): int
     {
@@ -85,8 +85,8 @@ class BudgetItem
             $pdo = Database::getDatabaseConn();
 
             if ($this->newRecord()) {
-
-                $sql = 'INSERT INTO budget_items (budget_id, product_id, quantity, unit_price, total_price) VALUES (:budget_id, :product_id, :quantity, :unit_price, :total_price)';
+                $sql = 'INSERT INTO budget_items (budget_id, product_id, quantity, unit_price, total_price)
+                            VALUES (:budget_id, :product_id, :quantity, :unit_price, :total_price)';
 
                 $stmt = $pdo->prepare($sql);
 
@@ -100,7 +100,13 @@ class BudgetItem
 
                 $this->id = (int) $pdo->lastInsertId();
             } else {
-                $sql = 'UPDATE budget_items SET budget_id = :budget_id, product_id = :product_id, quantity = :quantity, unit_price = :unit_price, total_price = :total_price WHERE id = :id;';
+                $sql = 'UPDATE budget_items SET
+                            budget_id = :budget_id,
+                            product_id = :product_id,
+                            quantity = :quantity,
+                            unit_price = :unit_price,
+                            total_price = :total_price
+                            WHERE id = :id;';
 
                 $stmt = $pdo->prepare($sql);
 
@@ -230,6 +236,12 @@ class BudgetItem
 
     public static function paginate(int $page = 1, int $per_page = 10): Paginator
     {
-        return new Paginator(BudgetItem::class, $page, $per_page, 'budget_items', ['budget_id', 'product_id', 'quantity', 'unit_price', 'total_price']);
+        return new Paginator(
+            BudgetItem::class,
+            $page,
+            $per_page,
+            'budget_items',
+            ['budget_id', 'product_id', 'quantity', 'unit_price', 'total_price']
+        );
     }
 }

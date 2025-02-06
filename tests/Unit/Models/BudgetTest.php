@@ -30,10 +30,11 @@ class BudgetTest extends TestCase
     public function test_should_create_new_budget(): void
     {
         $budget = new Budget(
+            1,
             $this->customer->getId(),
             'pending',
-            0,
-            0,
+            false,
+            false,
             10
         );
 
@@ -47,16 +48,16 @@ class BudgetTest extends TestCase
         $budgets[] = new Budget(
             customer_id: $this->customer->getId(),
             status: 'pending',
-            cancelled: 0,
-            payed: 0,
+            cancelled: false,
+            payed: false,
             total: 10
         );
 
         $budgets[] = new Budget(
             customer_id: $this->customer->getId(),
             status: 'pending',
-            cancelled: 0,
-            payed: 0,
+            cancelled: false,
+            payed: false,
             total: 20
         );
 
@@ -76,15 +77,15 @@ class BudgetTest extends TestCase
         $budget1 = new Budget(
             customer_id: $this->customer->getId(),
             status: 'pending',
-            cancelled: 0,
-            payed: 0,
+            cancelled: false,
+            payed: false,
             total: 10
         );
         $budget2 = new Budget(
             customer_id: $this->customer->getId(),
             status: 'completed',
-            cancelled: 0,
-            payed: 0,
+            cancelled: false,
+            payed: false,
             total: 20
         );
 
@@ -101,8 +102,8 @@ class BudgetTest extends TestCase
         $budget = new Budget(
             customer_id: $this->customer->getId(),
             status: 'pending',
-            cancelled: 0,
-            payed: 0,
+            cancelled: false,
+            payed: false,
             total: 10
         );
 
@@ -114,8 +115,8 @@ class BudgetTest extends TestCase
         $budget = new Budget(
             customer_id: $this->customer->getId(),
             status: 'pending',
-            cancelled: 0,
-            payed: 0,
+            cancelled: false,
+            payed: false,
             total: 10
         );
 
@@ -129,8 +130,8 @@ class BudgetTest extends TestCase
         $budget = new Budget(
             customer_id: $this->customer->getId(),
             status: 'pending',
-            cancelled: 0,
-            payed: 0,
+            cancelled: false,
+            payed: false,
             total: 10
         );
 
@@ -150,24 +151,24 @@ class BudgetTest extends TestCase
         $budget2 = new Budget(
             customer_id: $this->customer->getId(),
             status: 'pending',
-            cancelled: 0,
-            payed: 0,
+            cancelled: false,
+            payed: false,
             total: 20
         );
 
         $budget1 = new Budget(
             customer_id: $this->customer->getId(),
             status: 'pending',
-            cancelled: 0,
-            payed: 0,
+            cancelled: false,
+            payed: false,
             total: 10
         );
 
         $budget3 = new Budget(
             customer_id: $this->customer->getId(),
             status: 'pending',
-            cancelled: 0,
-            payed: 0,
+            cancelled: false,
+            payed: false,
             total: 30
         );
 
@@ -183,8 +184,8 @@ class BudgetTest extends TestCase
         $budget = new Budget(
             customer_id: $this->customer->getId(),
             status: 'pending',
-            cancelled: 0,
-            payed: 0,
+            cancelled: false,
+            payed: false,
             total: 10
         );
 

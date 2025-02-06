@@ -12,13 +12,13 @@ class Budget
 
     public function __construct(
         private int $id = -1,
-
         private int $customer_id = 0,
         private string $status = 'pending',
-        private int $cancelled = 0,
-        private int $payed = 0,
+        private bool $cancelled = false,
+        private bool $payed = false,
         private float $total = 0.0,
-    ) {}
+    ) {
+    }
 
     public function getId(): int
     {
@@ -216,6 +216,12 @@ class Budget
 
     public static function paginate(int $page = 1, int $per_page = 10): Paginator
     {
-        return new Paginator(Budget::class, $page, $per_page, 'budgets', ['customer_id', 'status', 'cancelled', 'payed', 'total']);
+        return new Paginator(
+            Budget::class,
+            $page,
+            $per_page,
+            'budgets',
+            ['customer_id', 'status', 'cancelled', 'payed', 'total']
+        );
     }
 }
