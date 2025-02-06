@@ -1,0 +1,124 @@
+<div>
+    <div class="flex flex-row items-center justify-between p-4 bg-gray-100 rounded shadow">
+        <h1 class="font-bold text-gray-700"><?= $title ?></h1>
+    </div>
+
+    <form action="<?= route('budgets.create') ?>" method="POST">
+        <div class="flex flex-col gap-2 p-4 mt-2 bg-white rounded shadow">
+            <div>
+                <label for="budget_customer_id" class="input-label">Cliente:</label>
+                <select name="budget[customer_id]" id="budget_customer_id" class="select">
+                    <?php foreach ($customers as $customer) { ?>
+                        <option value="<?= $customer->getId() ?>"><?= $customer->getId() . ' - ' .  $customer->getName() ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+
+            <div class="flex flex-row items-end justify-between gap-2">
+                <div class="w-full">
+                    <label for="product_id" class="input-label">Produto:</label>
+                    <select id="product_id" class="select">
+                        <?php foreach ($products as $product) { ?>
+                            <option value="<?= $product->getId() ?>"><?= $product->getId() . ' - ' .  $product->getName() ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+
+                <div class="w-full">
+                    <label for="product_quantity" class="input-label">Quantidade:</label>
+                    <input type="number" placeholder="0" id="product_quantity" class="input" min="1" value="1">
+                </div>
+
+                <div class="w-full">
+                    <label for="product_price" class="input-label">Preço:</label>
+                    <div class="flex flex-row">
+                        <span class="flex items-center justify-center h-12 px-4 text-lg leading-6 text-center border border-gray-600 rounded-md rounded-e-none">R$</span>
+                        <input type="number" id="product_price" class="input !rounded-s-none" min="0.00" step="0.01" placeholder="0.00">
+                    </div>
+                </div>
+
+                <button
+                    class="p-3 font-bold text-white bg-green-700 rounded"
+                    type="button"
+                    id="add-product">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <h3 class="font-bold">Produtos adicionados:</h3>
+            <ul id="product-list" class="list-disc list-inside">
+                <!-- Produtos adicionados serão inseridos aqui -->
+            </ul>
+        </div>
+
+        <!-- Campo oculto para armazenar os produtos selecionados -->
+        <input type="hidden" name="products" id="products-input">
+
+        <button class="w-full mt-2 btn-success" type="submit">CRIAR</button>
+    </form>
+</div>
+
+<script>
+    let selectedProducts = [];
+
+    document.getElementById('add-product').addEventListener('click', function() {
+        const productSelect = document.getElementById('product_id');
+        const productId = productSelect.value;
+        const productName = productSelect.options[productSelect.selectedIndex].text;
+
+        const quantityInput = document.getElementById('product_quantity');
+        const quantity = parseInt(quantityInput.value);
+
+        const priceInput = document.getElementById('product_price');
+        const price = parseFloat(priceInput.value);
+
+        if (!productId || quantity <= 0 || price < 0) {
+            alert('Por favor, preencha todos os campos corretamente.');
+            return;
+        }
+
+        // Verificar se o produto já foi adicionado
+        const existingProduct = selectedProducts.find(p => p.id === productId);
+        if (existingProduct) {
+            alert('Produto já adicionado. Você pode removê-lo e adicioná-lo novamente com novos valores.');
+            return;
+        }
+
+        // Adicionar o produto ao array de produtos selecionados
+        selectedProducts.push({
+            id: productId,
+            name: productName,
+            quantity: quantity,
+            price: price
+        });
+
+        // Atualizar a lista exibida
+        const productList = document.getElementById('product-list');
+        const listItem = document.createElement('li');
+        listItem.textContent = `${productName} - Quantidade: ${quantity} - Preço: R$ ${price.toFixed(2)}`;
+
+        // Botão para remover o produto da lista
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remover';
+        removeButton.classList.add('ml-2', 'text-red-500', 'hover:underline');
+        removeButton.addEventListener('click', function() {
+            selectedProducts = selectedProducts.filter(p => p.id !== productId);
+            document.getElementById('products-input').value = JSON.stringify(selectedProducts);
+            productList.removeChild(listItem);
+        });
+
+        listItem.appendChild(removeButton);
+        productList.appendChild(listItem);
+
+        // Atualizar o campo hidden com os produtos selecionados
+        document.getElementById('products-input').value = JSON.stringify(selectedProducts);
+
+        // Limpar os campos de quantidade e preço
+        quantityInput.value = '1';
+        priceInput.value = '';
+    });
+</script>

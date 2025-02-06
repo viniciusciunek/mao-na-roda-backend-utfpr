@@ -21,10 +21,10 @@ class AuthenticationsController
     {
         $params = $request->getParam('user');
 
-        $customer = Customer::findByEmail($params['email']) ?? Admin::findByEmail($params['email']);
+        $user = Customer::findByEmail($params['email']) ?? Admin::findByEmail($params['email']);
 
-        if ($customer && $customer->authenticate($params['password'])) {
-            Auth::login($customer);
+        if ($user && $user->authenticate($params['password'])) {
+            Auth::login($user);
 
             FlashMessage::success('Login realizado com sucesso!');
 

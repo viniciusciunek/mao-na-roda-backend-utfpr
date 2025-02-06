@@ -1,0 +1,68 @@
+    <div>
+        <div class="flex flex-row items-center justify-between p-4 mb-2 bg-gray-100 rounded shadow">
+            <h1 class="font-bold text-gray-700"><?= $title ?></h1>
+
+            <a href="<?= route('budgets.new') ?>" class="btn-success">
+                Novo Orçamento
+            </a>
+        </div>
+
+        <table class="min-w-full bg-white rounded-lg shadow">
+            <thead>
+                <tr class="text-sm font-semibold text-left text-gray-700 uppercase bg-gray-200">
+                    <th class="px-4 py-2 text-center border-b">ID</th>
+                    <th class="px-4 py-2 text-center border-b">Cliente</th>
+                    <th class="px-4 py-2 text-center border-b">Status</th>
+                    <th class="px-4 py-2 text-center border-b">Pago</th>
+                    <th class="px-4 py-2 text-center border-b">Total</th>
+                    <th class="px-4 py-2 text-center border-b">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($budgets as $budget) : ?>
+                    <tr class="hover:bg-gray-50">
+                        <td class="py-2 font-bold text-center text-gray-800 border-b"><a href="<?= route('budgets.show', ['id' => $budget->getId()]) ?>"><?= $budget->getId() ?></a></td>
+                        <td class="py-2 font-bold text-center text-gray-800 border-b"><?= $budget->getCustomerId() ?></td>
+                        <td class="py-2 font-bold text-center text-gray-800 border-b">
+                            <a href="">
+                                <?php
+                                switch ($budget->getStatus()) {
+                                    case 'pending':
+                                        echo 'Pendente Aprovação';
+                                        break;
+                                    default:
+                                        echo 'Pendente';
+                                        break;
+                                }
+                                ?>
+                            </a>
+                        </td>
+                        <td class="py-2 font-bold text-center text-gray-800 border-b"><a href=""><?= $budget->isPayed() ? 'Pago' : 'Pendente' ?></a></td>
+                        <td class="py-2 font-bold text-center text-gray-800 border-b"><a href="">R$ <?= number_format($budget->getTotal(), 2, ',', '.') ?></a></td>
+                        <td class="py-2 text-center text-gray-800 border-b">
+                            <div class="flex flex-row items-stretch justify-center gap-2">
+                                <?php if ($budget->getStatus() == 'pending') : ?>
+                                    <a href="">
+                                        <button class="btn-info">
+                                            Editar
+                                        </button>
+                                    </a>
+
+                                    <form action="" method="POST" class="m-0">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button class="btn-danger" type="submit">
+                                            Excluir
+                                        </button>
+                                    </form>
+                                <?php endif ?>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+        <div class="mt-2">
+            <?php $paginator->renderPagesNavigation(); ?>
+        </div>
+    </div>

@@ -1,9 +1,10 @@
 <?php
 
-use App\Controllers\AuthenticationsController;
-use App\Controllers\DashboardController;
-use App\Controllers\ProductsController;
 use Core\Router\Route;
+use App\Controllers\BudgetsController;
+use App\Controllers\ProductsController;
+use App\Controllers\DashboardController;
+use App\Controllers\AuthenticationsController;
 
 Route::get('/login', [AuthenticationsController::class, 'new'])->name('customers.login');
 Route::post('/login', [AuthenticationsController::class, 'authenticate'])->name('customers.authenticate');
@@ -31,4 +32,16 @@ Route::middleware('auth')->group(function () {
     // Logout
     Route::get('/logout', [AuthenticationsController::class, 'destroy'])->name('customers.logout');
     // ------------------------------- End Products --------------------------------
+
+    // ------------------------------- Budgets ------------------------------------
+    Route::get('/budgets', [BudgetsController::class, 'index'])->name('budgets.index');
+    Route::get('/budgets/page/{page}', [BudgetsController::class, 'index'])->name('budgets.paginate');
+
+    // Create
+    Route::get('/budgets/new', [BudgetsController::class, 'new'])->name('budgets.new');
+    Route::post('/budgets', [BudgetsController::class, 'create'])->name('budgets.create');
+    Route::post('/budgets/add_item', [BudgetsController::class, 'test'])->name('budgets.test');
+
+    // Show
+    Route::get('/budgets/{id}', [BudgetsController::class, 'show'])->name('budgets.show');
 });

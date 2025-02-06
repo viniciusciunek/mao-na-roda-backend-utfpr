@@ -30,3 +30,28 @@ CREATE TABLE customers (
   cpf VARCHAR(255) NOT NULL,
   cnpj VARCHAR(255) NOT NULL
 );
+
+DROP TABLE IF EXISTS budgets;
+
+CREATE TABLE budgets (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  customer_id INT NOT NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'pending',
+  cancelled BOOLEAN NOT NULL DEFAULT FALSE,
+  payed BOOLEAN NOT NULL DEFAULT FALSE,
+  total DECIMAL(10,2) NOT NULL DEFAULT 0.0,
+  FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
+
+DROP TABLE IF EXISTS budget_items;
+
+CREATE TABLE budget_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    budget_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL,
+    total_price DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (budget_id) REFERENCES budgets(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
