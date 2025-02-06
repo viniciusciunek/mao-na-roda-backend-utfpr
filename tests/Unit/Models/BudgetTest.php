@@ -30,12 +30,11 @@ class BudgetTest extends TestCase
     public function test_should_create_new_budget(): void
     {
         $budget = new Budget(
-            1,
-            $this->customer->getId(),
-            'pending',
-            false,
-            false,
-            10
+            customer_id: $this->customer->getId(),
+            status: 'pending',
+            cancelled: false,
+            payed: false,
+            total: 10
         );
 
         $this->assertTrue($budget->save());

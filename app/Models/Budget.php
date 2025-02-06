@@ -92,8 +92,8 @@ class Budget
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':customer_id', $this->customer_id);
                 $stmt->bindParam(':status', $this->status);
-                $stmt->bindValue(':cancelled', $this->cancelled);
-                $stmt->bindValue(':payed', $this->payed);
+                $stmt->bindParam(':cancelled', $this->cancelled, \PDO::PARAM_BOOL);
+                $stmt->bindParam(':payed', $this->payed, \PDO::PARAM_BOOL);
                 $stmt->bindValue(':total', $this->total);
 
                 $stmt->execute();
@@ -106,8 +106,8 @@ class Budget
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':customer_id', $this->customer_id);
                 $stmt->bindParam(':status', $this->status);
-                $stmt->bindValue(':cancelled', $this->cancelled);
-                $stmt->bindValue(':payed', $this->payed);
+                $stmt->bindParam(':cancelled', $this->cancelled, \PDO::PARAM_BOOL);
+                $stmt->bindParam(':payed', $this->payed, \PDO::PARAM_BOOL);
                 $stmt->bindValue(':total', $this->total);
                 $stmt->bindParam(':id', $this->id);
                 $stmt->execute();
