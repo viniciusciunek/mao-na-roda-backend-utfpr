@@ -36,7 +36,7 @@ class AuthTest extends TestCase
     {
         Auth::login($this->admin);
 
-        $this->assertEquals(1, $_SESSION['admin']['id']);
+        $this->assertEquals(1, $_SESSION['user']['id']);
     }
 
     public function test_admin(): void

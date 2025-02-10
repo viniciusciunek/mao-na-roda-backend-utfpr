@@ -5,6 +5,12 @@ namespace App\Models;
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $encrypted_password
+ */
 class Admin extends Model
 {
     protected static string $table = 'admins';
@@ -12,7 +18,6 @@ class Admin extends Model
 
     protected ?string $password = null;
     protected ?string $password_confirmation = null;
-
 
     public function validates(): void
     {

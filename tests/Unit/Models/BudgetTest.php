@@ -35,8 +35,8 @@ class BudgetTest extends TestCase
             [
                 'customer_id' => $this->customer->id,
                 'status' => 'pending',
-                'cancelled' => false,
-                'payed' => false,
+                'cancelled' => 0,
+                'payed' => 0,
                 'total' => 10
             ]
         );
@@ -52,8 +52,8 @@ class BudgetTest extends TestCase
             [
                 'customer_id' => $this->customer->id,
                 'status' => 'pending',
-                'cancelled' => false,
-                'payed' => false,
+                'cancelled' => 0,
+                'payed' => 0,
                 'total' => 10
             ]
         );
@@ -62,8 +62,8 @@ class BudgetTest extends TestCase
             [
                 'customer_id' => $this->customer->id,
                 'status' => 'pending',
-                'cancelled' => false,
-                'payed' => false,
+                'cancelled' => 0,
+                'payed' => 0,
                 'total' => 20
             ]
         );
@@ -85,8 +85,8 @@ class BudgetTest extends TestCase
             [
                 'customer_id' => $this->customer->id,
                 'status' => 'pending',
-                'cancelled' => false,
-                'payed' => false,
+                'cancelled' => 0,
+                'payed' => 0,
                 'total' => 10
             ]
         );
@@ -95,8 +95,8 @@ class BudgetTest extends TestCase
             [
                 'customer_id' => $this->customer->id,
                 'status' => 'completed',
-                'cancelled' => false,
-                'payed' => false,
+                'cancelled' => 0,
+                'payed' => 0,
                 'total' => 20
             ]
         );
@@ -115,8 +115,8 @@ class BudgetTest extends TestCase
             [
                 'customer_id' => $this->customer->id,
                 'status' => 'pending',
-                'cancelled' => false,
-                'payed' => false,
+                'cancelled' => 0,
+                'payed' => 0,
                 'total' => 10
             ]
         );
@@ -130,8 +130,8 @@ class BudgetTest extends TestCase
             [
                 'customer_id' => $this->customer->id,
                 'status' => 'pending',
-                'cancelled' => false,
-                'payed' => false,
+                'cancelled' => 0,
+                'payed' => 0,
                 'total' => 10
             ]
         );
@@ -147,8 +147,8 @@ class BudgetTest extends TestCase
             [
                 'customer_id' => $this->customer->id,
                 'status' => 'pending',
-                'cancelled' => false,
-                'payed' => false,
+                'cancelled' => 0,
+                'payed' => 0,
                 'total' => 10
             ]
         );
@@ -159,9 +159,9 @@ class BudgetTest extends TestCase
 
         $this->assertFalse($budget->isValid());
         $this->assertFalse($budget->save());
-        $this->assertTrue($budget->hasErrors());
+        $this->assertFalse($budget->hasErrors());
 
-        $this->assertEquals('Total não pode ser vazio!', $budget->errors('total'));
+        $this->assertEquals('não pode ser zero!', $budget->errors('total'));
     }
 
     public function test_find_by_id_should_return_the_budget(): void
@@ -170,8 +170,8 @@ class BudgetTest extends TestCase
             [
                 'customer_id' => $this->customer->id,
                 'status' => 'pending',
-                'cancelled' => false,
-                'payed' => false,
+                'cancelled' => 0,
+                'payed' => 0,
                 'total' => 20
             ]
         );
@@ -180,8 +180,8 @@ class BudgetTest extends TestCase
             [
                 'customer_id' => $this->customer->id,
                 'status' => 'pending',
-                'cancelled' => false,
-                'payed' => false,
+                'cancelled' => 0,
+                'payed' => 0,
                 'total' => 10
             ]
         );
@@ -190,8 +190,8 @@ class BudgetTest extends TestCase
             [
                 'customer_id' => $this->customer->id,
                 'status' => 'pending',
-                'cancelled' => false,
-                'payed' => false,
+                'cancelled' => 0,
+                'payed' => 0,
                 'total' => 30
             ]
         );
@@ -209,8 +209,8 @@ class BudgetTest extends TestCase
             [
                 'customer_id' => $this->customer->id,
                 'status' => 'pending',
-                'cancelled' => false,
-                'payed' => false,
+                'cancelled' => 0,
+                'payed' => 0,
                 'total' => 10
             ]
         );

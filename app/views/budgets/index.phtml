@@ -21,12 +21,12 @@
             <tbody>
                 <?php foreach ($budgets as $budget) : ?>
                     <tr class="hover:bg-gray-50">
-                        <td class="py-2 font-bold text-center text-gray-800 border-b"><a href="<?= route('budgets.show', ['id' => $budget->getId()]) ?>"><?= $budget->getId() ?></a></td>
-                        <td class="py-2 font-bold text-center text-gray-800 border-b"><?= $budget->getCustomerId() ?></td>
+                        <td class="py-2 font-bold text-center text-gray-800 border-b"><a href="<?= route('budgets.show', ['id' => $budget->id]) ?>"><?= $budget->id ?></a></td>
+                        <td class="py-2 font-bold text-center text-gray-800 border-b"><?= $budget->customer_id ?></td>
                         <td class="py-2 font-bold text-center text-gray-800 border-b">
                             <a href="">
                                 <?php
-                                switch ($budget->getStatus()) {
+                                switch ($budget->status) {
                                     case 'pending':
                                         echo 'Pendente Aprovação';
                                         break;
@@ -37,11 +37,11 @@
                                 ?>
                             </a>
                         </td>
-                        <td class="py-2 font-bold text-center text-gray-800 border-b"><a href=""><?= $budget->isPayed() ? 'Pago' : 'Pendente' ?></a></td>
-                        <td class="py-2 font-bold text-center text-gray-800 border-b"><a href="">R$ <?= number_format($budget->getTotal(), 2, ',', '.') ?></a></td>
+                        <td class="py-2 font-bold text-center text-gray-800 border-b"><a href=""><?= $budget->payed ? 'Pago' : 'Pendente' ?></a></td>
+                        <td class="py-2 font-bold text-center text-gray-800 border-b"><a href="">R$ <?= number_format($budget->total, 2, ',', '.') ?></a></td>
                         <td class="py-2 text-center text-gray-800 border-b">
                             <div class="flex flex-row items-stretch justify-center gap-2">
-                                <?php if ($budget->getStatus() == 'pending') : ?>
+                                <?php if ($budget->status == 'pending') : ?>
                                     <a href="">
                                         <button class="btn-info">
                                             Editar

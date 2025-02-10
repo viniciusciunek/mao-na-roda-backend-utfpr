@@ -12,7 +12,6 @@ use Lib\Authentication\Auth;
 
 class ProductsController extends Controller
 {
-
     public function index(Request $request): void
     {
         $paginator = Product::paginate(page: $request->getParam('page', 1));
@@ -34,7 +33,7 @@ class ProductsController extends Controller
 
         $product = Product::findById($params['id']);
 
-        $title = "Visualização do Produto #{$product->getId()}";
+        $title = "Visualização do Produto #{$product->id}";
 
         $this->render('products/show', compact('product', 'title'));
     }
@@ -55,10 +54,12 @@ class ProductsController extends Controller
         $params = array_map('trim', $params);
 
         $product = new Product(
-            name: $params['name'],
-            description: $params['description'],
-            brand: $params['brand'],
-            price: (float) $params['price']
+            [
+                'name' =>  $params['name'],
+                'description' => $params['description'],
+                'brand' => $params['brand'],
+                'price' => (float) $params['price']
+            ]
         );
 
         if ($product->save()) {
@@ -79,7 +80,7 @@ class ProductsController extends Controller
 
         $product = Product::findById($params['id']);
 
-        $title = "Editar Produto #{$product->getId()}";
+        $title = "Editar Produto #{$product->id}";
 
         $this->render('products/edit', compact('product', 'title'));
     }
@@ -91,10 +92,10 @@ class ProductsController extends Controller
         $params['product'] = array_map('trim', $params['product']);
 
         $product = Product::findById($params['id']);
-        $product->setName($params['product']['name']);
-        $product->setDescription($params['product']['description']);
-        $product->setBrand($params['product']['brand']);
-        $product->setPrice((float) $params['product']['price']);
+        $product->name  = $params['product']['name'];
+        $product->description = $params['product']['description'];
+        $product->brand = $params['product']['brand'];
+        $product->price = (float) $params['product']['price'];
 
         if ($product->save()) {
             FlashMessage::success("Produto editado com sucesso!");
@@ -103,7 +104,7 @@ class ProductsController extends Controller
         } else {
             FlashMessage::danger("Erro ao editar produto!");
 
-            $title = "Editar Produto #{$product->getId()}";
+            $title = "Editar Produto #{$product->id}";
             $this->render('products/edit', compact('product', 'title'));
         }
     }

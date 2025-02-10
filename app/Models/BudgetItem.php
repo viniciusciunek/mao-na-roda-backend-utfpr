@@ -5,6 +5,15 @@ namespace App\Models;
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
 
+/**
+ * @property int $id
+ * @property int $budget_id
+ * @property int $product_id
+ * @property int $quantity
+ * @property float $unit_price
+ * @property float $total_price
+ */
+
 class BudgetItem extends Model
 {
     protected static string $table = 'budget_items';

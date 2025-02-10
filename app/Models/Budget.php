@@ -5,6 +5,15 @@ namespace App\Models;
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
 
+/**
+ * @property int $id
+ * @property int $customer_id
+ * @property string $status
+ * @property boolean $cancelled
+ * @property boolean $payed
+ * @property float $total
+ *
+ */
 class Budget extends Model
 {
     protected static string $table = 'budgets';
@@ -16,6 +25,6 @@ class Budget extends Model
         Validations::notEmpty('status', $this);
         Validations::notEmpty('cancelled', $this);
         Validations::notEmpty('payed', $this);
-        Validations::notEmpty('total', $this);
+        Validations::nonZero('total', $this);
     }
 }

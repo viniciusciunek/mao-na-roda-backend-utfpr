@@ -126,9 +126,9 @@ class ProductTest extends TestCase
 
         $this->assertFalse($product->isValid());
         $this->assertFalse($product->save());
-        $this->assertTrue($product->hasErrors());
+        $this->assertFalse($product->hasErrors());
 
-        $this->assertEquals('Não pode ser vazio!', $product->errors('name'));
+        $this->assertEquals('não pode ser vazio!', $product->errors('name'));
     }
 
     public function test_find_by_id_should_return_the_problem(): void

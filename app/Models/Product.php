@@ -5,6 +5,13 @@ namespace App\Models;
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $description
+ * @property string $brand
+ * @property float $price
+ */
 class Product extends Model
 {
     protected static string $table = 'products';

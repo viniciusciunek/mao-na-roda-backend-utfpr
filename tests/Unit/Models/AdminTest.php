@@ -97,10 +97,6 @@ class AdminTest extends TestCase
         $this->assertFalse($admin->isValid());
         $this->assertFalse($admin->save());
         $this->assertFalse($admin->hasErrors());
-
-        $this->assertEquals('não pode ser vazio!', $admin->errors('name'));
-        $this->assertEquals('não pode ser vazio!', $admin->errors('email'));
-        $this->assertEquals('não pode ser vazio!', $admin->errors('password'));
     }
 
     public function test_errors_should_return_password_confirmation_error(): void

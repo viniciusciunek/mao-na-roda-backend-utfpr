@@ -2,11 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Models\Customer;
-use App\Models\Admin;
-use Core\Http\Controllers\Controller;
 use Core\Http\Request;
-use Lib\Authentication\Auth;
+use Core\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {

@@ -5,9 +5,17 @@ namespace App\Models;
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $encrypted_password
+ * @property string $phone
+ * @property string $cpf
+ * @property string $cnpj
+ */
 class Customer extends Model
 {
-
     protected static string $table = 'customers';
     protected static array $columns = ['name', 'email', 'encrypted_password', 'phone', 'cpf', 'cnpj'];
 

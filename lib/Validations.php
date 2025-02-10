@@ -16,6 +16,16 @@ class Validations
         return true;
     }
 
+    public static function nonZero($attribute, $obj)
+    {
+        if ($obj->$attribute == 0) {
+            $obj->addError($attribute, 'não pode ser zero!');
+            return false;
+        }
+
+        return true;
+    }
+
     public static function passwordConfirmation($obj)
     {
         if ($obj->password !== $obj->password_confirmation) {

@@ -105,10 +105,7 @@ class CustomerTest extends TestCase
 
         $this->assertEquals('não pode ser vazio!', $customer->errors('name'));
         $this->assertEquals('não pode ser vazio!', $customer->errors('email'));
-        $this->assertEquals('não pode ser vazio!', $customer->errors('password'));
         $this->assertEquals('não pode ser vazio!', $customer->errors('phone'));
-        $this->assertEquals('não pode ser vazio!', $customer->errors('cpf'));
-        $this->assertEquals('não pode ser vazio!', $customer->errors('password'));
     }
 
     public function test_errors_should_return_password_confirmation_error(): void

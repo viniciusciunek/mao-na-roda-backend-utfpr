@@ -33,7 +33,7 @@ class BudgetsController extends Controller
 
         $budget = Budget::findById($params['id']);
 
-        $title = "Visualização do Orçamento #{$budget->getId()}";
+        $title = "Visualização do Orçamento #{$budget->id}";
 
         $this->render('budgets/show', compact('budget', 'title'));
     }
@@ -83,22 +83,26 @@ class BudgetsController extends Controller
         }
 
         $budget = new Budget(
-            customer_id: $budgetData['customer_id'],
-            status: $budgetData['status'] ?? 'pending',
-            cancelled: $budgetData['cancelled'] ?? false,
-            payed: $budgetData['payed'] ?? false,
-            total: $total,
+            [
+                'customer_id' =>  $budgetData['customer_id'],
+                'status' => $budgetData['status'] ?? 'pending',
+                'cancelled' => $budgetData['cancelled'] ?? false,
+                'payed' => $budgetData['payed'] ?? false,
+                'total' => $total
+            ]
         );
 
 
         if ($budget->save()) {
             foreach ($products as $product) {
                 $budgetItem = new BudgetItem(
-                    budget_id: (int) $budget->getId(),
-                    product_id: $product['id'],
-                    quantity: $product['quantity'],
-                    unit_price: $product['price'],
-                    total_price: $product['price'] * $product['quantity'],
+                    [
+                        'budget_id' => (int) $budget->id,
+                        'product_id' => $product['id'],
+                        'quantity' => $product['quantity'],
+                        'unit_price' => $product['price'],
+                        'total_price' => $product['price'] * $product['quantity']
+                    ]
                 );
                 $budgetItem->save();
             }
