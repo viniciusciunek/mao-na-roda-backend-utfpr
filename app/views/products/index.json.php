@@ -4,11 +4,11 @@ $productsToJson = [];
 
 foreach ($products as $product) {
     $productsToJson[] = [
-        'id' => $product->getId(),
-        'name' => $product->getName(),
-        'description' => $product->getDescription(),
-        'brand' => $product->getBrand(),
-        'price' => $product->getPrice()
+        'id' => $product->id,
+        'name' => $product->name,
+        'description' => $product->description,
+        'brand' => $product->brand,
+        'price' => $product->price
     ];
 }
 

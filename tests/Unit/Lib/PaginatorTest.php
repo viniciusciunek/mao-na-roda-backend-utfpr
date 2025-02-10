@@ -20,10 +20,12 @@ class PaginatorTest extends TestCase
 
         for ($i = 0; $i < 10; $i++) {
             $product = new Product(
-                name: 'Product ' . $i,
-                description: 'Description ' . $i,
-                brand: 'Brand ' . $i,
-                price: 100.00 + $i
+                [
+                    'name' => 'Product ' . $i,
+                    'description' => 'Description ' . $i,
+                    'brand' => 'Brand ' . $i,
+                    'price' => 100.00 + $i
+                ]
             );
 
             $product->save();
@@ -52,7 +54,14 @@ class PaginatorTest extends TestCase
 
     public function test_total_of_pages_when_the_division_is_not_exact(): void
     {
-        $product = new Product(name: 'Product ', description: 'Description ', brand: 'Brand ', price: 100.00);
+        $product = new Product(
+            [
+                'name' => 'Product 1',
+                'description' => 'Product 1',
+                'brand' => 'Product 1',
+                'price' => 1
+            ]
+        );
 
         $product->save();
 

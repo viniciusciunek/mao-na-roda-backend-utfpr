@@ -1,7 +1,6 @@
 parameters:
 
   level: 6
-
   paths:
     - app
     - core
@@ -9,3 +8,8 @@ parameters:
 
   excludePaths:
     - app/views/*
+
+  ignoreErrors:
+    - '#Unsafe usage of new static\(\)\.#'
+    - '#Access to protected property App\\Models\\Admin::\$password.#'
+    - '#Access to protected property App\\Models\\Customer::\$password.#'

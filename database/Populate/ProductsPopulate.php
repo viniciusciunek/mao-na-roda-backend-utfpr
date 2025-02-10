@@ -12,10 +12,12 @@ class ProductsPopulate
 
         for ($i = 0; $i < $numberOfProducts; $i++) {
             $product = new Product(
-                name: 'Product ' . $i,
-                description: 'Description ' . $i,
-                brand: 'Brand ' . $i,
-                price: 100 + $i
+                [
+                    'name' => 'Product ' . $i,
+                    'description' => 'Description ' . $i,
+                    'brand' => 'Brand ' . $i,
+                    'price' => 100 + $i
+                ]
             );
             $product->save();
         }

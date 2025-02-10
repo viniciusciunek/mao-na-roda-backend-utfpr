@@ -9,8 +9,8 @@ class Auth
 {
     public static function login(Customer|Admin $customer): void
     {
-        $_SESSION['user']['id'] = $customer->getId();
-        $_SESSION['user']['email'] = $customer->getEmail();
+        $_SESSION['user']['id'] = $customer->id;
+        $_SESSION['user']['email'] = $customer->email;
     }
 
     public static function logout(): void

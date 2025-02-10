@@ -20,7 +20,7 @@ class RouteWrapperMiddlewareTest extends FrameworkTestCase
         $routeSizeBefore = Router::getInstance()->getRouteSize();
 
         $routeWrapperMiddleware->group(function () {
-            Route::get('/home', [MockController::class, 'index'])->name('home');
+            Route::get('/home', [MockController::class, 'index'])->setName('home');
         });
 
         $routeSizeAfter = Router::getInstance()->getRouteSize();

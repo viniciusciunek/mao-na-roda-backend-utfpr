@@ -4,9 +4,9 @@
     </div>
 
     <div class="p-4 shadow rounded-b-lg">
-        <p><span class="font-bold text-gray-800">Nome:</span> <?= $product->getName()  ?></p>
-        <p><span class="font-bold text-gray-800">Descrição:</span> <?= $product->getDescription()  ?></p>
-        <p><span class="font-bold text-gray-800">Marca:</span> <?= $product->getBrand()  ?></p>
-        <p><span class="font-bold text-gray-800">Preço:</span> R$ <?= number_format($product->getPrice(), 2, ',', '.') ?></p>
+        <p><span class="font-bold text-gray-800">Nome:</span> <?= $product->name  ?></p>
+        <p><span class="font-bold text-gray-800">Descrição:</span> <?= $product->description  ?></p>
+        <p><span class="font-bold text-gray-800">Marca:</span> <?= $product->brand  ?></p>
+        <p><span class="font-bold text-gray-800">Preço:</span> R$ <?= number_format($product->price, 2, ',', '.') ?></p>
     </div>
 </div>
