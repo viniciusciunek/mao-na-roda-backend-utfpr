@@ -14,7 +14,11 @@ class BudgetsController extends Controller
 {
     public function index(Request $request): void
     {
-        $paginator = Budget::paginate(page: $request->getParam('page', 1));
+        if ($this->isAdmin()) {
+            $paginator = Budget::paginate(page: $request->getParam('page', 1));
+        } else {
+            $paginator = $this->currentUser()->budgets()->paginate(page: $request->getParam('page', 1));
+        }
 
         $budgets = $paginator->registers();
 
@@ -31,7 +35,11 @@ class BudgetsController extends Controller
     {
         $params = $request->getParams();
 
-        $budget = Budget::findById($params['id']);
+        if ($this->isAdmin()) {
+            $budget = Budget::findById($params['id']);
+        } else {
+            $budget = $this->currentUser()->budgets()->findById($params['id']);
+        }
 
         $title = "Visualização do Orçamento #{$budget->id}";
 
@@ -40,7 +48,11 @@ class BudgetsController extends Controller
 
     public function new(): void
     {
-        $budget = new Budget();
+        // $budget = new Budget();
+
+        $budget = $this->currentUser()->budgets()->new();
+
+        dd($budget);
 
         $customers = Customer::all();
 

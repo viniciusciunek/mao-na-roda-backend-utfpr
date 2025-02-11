@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Core\Database\ActiveRecord\BelongsTo;
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
 
@@ -26,5 +27,10 @@ class Budget extends Model
         Validations::notEmpty('cancelled', $this);
         Validations::notEmpty('payed', $this);
         Validations::nonZero('total', $this);
+    }
+
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 }
