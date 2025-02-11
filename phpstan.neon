@@ -13,3 +13,4 @@ parameters:
     - '#Unsafe usage of new static\(\)\.#'
     - '#Access to protected property App\\Models\\Admin::\$password.#'
     - '#Access to protected property App\\Models\\Customer::\$password.#'
+    - '#Call to an undefined method ReflectionType::getName\(\).#'

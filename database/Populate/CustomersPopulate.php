@@ -10,7 +10,7 @@ class CustomersPopulate
     {
         $customer = new Customer(
             [
-                'name' => 'Customer 1',
+                'name' => 'Customer',
                 'email' => 'customer@example.com',
                 'password' => '123456',
                 'password_confirmation' => '123456',

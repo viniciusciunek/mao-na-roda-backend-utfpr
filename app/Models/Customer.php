@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Core\Database\ActiveRecord\HasMany;
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
 
@@ -21,7 +22,6 @@ class Customer extends Model
 
     protected ?string $password = null;
     protected ?string $password_confirmation = null;
-
 
     public function validates(): void
     {
@@ -61,5 +61,10 @@ class Customer extends Model
     public static function findByEmail(string $email): Customer | null
     {
         return Customer::findBy(['email' => $email]);
+    }
+
+    public function budgets(): HasMany
+    {
+        return $this->hasMany(Budget::class, 'customer_id');
     }
 }

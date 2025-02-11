@@ -11,7 +11,12 @@ class Controller
 {
     protected string $layout = 'application';
 
-    private Customer|Admin|null $currentUser = null;
+    private Customer|Admin|null $current_user = null;
+
+    public function __construct()
+    {
+        $this->current_user = Auth::user();
+    }
 
     public function isAdmin(): bool
     {
@@ -20,11 +25,11 @@ class Controller
 
     public function currentUser(): Customer|Admin|null
     {
-        if ($this->currentUser === null && isset($_SESSION['user']['id'])) {
-            $this->currentUser = Auth::user();
+        if ($this->current_user === null && isset($_SESSION['user']['id'])) {
+            $this->current_user = Auth::user();
         }
 
-        return $this->currentUser;
+        return $this->current_user;
     }
 
     /**

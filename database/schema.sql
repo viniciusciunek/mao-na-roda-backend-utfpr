@@ -35,7 +35,7 @@ DROP TABLE IF EXISTS budgets;
 
 CREATE TABLE budgets (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  customer_id INT NOT NULL,
+  customer_id INT NOT NULL REFERENCES customers(id),
   status VARCHAR(20) NOT NULL DEFAULT 'pending',
   cancelled BOOLEAN NOT NULL DEFAULT FALSE,
   payed BOOLEAN NOT NULL DEFAULT FALSE,
@@ -55,3 +55,5 @@ CREATE TABLE budget_items (
     FOREIGN KEY (budget_id) REFERENCES budgets(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
+
+SET FOREIGN_KEY_CHECKS = 1;

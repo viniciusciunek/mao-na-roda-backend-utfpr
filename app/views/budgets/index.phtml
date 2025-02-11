@@ -1,11 +1,13 @@
     <div>
-        <div class="flex flex-row items-center justify-between p-4 mb-2 bg-gray-100 rounded shadow">
-            <h1 class="font-bold text-gray-700"><?= $title ?></h1>
+        <?php if ($this->isAdmin()): ?>
+            <div class="flex flex-row items-center justify-between p-4 mb-2 bg-gray-100 rounded shadow">
+                <h1 class="font-bold text-gray-700"><?= $title ?></h1>
 
-            <a href="<?= route('budgets.new') ?>" class="btn-success">
-                Novo Orçamento
-            </a>
-        </div>
+                <a href="<?= route('budgets.new') ?>" class="btn-success">
+                    Novo Orçamento
+                </a>
+            </div>
+        <? endif ?>
 
         <table class="min-w-full bg-white rounded-lg shadow">
             <thead>
@@ -22,7 +24,7 @@
                 <?php foreach ($budgets as $budget) : ?>
                     <tr class="hover:bg-gray-50">
                         <td class="py-2 font-bold text-center text-gray-800 border-b"><a href="<?= route('budgets.show', ['id' => $budget->id]) ?>"><?= $budget->id ?></a></td>
-                        <td class="py-2 font-bold text-center text-gray-800 border-b"><?= $budget->customer_id ?></td>
+                        <td class="py-2 font-bold text-center text-gray-800 border-b"><?= $budget->customer->name ?></td>
                         <td class="py-2 font-bold text-center text-gray-800 border-b">
                             <a href="">
                                 <?php
