@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Core\Database\ActiveRecord\BelongsTo;
+use Core\Database\ActiveRecord\BelongsToMany;
+use Core\Database\ActiveRecord\HasMany;
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
 
@@ -32,5 +34,20 @@ class Budget extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class, 'customer_id');
+    }
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Product::class,
+            'budget_items',
+            'budget_id',
+            'product_id'
+        );
+    }
+
+    public function items(): HasMany
+    {
+        return $this->hasMany(BudgetItem::class, 'budget_id');
     }
 }

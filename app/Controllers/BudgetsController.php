@@ -48,11 +48,11 @@ class BudgetsController extends Controller
 
     public function new(): void
     {
-        // $budget = new Budget();
-
-        $budget = $this->currentUser()->budgets()->new();
-
-        dd($budget);
+        if ($this->isAdmin()) {
+            $budget = new Budget();
+        } else {
+            $budget = $this->currentUser()->budgets()->new();
+        }
 
         $customers = Customer::all();
 

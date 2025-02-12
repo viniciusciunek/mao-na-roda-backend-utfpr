@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Core\Database\ActiveRecord\BelongsTo;
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
 
@@ -27,5 +28,10 @@ class BudgetItem extends Model
         Validations::notEmpty('quantity', $this);
         Validations::notEmpty('unit_price', $this);
         Validations::notEmpty('total_price', $this);
+    }
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class, 'product_id');
     }
 }
