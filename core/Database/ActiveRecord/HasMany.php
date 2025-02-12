@@ -40,7 +40,7 @@ class HasMany
         );
     }
 
-    public function paginate(int $page = 1, int $per_page = 10): Paginator
+    public function paginate(int $page = 1, int $per_page = 10, string $route = null): Paginator
     {
         return new Paginator(
             class: $this->related,
@@ -48,7 +48,8 @@ class HasMany
             per_page: $per_page,
             table: $this->related::table(),
             attributes: $this->related::columns(),
-            conditions: [$this->foreignKey => $this->model->id]
+            conditions: [$this->foreignKey => $this->model->id],
+            route: $route
         );
     }
 }

@@ -24,6 +24,19 @@
             ?>
         </p>
         <p><span class="font-bold text-gray-800">Pago?</span> <?= $budget->payed ? 'Pago' : 'Pendente' ?></p>
+        <p><span class="font-bold text-gray-800">Quantidade de Produtos:</span> <?= count($budget->products) ?></p>
         <p><span class="font-bold text-gray-800">Total:</span>R$ <?= number_format($budget->total, 2, ',', '.')  ?></p>
+    </div>
+
+
+
+    <div class="p-4 rounded-b-lg shadow">
+        <ul>
+            <?php foreach ($budget->items as $item): ?>
+                <li>
+                    <?= $item->quantity . "x - " .  $item->product->name ?> - R$ <?= $item->unit_price ?>
+                </li>
+            <?php endforeach ?>
+        </ul>
     </div>
 </div>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
+use Core\Database\ActiveRecord\BelongsToMany;
 
 /**
  * @property int $id
@@ -24,5 +25,15 @@ class Product extends Model
         Validations::notEmpty('description', $this);
         Validations::notEmpty('brand', $this);
         Validations::notEmpty('price', $this);
+    }
+
+    public function budgets(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Budget::class,
+            'budget_items',
+            'product_id',
+            'budget_id'
+        );
     }
 }
