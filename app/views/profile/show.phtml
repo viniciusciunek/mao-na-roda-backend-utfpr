@@ -1,0 +1,24 @@
+<div class="p-2">
+    <div class="flex justify-center mb-2">
+        <img id="image_preview" class="rounded-full max-w-10 max-h-10 avatar img-thumbnail" src="<?= $this->current_user->avatar()->path() ?>" alt="avatar">
+
+        <form action="<?= route('profile.avatar') ?>" method="POST" enctype="multipart/form-data">
+            <input id="image_preview_input" type="file" name="user_avatar" id="user_avatar">
+            <div class="grid mt-2">
+                <button id="image_preview_submit" type="submit" class="btn btn-fill btn-primary">Atualizar</button>
+            </div>
+        </form>
+    </div>
+    <div>
+        <div class="w-full p-2 font-bold text-white rounded-md bg-darkBlue">
+            <ul>
+                <li><?= $this->isAdmin() ? 'Administrador'   : "Cliente" ?>: <?= $this->current_user->name ?></li>
+                <li>Email: <?= $this->current_user->email ?></li>
+                <?php if (!$this->isAdmin()): ?>
+                    <li>Telefone: <?= $this->current_user->phone ?></li>
+                    <li>CPF: <?= $this->current_user->cpf ?></li>
+                <?php endif; ?>
+            </ul>
+        </div>
+    </div>
+</div>

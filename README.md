@@ -28,6 +28,12 @@ $ cp .env.example .env
 $ ./run composer install
 ```
 
+### Modifica permissões de pastas para upar imagens.
+
+```
+sudo chown www-data:www-data public/assets/uploads
+```
+
 ### Subir os contêineres
 
 ```

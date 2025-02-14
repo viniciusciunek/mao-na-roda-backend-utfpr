@@ -22,7 +22,7 @@ class Route
     ) {
     }
 
-    public function setName(string $name): void
+    public function name(string $name): void
     {
         $this->name = $name;
     }

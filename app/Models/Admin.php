@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\ProfileAvatar;
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
 
@@ -14,7 +15,7 @@ use Core\Database\ActiveRecord\Model;
 class Admin extends Model
 {
     protected static string $table = 'admins';
-    protected static array $columns = ['name', 'email', 'encrypted_password'];
+    protected static array $columns = ['name', 'email', 'encrypted_password', 'avatar_name'];
 
     protected ?string $password = null;
     protected ?string $password_confirmation = null;
@@ -56,5 +57,10 @@ class Admin extends Model
     public static function findByEmail(string $email): Admin | null
     {
         return Admin::findBy(['email' => $email]);
+    }
+
+    public function avatar(): ProfileAvatar
+    {
+        return new ProfileAvatar($this);
     }
 }

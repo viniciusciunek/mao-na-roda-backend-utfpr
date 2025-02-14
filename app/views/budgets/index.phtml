@@ -43,20 +43,18 @@
                         <td class="py-2 font-bold text-center text-gray-800 border-b"><a href="">R$ <?= number_format($budget->total, 2, ',', '.') ?></a></td>
                         <td class="py-2 text-center text-gray-800 border-b">
                             <div class="flex flex-row items-stretch justify-center gap-2">
-                                <?php if ($budget->status == 'pending') : ?>
-                                    <a href="">
-                                        <button class="btn-info">
-                                            Editar
-                                        </button>
-                                    </a>
+                                <a href="">
+                                    <button class="btn-info">
+                                        Editar
+                                    </button>
+                                </a>
 
-                                    <form action="" method="POST" class="m-0">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <button class="btn-danger" type="submit">
-                                            Excluir
-                                        </button>
-                                    </form>
-                                <?php endif ?>
+                                <form action="" method="POST" class="m-0">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button class="btn-danger" type="submit">
+                                        Excluir
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>
