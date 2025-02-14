@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\ProfileAvatar;
 use Core\Database\ActiveRecord\HasMany;
 use Lib\Validations;
 use Core\Database\ActiveRecord\Model;
@@ -18,7 +19,7 @@ use Core\Database\ActiveRecord\Model;
 class Customer extends Model
 {
     protected static string $table = 'customers';
-    protected static array $columns = ['name', 'email', 'encrypted_password', 'phone', 'cpf', 'cnpj'];
+    protected static array $columns = ['name', 'email', 'encrypted_password', 'phone', 'cpf', 'cnpj', 'avatar_name'];
 
     protected ?string $password = null;
     protected ?string $password_confirmation = null;
@@ -66,5 +67,10 @@ class Customer extends Model
     public function budgets(): HasMany
     {
         return $this->hasMany(Budget::class, 'customer_id');
+    }
+
+    public function avatar(): ProfileAvatar
+    {
+        return new ProfileAvatar($this);
     }
 }

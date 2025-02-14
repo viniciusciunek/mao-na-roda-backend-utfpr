@@ -147,7 +147,7 @@ class RouteTest extends TestCase
     public function test_name_should_set_the_name_of_the_route(): void
     {
         $route = new Route(method: 'GET', uri: '/', controllerName: 'MockController', actionName: 'index');
-        $route->setName('root');
+        $route->name('root');
 
         $this->assertEquals('root', $route->getName());
     }
@@ -155,7 +155,7 @@ class RouteTest extends TestCase
     public function test_match_should_return_true_if_method_and_uri_with_params_match(): void
     {
         $route = new Route(method: 'GET', uri: '/test/{id}', controllerName: 'MockController', actionName: 'show');
-        $route->setName('test.show');
+        $route->name('test.show');
 
         $this->assertTrue($route->match($this->request('GET', '/test/1')));
         $this->assertFalse($route->match($this->request('GET', '/test/1/edit')));

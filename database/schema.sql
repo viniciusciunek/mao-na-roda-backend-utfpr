@@ -16,7 +16,8 @@ CREATE TABLE admins (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
   encrypted_password VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL
+  email VARCHAR(255) UNIQUE NOT NULL,
+  avatar_name VARCHAR(255)
 );
 
 DROP TABLE IF EXISTS customers;
@@ -28,7 +29,8 @@ CREATE TABLE customers (
   encrypted_password VARCHAR(255) NOT NULL,
   phone VARCHAR(255) NOT NULL,
   cpf VARCHAR(255) NOT NULL,
-  cnpj VARCHAR(255) NOT NULL
+  cnpj VARCHAR(255) NOT NULL,
+  avatar_name VARCHAR(255)
 );
 
 DROP TABLE IF EXISTS budgets;

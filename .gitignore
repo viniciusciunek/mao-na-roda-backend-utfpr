@@ -17,3 +17,6 @@
 
 # ignore .env
 .env
+
+/public/assets/uploads/*
+!/public/assets/uploads/.gitkeep
