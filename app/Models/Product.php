@@ -24,7 +24,7 @@ class Product extends Model
         Validations::notEmpty('name', $this);
         Validations::notEmpty('description', $this);
         Validations::notEmpty('brand', $this);
-        Validations::notEmpty('price', $this);
+        Validations::nonZero('price', $this);
     }
 
     public function budgets(): BelongsToMany

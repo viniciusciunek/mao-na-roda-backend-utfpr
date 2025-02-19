@@ -51,29 +51,29 @@ class ProductsController extends Controller
     public function create(Request $request): void
     {
         $params = $request->getParams()['product'];
-
         $params = array_map('trim', $params);
 
-        $product = new Product(
-            [
-                'name' =>  $params['name'],
-                'description' => $params['description'],
-                'brand' => $params['brand'],
-                'price' => (float) $params['price']
-            ]
-        );
+        $product = new Product([
+            'name' =>  $params['name'],
+            'description' => $params['description'],
+            'brand' => $params['brand'],
+            'price' => (float) $params['price'],
+            'active' => 1
+        ]);
 
         if ($product->save()) {
             FlashMessage::success("Produto criado com sucesso!");
 
-            $this->redirectTo(route('products.index'));
+            $this->redirectTo(route('admin.products.index'));
         } else {
             FlashMessage::danger("Erro ao criar produto!");
 
             $title = 'Novo Produto';
+
             $this->render('products/new', compact('product', 'title'));
         }
     }
+
 
     public function edit(Request $request): void
     {
@@ -101,7 +101,7 @@ class ProductsController extends Controller
         if ($product->save()) {
             FlashMessage::success("Produto editado com sucesso!");
 
-            $this->redirectTo(route('products.index'));
+            $this->redirectTo(route('admin.products.index'));
         } else {
             FlashMessage::danger("Erro ao editar produto!");
 
@@ -123,6 +123,6 @@ class ProductsController extends Controller
 
         FlashMessage::success("Produto removido com sucesso!");
 
-        $this->redirectTo(route('products.index'));
+        $this->redirectTo(route('admin.products.index'));
     }
 }

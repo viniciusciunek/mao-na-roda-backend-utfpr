@@ -31,7 +31,7 @@ Route::middleware('admin')->group(function () {
     // create products
     Route::get('/admin/products/new', [ProductsController::class, 'new'])->name('admin.products.new');
     Route::post('/admin/products', [ProductsController::class, 'create'])->name('admin.products.create');
-    Route::get('/admin/products/page/{page}', [ProductsController::class, 'index'])->name('admin.products.paginate');
+    Route::get('/admin/products/page/{page}', [ProductsController::class, 'index'])->name('products.paginate');
 
     // retrive all products
     Route::get('/admin/products', [ProductsController::class, 'index'])->name('admin.products.index');
@@ -53,7 +53,6 @@ Route::middleware('admin')->group(function () {
 
     // retrive all budgets
     Route::get('/admin/budgets', [BudgetsController::class, 'index'])->name('admin.budgets.index');
-    // Route::get('/admin/budgets/page/{page}', [BudgetsController::class, 'index'])->name('admin.budgets.paginate');
 
     // retrive budget
     Route::get('/admin/budgets/{id}', [BudgetsController::class, 'show'])->name('admin.budgets.show');
@@ -64,6 +63,5 @@ Route::middleware('admin')->group(function () {
 
 Route::middleware(middleware: 'customer')->group(function () {
     Route::get('/budgets', [BudgetsController::class, 'index'])->name('customer.budgets.index');
-    // Route::get('/budgets/page/{page}', [BudgetsController::class, 'index'])->name('customer.budgets.paginate');
     Route::get('/budgets/{id}', [BudgetsController::class, 'show'])->name('customer.budgets.show');
 });
