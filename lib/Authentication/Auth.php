@@ -15,7 +15,7 @@ class Auth
 
     public static function logout(): void
     {
-        unset($_SESSION['user']['id']);
+        unset($_SESSION['user']);
     }
 
 
@@ -24,6 +24,7 @@ class Auth
         if (isset($_SESSION['user']['id'])) {
             $id = $_SESSION['user']['id'];
             $email = $_SESSION['user']['email'];
+
 
             if (Admin::findById($id) !== null && Admin::findByEmail($email) !== null) {
                 return Admin::findById($id);

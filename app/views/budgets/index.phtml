@@ -1,13 +1,12 @@
     <div>
-        <?php if ($this->isAdmin()): ?>
-            <div class="flex flex-row items-center justify-between p-4 mb-2 bg-gray-100 rounded shadow">
-                <h1 class="font-bold text-gray-700"><?= $title ?></h1>
-
-                <a href="<?= route('budgets.new') ?>" class="btn-success">
+        <div class="flex flex-row items-center justify-between p-4 mb-2 bg-gray-100 rounded shadow">
+            <h1 class="font-bold text-gray-700"><?= $title ?></h1>
+            <?php if ($this->isAdmin()): ?>
+                <a href="<?= route('admin.budgets.new') ?>" class="btn-success">
                     Novo Orçamento
                 </a>
-            </div>
-        <? endif ?>
+            <? endif ?>
+        </div>
 
         <table class="min-w-full bg-white rounded-lg shadow">
             <thead>
@@ -23,7 +22,7 @@
             <tbody>
                 <?php foreach ($budgets as $budget) : ?>
                     <tr class="hover:bg-gray-50">
-                        <td class="py-2 font-bold text-center text-gray-800 border-b"><a href="<?= route('budgets.show', ['id' => $budget->id]) ?>"><?= $budget->id ?></a></td>
+                        <td class="py-2 font-bold text-center text-gray-800 border-b"><a href="<?= route($this->isAdmin() ? 'admin.budgets.show' : 'customer.budgets.show', ['id' => $budget->id]) ?>"><?= $budget->id ?></a></td>
                         <td class="py-2 font-bold text-center text-gray-800 border-b"><?= $budget->customer->name ?></td>
                         <td class="py-2 font-bold text-center text-gray-800 border-b">
                             <a href="">
@@ -42,20 +41,29 @@
                         <td class="py-2 font-bold text-center text-gray-800 border-b"><a href=""><?= $budget->payed ? 'Pago' : 'Pendente' ?></a></td>
                         <td class="py-2 font-bold text-center text-gray-800 border-b"><a href="">R$ <?= number_format($budget->total, 2, ',', '.') ?></a></td>
                         <td class="py-2 text-center text-gray-800 border-b">
-                            <div class="flex flex-row items-stretch justify-center gap-2">
-                                <a href="">
+                            <?php if ($this->isAdmin()): ?>
+                                <div class="flex flex-row items-stretch justify-center gap-2">
+                                    <a href="<?= route('admin.budgets.edit', ['id' => $budget->id]) ?>">
+                                        <button class="btn-info">
+                                            Editar
+                                        </button>
+                                    </a>
+
+                                    <form action="" method="POST" class="m-0">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button class="btn-danger" type="submit">
+                                            Excluir
+                                        </button>
+                                    </form>
+                                </div>
+
+                            <?php else : ?>
+                                <a href="<?= route('customer.budgets.show', ['id' => $budget->id]) ?>">
                                     <button class="btn-info">
-                                        Editar
+                                        Detalhes
                                     </button>
                                 </a>
-
-                                <form action="" method="POST" class="m-0">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <button class="btn-danger" type="submit">
-                                        Excluir
-                                    </button>
-                                </form>
-                            </div>
+                            <? endif ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

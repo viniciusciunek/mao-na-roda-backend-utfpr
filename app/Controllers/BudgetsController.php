@@ -63,6 +63,16 @@ class BudgetsController extends Controller
         $this->render('budgets/new', compact('budget', 'customers', 'products', 'title'));
     }
 
+    // public function edit(Request $request): void
+    // {
+    //     $params = $request->getParams();
+
+    //     $budget = Budget::findById($params['id']);
+
+    //     $title = "Editar Orçamento #{$budget->id}";
+
+    //     $this->render('products/edit', compact('product', 'title'));
+    // }
 
     public function create(Request $request): bool
     {

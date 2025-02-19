@@ -2,18 +2,20 @@
 
 namespace App\Middleware;
 
+use App\Models\Admin;
 use Core\Http\Middleware\Middleware;
 use Core\Http\Request;
 use Lib\Authentication\Auth;
 use Lib\FlashMessage;
 
-class Authenticate implements Middleware
+class AdminMiddleware implements Middleware
 {
     public function handle(Request $request): void
     {
-        if (!Auth::check()) {
-            FlashMessage::danger('Você deve estar logado para acessar essa página');
+        $user = Auth::user();
 
+        if (!$user instanceof Admin) {
+            FlashMessage::danger('Acesso restrito a administradores');
             $this->redirectTo(route('login'));
         }
     }

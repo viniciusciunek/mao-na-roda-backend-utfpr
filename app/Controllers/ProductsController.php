@@ -9,12 +9,13 @@ use Lib\FlashMessage;
 use Core\Http\Request;
 use App\Models\Product;
 use Lib\Authentication\Auth;
+use Lib\Paginator;
 
 class ProductsController extends Controller
 {
     public function index(Request $request): void
     {
-        $paginator = Product::paginate(page: $request->getParam('page', 1));
+        $paginator = new Paginator(Product::class, $request->getParam('page', 1), 10, Product::table(), Product::columns(), ['active' => 1]);
 
         $products = $paginator->registers();
 
@@ -114,7 +115,11 @@ class ProductsController extends Controller
         $params = $request->getParams();
 
         $product = Product::findById($params['id']);
-        $product->destroy();
+        // $product->destroy();
+
+        $product->update([
+            'active' => 0
+        ]);
 
         FlashMessage::success("Produto removido com sucesso!");
 

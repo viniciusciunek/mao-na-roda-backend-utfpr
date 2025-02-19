@@ -52,7 +52,7 @@
 
                     <div>
                         <form method="POST">
-                            <a href="<?= route('customers.logout') ?>" class="p-2 px-6 text-sm font-bold text-gray-500 uppercase bg-gray-200 rounded hover:bg-gray-300">
+                            <a href="<?= route('logout') ?>" class="p-2 px-6 text-sm font-bold text-gray-500 uppercase bg-gray-200 rounded hover:bg-gray-300">
                                 Logout
                             </a>
                         </form>
@@ -63,8 +63,10 @@
                     <a href="<?= route('root') ?>" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Home</a>
 
                     <?php if ($this->isAdmin()): ?>
-                        <a href="<?= route('budgets.index') ?>" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Orçamentos</a>
-                        <a href="<?= route('products.index') ?>" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Produtos</a>
+                        <a href="<?= route('admin.budgets.index') ?>" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Orçamentos</a>
+                        <a href="<?= route('admin.products.index') ?>" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Produtos</a>
+                    <?php else: ?>
+                        <a href="<?= route('customer.budgets.index') ?>" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Orçamentos</a>
                     <?php endif ?>
 
                     <a href="<?= route('profile.show') ?>" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Meu Perfil</a>

@@ -17,7 +17,7 @@ class Product extends Model
 {
     protected static string $table = 'products';
 
-    protected static array $columns = ['name', 'description', 'brand', 'price'];
+    protected static array $columns = ['name', 'description', 'brand', 'price', 'active'];
 
     public function validates(): void
     {

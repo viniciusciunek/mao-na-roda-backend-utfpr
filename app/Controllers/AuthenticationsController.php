@@ -33,7 +33,7 @@ class AuthenticationsController extends Controller
         } else {
             FlashMessage::danger('Email e/ou senha inválidos!');
 
-            $this->redirectTo(route('customers.login'));
+            $this->redirectTo(route('login'));
         }
     }
 
@@ -43,6 +43,6 @@ class AuthenticationsController extends Controller
 
         FlashMessage::success('Logout realizado com sucesso!');
 
-        $this->redirectTo(route('customers.login'));
+        $this->redirectTo(route('login'));
     }
 }

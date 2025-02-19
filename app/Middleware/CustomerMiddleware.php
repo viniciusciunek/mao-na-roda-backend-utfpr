@@ -2,17 +2,20 @@
 
 namespace App\Middleware;
 
+use App\Models\Customer;
 use Core\Http\Middleware\Middleware;
 use Core\Http\Request;
 use Lib\Authentication\Auth;
 use Lib\FlashMessage;
 
-class Authenticate implements Middleware
+class CustomerMiddleware implements Middleware
 {
     public function handle(Request $request): void
     {
-        if (!Auth::check()) {
-            FlashMessage::danger('Você deve estar logado para acessar essa página');
+        $user = Auth::user();
+
+        if (!$user instanceof Customer) {
+            FlashMessage::danger('Acesso restrito a clientes');
 
             $this->redirectTo(route('login'));
         }
