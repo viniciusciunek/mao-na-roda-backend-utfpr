@@ -5,11 +5,8 @@ use App\Controllers\BudgetsController;
 use App\Controllers\ProductsController;
 use App\Controllers\DashboardController;
 use App\Controllers\AuthenticationsController;
+use App\Controllers\BudgetItemsController;
 use App\Controllers\ProfileController;
-
-
-// PAREI FAZENDO AS ROTAS NOVAS DO ORÇAMENTO EXCLUIR E EDITAR.. PRECISO FAZER O AJAX PARA ADICIONAR PRODUTO ( FETCH NA ROTA DO BACK PARA SALVAR NO BACNO EM ITEMS )
-// LOGO APOS ADICIOANR NOVA COLUNA EM BUDGET DE DELETED PRA CONSEGUIR FAZER UM SOFT DELETE.
 
 
 Route::get('/login', [AuthenticationsController::class, 'new'])->name('login');
@@ -46,19 +43,25 @@ Route::middleware('admin')->group(function () {
     // delelte product
     Route::delete('/admin/products/{id}', [ProductsController::class, 'destroy'])->name('admin.products.destroy');
 
-    // craete budget
+    // new budget
     Route::get('/admin/budgets/new', [BudgetsController::class, 'new'])->name('admin.budgets.new');
-    Route::post('/admin/budgets', [BudgetsController::class, 'create'])->name('admin.budgets.create');
-    Route::post('/admin/budgets/add_item', [BudgetsController::class, 'test'])->name('admin.budgets.test');
 
     // retrive all budgets
     Route::get('/admin/budgets', [BudgetsController::class, 'index'])->name('admin.budgets.index');
 
-    // retrive budget
+    // show budget
     Route::get('/admin/budgets/{id}', [BudgetsController::class, 'show'])->name('admin.budgets.show');
 
-    // update budget
-    Route::get('/admin/budgets/{id}/edit', [BudgetsController::class, 'show'])->name('admin.budgets.edit');
+    // edit budget
+    Route::get('/admin/budgets/{id}/edit', [BudgetsController::class, 'edit'])->name('admin.budgets.edit');
+
+
+    // -------------------- rotas ajax --------------------
+    Route::post('/admin/budgets', [BudgetsController::class, 'create'])->name('admin.budgets.create'); # criando o orçamento primeiro
+
+    Route::post('/admin/budgets/add_item', [BudgetItemsController::class, 'create'])->name('admin.budget_items.create'); # adicionando produtos
+
+    Route::delete('/admin/budgets/remove_item', [BudgetItemsController::class, 'destroy'])->name('admin.budget_items.destroy'); # removendo produtos
 });
 
 Route::middleware(middleware: 'customer')->group(function () {

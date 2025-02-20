@@ -2,7 +2,7 @@
         <div class="flex flex-row items-center justify-between p-4 mb-2 bg-gray-100 rounded shadow">
             <h1 class="font-bold text-gray-700"><?= $title ?></h1>
             <?php if ($this->isAdmin()): ?>
-                <a href="<?= route('admin.budgets.new') ?>" class="btn-success">
+                <a href="<?= route(name: 'admin.budgets.new') ?>" class="btn-success">
                     Novo Orçamento
                 </a>
             <? endif ?>
