@@ -8,7 +8,6 @@ use App\Controllers\AuthenticationsController;
 use App\Controllers\BudgetItemsController;
 use App\Controllers\ProfileController;
 
-
 Route::get('/login', [AuthenticationsController::class, 'new'])->name('login');
 Route::post('/login', [AuthenticationsController::class, 'authenticate'])->name('authenticate');
 
@@ -55,15 +54,21 @@ Route::middleware('admin')->group(function () {
     // edit budget
     Route::get('/admin/budgets/{id}/edit', [BudgetsController::class, 'edit'])->name('admin.budgets.edit');
 
-
     // -------------------- rotas ajax --------------------
-    Route::post('/admin/budgets', [BudgetsController::class, 'create'])->name('admin.budgets.create'); # criando o orçamento primeiro
+    # criando o orçamento primeiro
+    Route::post('/admin/budgets', [BudgetsController::class, 'create'])->name('admin.budgets.create');
 
-    Route::post('/admin/budgets/add_item', [BudgetItemsController::class, 'create'])->name('admin.budget_items.create'); # adicionando produtos
+    # adicionando produtos
+    Route::post('/admin/budgets/add_item', [BudgetItemsController::class, 'create'])
+        ->name('admin.budget_items.create');
 
-    Route::delete('/admin/budgets/remove_item', [BudgetItemsController::class, 'destroy'])->name('admin.budget_items.destroy'); # removendo produtos
+    # removendo produtos
+    Route::delete('/admin/budgets/remove_item', [BudgetItemsController::class, 'destroy'])
+        ->name('admin.budget_items.destroy');
 
-    Route::post('/admin/budgets/change_status', [BudgetsController::class, 'changeStatus'])->name('admin.budgets.change_status'); # alterando o status
+    # alterando o status
+    Route::post('/admin/budgets/change_status', [BudgetsController::class, 'changeStatus'])
+        ->name('admin.budgets.change_status');
 });
 
 Route::middleware(middleware: 'customer')->group(function () {

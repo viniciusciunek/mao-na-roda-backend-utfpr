@@ -15,7 +15,14 @@ class ProductsController extends Controller
 {
     public function index(Request $request): void
     {
-        $paginator = new Paginator(Product::class, $request->getParam('page', 1), 10, Product::table(), Product::columns(), ['active' => 1]);
+        $paginator = new Paginator(
+            Product::class,
+            $request->getParam('page', 1),
+            10,
+            Product::table(),
+            Product::columns(),
+            ['active' => 1]
+        );
 
         $products = $paginator->registers();
 

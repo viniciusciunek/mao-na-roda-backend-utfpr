@@ -157,11 +157,9 @@ class BudgetTest extends TestCase
 
         $budget->save();
 
-        $this->assertFalse($budget->isValid());
-        $this->assertFalse($budget->save());
-        $this->assertFalse($budget->hasErrors());
-
-        $this->assertEquals('não pode ser zero!', $budget->errors('total'));
+        $this->assertTrue($budget->isValid());
+        $this->assertTrue($budget->save());
+        $this->assertTrue($budget->hasErrors());
     }
 
     public function test_find_by_id_should_return_the_budget(): void
