@@ -1,16 +1,10 @@
 <div>
     <div class="flex flex-row items-center justify-between p-4 bg-gray-100 rounded-t-lg shadow">
         <h1 class="font-bold text-gray-700"><?= $title ?></h1>
-
-        <div class="flex items-center justify-center w-12 h-12 p-2 font-bold text-white rounded-full bg-darkBlue">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-            </svg>
-        </div>
     </div>
 
     <div class="p-4 rounded-b-lg shadow">
-        <p><span class="font-bold text-gray-800">Cliente:</span> <?= $budget->customer_id  ?></p>
+        <p><span class="font-bold text-gray-800">Cliente:</span> <?= $budget->customer->name  ?></p>
         <p><span class="font-bold text-gray-800">Status:</span>
             <?php
             switch ($budget->status) {
@@ -28,15 +22,37 @@
         <p><span class="font-bold text-gray-800">Total:</span>R$ <?= number_format($budget->total, 2, ',', '.')  ?></p>
     </div>
 
+    <div class="mt-4">
+        <h3 class="text-lg font-semibold">Produtos:</h3>
 
+        <table class="min-w-full bg-white rounded-lg shadow">
+            <thead>
+                <tr class="text-sm font-semibold text-left text-gray-700 uppercase bg-gray-200">
+                    <th class="px-4 py-2 text-center border-b">N°</th>
+                    <th class="px-4 py-2 text-center border-b">Produto</th>
+                    <th class="px-4 py-2 text-center border-b">Quantidade</th>
+                    <th class="px-4 py-2 text-center border-b">Valor Un.</th>
+                    <th class="px-4 py-2 text-center border-b">Valor Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($budget->items as $k => $product): ?>
+                    <tr class="hover:bg-gray-50">
+                        <td class="py-2 font-bold text-center text-gray-800 border-b"><?= $k + 1; ?></td>
+                        <td class="py-2 font-bold text-center text-gray-800 border-b"><?= $product->product->name; ?></td>
+                        <td class="py-2 font-bold text-center text-gray-800 border-b"><?= $product->quantity; ?></td>
+                        <td class="py-2 font-bold text-center text-gray-800 border-b">R$ <?= number_format($product->unit_price, 2, ',', '.'); ?></td>
+                        <td class="py-2 font-bold text-center text-gray-800 border-b">R$ <?= number_format($product->total_price, 2, ',', '.'); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
 
-    <div class="p-4 rounded-b-lg shadow">
-        <ul>
-            <?php foreach ($budget->items as $item): ?>
-                <li>
-                    <?= $item->quantity . "x - " .  $item->product->name ?> - R$ <?= $item->unit_price ?>
-                </li>
-            <?php endforeach ?>
-        </ul>
+        <div class="flex flex-col mt-2 font-bold rounded">
+            <div class="flex flex-row items-center justify-between">
+                <h1>Total do orçamento:</h1>
+                <h1 class="text-xl font-black text-green-600 uppercase">R$ <?= number_format($budget->total, 2, ',', '.') ?></h1>
+            </div>
+        </div>
     </div>
 </div>

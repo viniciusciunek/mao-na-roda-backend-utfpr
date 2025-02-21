@@ -8,7 +8,9 @@ use Core\Http\Request;
 use App\Models\Product;
 use App\Models\Customer;
 use App\Models\BudgetItem;
+use Core\Exceptions\HTTPException;
 use Core\Http\Controllers\Controller;
+use Exception;
 
 class BudgetsController extends Controller
 {
@@ -36,9 +38,9 @@ class BudgetsController extends Controller
         $params = $request->getParams();
 
         if ($this->isAdmin()) {
-            $budget = Budget::findById($params['id']);
+            $budget = Budget::findById((int) $params['id']);
         } else {
-            $budget = $this->currentUser()->budgets()->findById($params['id']);
+            $budget = $this->currentUser()->budgets()->findById((int) $params['id']);
         }
 
         $title = "Visualização do Orçamento #{$budget->id}";
@@ -63,79 +65,84 @@ class BudgetsController extends Controller
         $this->render('budgets/new', compact('budget', 'customers', 'products', 'title'));
     }
 
-
-    public function create(Request $request): bool
+    public function create(Request $request): void
     {
-        $params = $request->getParams();
+        try {
+            $data = json_decode(file_get_contents('php://input'), true);
 
-        $budgetData = $params['budget'];
-
-        $products = json_decode($params['products'], true);
-
-        if (empty($products)) {
-            FlashMessage::danger("Adicione pelo menos um produto ao orçamento.");
-
-            $budget = new Budget();
-
-            $customers = Customer::all();
-
-            $products = Product::all();
-
-            $title = 'Criando Orçamento';
-
-            $this->render('budgets/new', compact('budget', 'customers', 'products', 'title'));
-
-            return false;
-        }
-
-        $total = 0.0;
-
-        foreach ($products as $product) {
-            $total += $product['price'] * $product['quantity'];
-        }
-
-        $budget = new Budget(
-            [
-                'customer_id' =>  $budgetData['customer_id'],
-                'status' => $budgetData['status'] ?? 'pending',
-                'cancelled' => $budgetData['cancelled'] ?? false,
-                'payed' => $budgetData['payed'] ?? false,
-                'total' => $total
-            ]
-        );
-
-
-        if ($budget->save()) {
-            foreach ($products as $product) {
-                $budgetItem = new BudgetItem(
-                    [
-                        'budget_id' => (int) $budget->id,
-                        'product_id' => $product['id'],
-                        'quantity' => $product['quantity'],
-                        'unit_price' => $product['price'],
-                        'total_price' => $product['price'] * $product['quantity']
-                    ]
-                );
-                $budgetItem->save();
+            if (empty($data['customer_id'])) {
+                throw new HTTPException('Selecione um cliente', 400);
             }
 
-            FlashMessage::success("Orçamento criado com sucesso!");
+            $budget = new Budget([
+                'customer_id' => (int) $data['customer_id'],
+                'status' => 'draft',
+                'total' => 0.00,
+                'cancelled' => 0,
+                'payed' => 0
+            ]);
 
-            $this->redirectTo(route('budgets.index'));
-        } else {
-            FlashMessage::danger("Erro ao criar orçamento!");
+            if ($budget->save()) {
+                $this->jsonResponse([
+                    'success' => true,
+                    'budget_id' => $budget->id,
+                    'message' => 'Orçamento criado. Adicione os produtos'
+                ]);
+            } else {
+                $this->jsonResponse([
+                    'success' => false,
+                    'budget_id' => $budget->id,
+                    'message' => $budget->errors('payed')
+                ]);
 
-            $budget = new Budget();
-
-            $customers = Customer::all();
-
-            $products = Product::all();
-
-            $title = 'Criando Orçamento';
-
-            $this->render('budgets/new', compact('budget', 'customers', 'products', 'title'));
+                throw new HTTPException('Erro ao criar orçamento', 500);
+            }
+        } catch (Exception $e) {
+            $this->jsonResponse([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], $e->getCode());
         }
+    }
 
-        return true;
+    public function edit(Request $request): void
+    {
+        $budgetId = $request->getParams()['id'];
+
+        $budget = Budget::findById((int) $budgetId);
+
+        $budget->customer();
+
+        $customers = Customer::all();
+        $products = Product::all();
+
+        $title = 'Editar orçamento';
+
+        $this->render('budgets/edit', compact('budget', 'customers', 'products', 'title'));
+    }
+
+    public function changeStatus(): void
+    {
+        try {
+            $data = json_decode(file_get_contents('php://input'), true);
+
+            $status = $data['status'];
+
+            $budget = Budget::findById($data['budget_id']);
+
+            $budget->update([
+                'status' => $status
+            ]);
+
+            $this->jsonResponse([
+                'success' => true,
+                'message' => 'Status alterado para: ' . $status
+            ]);
+        } catch (Exception $e) {
+            $this->jsonResponse([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], $e->getCode());
+        }
     }
 }

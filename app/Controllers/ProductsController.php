@@ -9,12 +9,20 @@ use Lib\FlashMessage;
 use Core\Http\Request;
 use App\Models\Product;
 use Lib\Authentication\Auth;
+use Lib\Paginator;
 
 class ProductsController extends Controller
 {
     public function index(Request $request): void
     {
-        $paginator = Product::paginate(page: $request->getParam('page', 1));
+        $paginator = new Paginator(
+            Product::class,
+            $request->getParam('page', 1),
+            10,
+            Product::table(),
+            Product::columns(),
+            ['active' => 1]
+        );
 
         $products = $paginator->registers();
 
@@ -50,29 +58,29 @@ class ProductsController extends Controller
     public function create(Request $request): void
     {
         $params = $request->getParams()['product'];
-
         $params = array_map('trim', $params);
 
-        $product = new Product(
-            [
-                'name' =>  $params['name'],
-                'description' => $params['description'],
-                'brand' => $params['brand'],
-                'price' => (float) $params['price']
-            ]
-        );
+        $product = new Product([
+            'name' =>  $params['name'],
+            'description' => $params['description'],
+            'brand' => $params['brand'],
+            'price' => (float) $params['price'],
+            'active' => 1
+        ]);
 
         if ($product->save()) {
             FlashMessage::success("Produto criado com sucesso!");
 
-            $this->redirectTo(route('products.index'));
+            $this->redirectTo(route('admin.products.index'));
         } else {
             FlashMessage::danger("Erro ao criar produto!");
 
             $title = 'Novo Produto';
+
             $this->render('products/new', compact('product', 'title'));
         }
     }
+
 
     public function edit(Request $request): void
     {
@@ -100,7 +108,7 @@ class ProductsController extends Controller
         if ($product->save()) {
             FlashMessage::success("Produto editado com sucesso!");
 
-            $this->redirectTo(route('products.index'));
+            $this->redirectTo(route('admin.products.index'));
         } else {
             FlashMessage::danger("Erro ao editar produto!");
 
@@ -114,10 +122,14 @@ class ProductsController extends Controller
         $params = $request->getParams();
 
         $product = Product::findById($params['id']);
-        $product->destroy();
+        // $product->destroy();
+
+        $product->update([
+            'active' => 0
+        ]);
 
         FlashMessage::success("Produto removido com sucesso!");
 
-        $this->redirectTo(route('products.index'));
+        $this->redirectTo(route('admin.products.index'));
     }
 }

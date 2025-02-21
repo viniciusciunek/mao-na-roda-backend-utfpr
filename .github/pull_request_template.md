@@ -1,14 +1,10 @@
 ## PR Template
 
-<!--- Provide a general summary of your changes in the Title above. -->
-
-<!-- Autolinked issue URL -->
-
 Issue: **#ISSUE_NUMBER**
 
 ### Description
 
-<!--- Describe your changes in detail -->
+->
 
 ### Types of changes
 

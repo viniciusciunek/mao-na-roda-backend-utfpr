@@ -2,7 +2,7 @@
     <div class="flex flex-row items-center justify-between p-4 mb-2 bg-gray-100 rounded shadow">
         <h1 class="font-bold text-gray-700"><?= $title ?></h1>
 
-        <a href="<?= route('products.new') ?>" class="btn-success">
+        <a href="<?= route('admin.products.new') ?>" class="btn-success">
             Cadastrar Produto
         </a>
     </div>
@@ -21,20 +21,20 @@
         <tbody>
             <?php foreach ($products as $product) : ?>
                 <tr class="hover:bg-gray-50">
-                    <td class="py-2 font-bold text-center text-gray-800 border-b"><a href="<?= route('products.show', ['id' => $product->id]) ?>"><?= $product->id ?></a></td>
+                    <td class="py-2 font-bold text-center text-gray-800 border-b"><a href="<?= route('admin.products.show', ['id' => $product->id]) ?>"><?= $product->id ?></a></td>
                     <td class="py-2 text-center text-gray-800 border-b"><?= $product->name ?></td>
                     <td class="py-2 text-center text-gray-800 border-b"><?= $product->description ?></td>
                     <td class="py-2 text-center text-gray-800 border-b"><?= $product->brand ?></td>
                     <td class="py-2 text-center text-gray-800 border-b">R$ <?= number_format($product->price, 2, ',', '.')  ?></td>
                     <td class="py-2 text-center text-gray-800 border-b">
                         <div class="flex flex-row items-stretch justify-center gap-2">
-                            <a href="<?= route('products.edit', ['id' => $product->id]) ?>">
+                            <a href="<?= route('admin.products.edit', ['id' => $product->id]) ?>">
                                 <button class="btn-info">
                                     Editar
                                 </button>
                             </a>
 
-                            <form action="<?= route('products.destroy', ['id' => $product->id]) ?>" method="POST" class="m-0">
+                            <form action="<?= route('admin.products.destroy', ['id' => $product->id]) ?>" method="POST" class="m-0">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button class="btn-danger" type="submit">
                                     Excluir

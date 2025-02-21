@@ -3,61 +3,27 @@
         <h1 class="font-bold text-gray-700"><?= $title ?></h1>
     </div>
 
-    <form action="<?= route('budgets.create') ?>" method="POST">
+    <form action="<?= route('admin.budgets.create') ?>" method="POST">
         <div class="flex flex-col gap-2 p-4 mt-2 bg-white rounded shadow">
-            <div>
-                <label for="budget_customer_id" class="input-label">Cliente:</label>
-                <select name="budget[customer_id]" id="budget_customer_id" class="select">
-                    <?php foreach ($customers as $customer) { ?>
-                        <option value="<?= $customer->id ?>"><?= $customer->id . ' - ' .  $customer->name ?></option>
-                    <?php } ?>
-                </select>
-            </div>
-
             <div class="flex flex-row items-end justify-between gap-2">
                 <div class="w-full">
-                    <label for="product_id" class="input-label">Produto:</label>
-                    <select id="product_id" class="select">
-                        <?php foreach ($products as $product) { ?>
-                            <option value="<?= $product->id ?>"><?= $product->id . ' - ' .  $product->name ?></option>
+                    <label for="budget_customer_id" class="input-label">Cliente:</label>
+                    <select name="budget[customer_id]" id="budget_customer_id" class="select">
+                        <?php foreach ($customers as $customer) { ?>
+                            <option value="<?= $customer->id ?>"><?= $customer->id . ' - ' .  $customer->name ?></option>
                         <?php } ?>
                     </select>
-                </div>
-
-                <div class="w-full">
-                    <label for="product_quantity" class="input-label">Quantidade:</label>
-                    <input type="number" placeholder="0" id="product_quantity" class="input" min="1" value="1">
-                </div>
-
-                <div class="w-full">
-                    <label for="product_price" class="input-label">Preço:</label>
-                    <div class="flex flex-row">
-                        <span class="flex items-center justify-center h-12 px-4 text-lg leading-6 text-center border border-gray-600 rounded-md rounded-e-none">R$</span>
-                        <input type="number" id="product_price" class="input !rounded-s-none" min="0.00" step="0.01" placeholder="0.00">
-                    </div>
                 </div>
 
                 <button
                     class="p-3 font-bold text-white bg-green-700 rounded"
                     type="button"
-                    id="add-product">
+                    id="select-customer">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                     </svg>
                 </button>
             </div>
         </div>
-
-        <div class="mt-4">
-            <h3 class="font-bold">Produtos adicionados:</h3>
-            <ul id="product-list" class="list-disc list-inside">
-                <!-- Produtos adicionados serão inseridos aqui -->
-            </ul>
-        </div>
-
-        <!-- Campo oculto para armazenar os produtos selecionados -->
-        <input type="hidden" name="products" id="products-input">
-
-        <button class="w-full mt-2 btn-success" type="submit">CRIAR</button>
     </form>
 </div>

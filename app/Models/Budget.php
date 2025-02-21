@@ -28,7 +28,7 @@ class Budget extends Model
         Validations::notEmpty('status', $this);
         Validations::notEmpty('cancelled', $this);
         Validations::notEmpty('payed', $this);
-        Validations::nonZero('total', $this);
+        // Validations::nonZero('total', $this);
     }
 
     public function customer(): BelongsTo
