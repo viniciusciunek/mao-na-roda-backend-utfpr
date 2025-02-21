@@ -62,6 +62,8 @@ Route::middleware('admin')->group(function () {
     Route::post('/admin/budgets/add_item', [BudgetItemsController::class, 'create'])->name('admin.budget_items.create'); # adicionando produtos
 
     Route::delete('/admin/budgets/remove_item', [BudgetItemsController::class, 'destroy'])->name('admin.budget_items.destroy'); # removendo produtos
+
+    Route::post('/admin/budgets/change_status', [BudgetsController::class, 'changeStatus'])->name('admin.budgets.change_status'); # alterando o status
 });
 
 Route::middleware(middleware: 'customer')->group(function () {

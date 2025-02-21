@@ -105,7 +105,6 @@ class BudgetsController extends Controller
         }
     }
 
-
     public function edit(Request $request): void
     {
         $budgetId = $request->getParams()['id'];
@@ -120,5 +119,30 @@ class BudgetsController extends Controller
         $title = 'Editar orçamento';
 
         $this->render('budgets/edit', compact('budget', 'customers', 'products', 'title'));
+    }
+
+    public function changeStatus(): void
+    {
+        try {
+            $data = json_decode(file_get_contents('php://input'), true);
+
+            $status = $data['status'];
+
+            $budget = Budget::findById($data['budget_id']);
+
+            $budget->update([
+                'status' => $status
+            ]);
+
+            $this->jsonResponse([
+                'success' => true,
+                'message' => 'Status alterado para: ' . $status
+            ]);
+        } catch (Exception $e) {
+            $this->jsonResponse([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], $e->getCode());
+        }
     }
 }

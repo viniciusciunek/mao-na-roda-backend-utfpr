@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Budget;
 use App\Models\BudgetItem;
 use Core\Http\Request;
 use Core\Http\Controllers\Controller;
@@ -14,7 +15,7 @@ class BudgetItemsController extends Controller
         try {
             $data = json_decode(file_get_contents('php://input'), true);
 
-            $total = $data['quantity'] * $data['price'];
+            $total = (int) $data['quantity'] * (float) $data['price'];
 
             $budgetItem = new BudgetItem([
                 'budget_id' => $data['budget_id'],
@@ -22,6 +23,12 @@ class BudgetItemsController extends Controller
                 'quantity' => $data['quantity'],
                 'unit_price' => $data['price'],
                 'total_price' => $total
+            ]);
+
+            $budget = Budget::findById($data['budget_id']);
+
+            $budget->update([
+                'total' => $budget->total + $total
             ]);
 
             if ($budgetItem->save()) {
@@ -51,6 +58,12 @@ class BudgetItemsController extends Controller
             $data = json_decode(file_get_contents('php://input'), true);
 
             $budgetItem = BudgetItem::findById((int) $data['id']);
+
+            $budget = Budget::findById((int) $data['budget_id']);
+
+            $budget->update([
+                'total' => $budget->total - $budgetItem->total_price
+            ]);
 
             if ($budgetItem->destroy()) {
                 $this->jsonResponse([
