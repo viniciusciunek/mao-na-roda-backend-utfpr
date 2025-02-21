@@ -74,4 +74,8 @@ Route::middleware('admin')->group(function () {
 Route::middleware(middleware: 'customer')->group(function () {
     Route::get('/budgets', [BudgetsController::class, 'index'])->name('customer.budgets.index');
     Route::get('/budgets/{id}', [BudgetsController::class, 'show'])->name('customer.budgets.show');
+
+    # alterando o status
+    Route::post('/budgets/change_status', [BudgetsController::class, 'changeStatus'])
+        ->name('customer.budgets.change_status');
 });

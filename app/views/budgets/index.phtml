@@ -31,6 +31,12 @@
                                     case 'pending':
                                         echo 'Pendente Aprovação';
                                         break;
+                                    case 'approved':
+                                        echo 'Aprovado';
+                                        break;
+                                    case 'reproved':
+                                        echo 'Reprovado';
+                                        break;
                                     default:
                                         echo 'Pendente';
                                         break;
@@ -43,24 +49,34 @@
                         <td class="py-2 text-center text-gray-800 border-b">
                             <?php if ($this->isAdmin()): ?>
                                 <div class="flex flex-row items-stretch justify-center gap-2">
-                                    <a href="<?= route('admin.budgets.edit', ['id' => $budget->id]) ?>">
+                                    <?php if ($budget->status == 'pending') : ?>
+                                        <a href="<?= route('admin.budgets.edit', ['id' => $budget->id]) ?>">
+                                            <button class="btn-info">
+                                                Editar
+                                            </button>
+                                        </a>
+                                    <?php endif ?>
+
+                                    <a href="<?= route('admin.budgets.show', ['id' => $budget->id]) ?>">
                                         <button class="btn-info">
-                                            Editar
+                                            Visualizar
                                         </button>
                                     </a>
-
-                                    <!-- <form action="" method="POST" class="m-0">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <button class="btn-danger" type="submit">
-                                            Excluir
-                                        </button>
-                                    </form> -->
                                 </div>
-
                             <?php else : ?>
+                                <?php if ($budget->status == 'pending') : ?>
+                                    <button class="btn-success approve-budget" data-id="<?= $budget->id ?>">
+                                        Aprovar
+                                    </button>
+
+                                    <button class="btn-danger reprove-budget" data-id="<?= $budget->id ?>">
+                                        Reprovar
+                                    </button>
+                                <?php endif ?>
+
                                 <a href="<?= route('customer.budgets.show', ['id' => $budget->id]) ?>">
                                     <button class="btn-info">
-                                        Detalhes
+                                        Visualizar
                                     </button>
                                 </a>
                             <? endif ?>

@@ -102,31 +102,96 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // salva o orçamento e atualiza o status
     const saveBudgetBtn = document.getElementById('save-budget');
 
-    saveBudgetBtn.addEventListener('click', async () => {
-        const budgetId = document.getElementById('budget_id').value;
+    if (saveBudgetBtn) {
+        saveBudgetBtn.addEventListener('click', async () => {
+            const budgetId = document.getElementById('budget_id').value;
 
-        try {
-            const response = await fetch('/admin/budgets/change_status', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    budget_id: budgetId,
-                    status: 'pending'
-                })
-            });
+            try {
+                const response = await fetch('/admin/budgets/change_status', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        budget_id: budgetId,
+                        status: 'pending'
+                    })
+                });
 
-            await response.json();
+                await response.json();
 
-            await fetch(`/admin/budgets/${budgetId}`);
+                await fetch(`/admin/budgets/${budgetId}`);
 
-            window.location.href = `/admin/budgets/${budgetId}`;
-        } catch (error) {
+                window.location.href = `/admin/budgets/${budgetId}`;
+            } catch (error) {
 
-            alert(error.message)
-        }
-    })
+                alert(error.message)
+            }
+        })
+    }
+
+    // cliente aprova orçamento
+    const approveBudgetBtn = document.querySelectorAll('.approve-budget');
+    const reproveBudgetBtn = document.querySelectorAll('.reprove-budget');
+
+    if (approveBudgetBtn) {
+        approveBudgetBtn.forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const budgetId = btn.getAttribute('data-id');
+
+                try {
+                    const response = await fetch('/budgets/change_status', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            budget_id: budgetId,
+                            status: 'approved'
+                        })
+                    });
+
+                    await response.json();
+
+                    await fetch(`/budgets/${budgetId}`);
+
+                    window.location.href = `/budgets`;
+                } catch (error) {
+                    alert(error.message)
+                }
+            })
+        });
+    }
+
+    if (reproveBudgetBtn) {
+        reproveBudgetBtn.forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const budgetId = btn.getAttribute('data-id');
+
+                try {
+                    const response = await fetch('/budgets/change_status', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            budget_id: budgetId,
+                            status: 'reproved'
+                        })
+                    });
+
+                    await response.json();
+
+                    await fetch(`/budgets/${budgetId}`);
+
+                    window.location.href = `/budgets`;
+                } catch (error) {
+                    alert(error.message)
+                }
+            })
+        });
+    }
 });
